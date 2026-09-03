@@ -1,0 +1,16 @@
+export const companyInfo = {
+  name: "Tripogram Club OPC Pvt Ltd",
+  brand: "Tripogram",
+  gst: "07AAJCT8023A1ZL",
+  address: "2-A Kundan Mansion, Asaf Ali Rd, New Delhi (110002)",
+  phone: "+91 8287876816",
+  phoneHref: "tel:+918287876816",
+  email: "Mail@tripogramclub.com",
+  emailHref: "mailto:Mail@tripogramclub.com",
+  website: "www.tripogramclub.com",
+  websiteHref: "https://www.tripogramclub.com",
+  logo: "/tripogramLogo.png",
+  logoLight: "/tripogramLogo2.png",
+  icon: "/tripogramIcon.jpg",
+  businessInfoImage: "/tripogramBusinessInfo.jpeg",
+};

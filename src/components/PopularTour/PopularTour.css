@@ -1,0 +1,61 @@
+.tour-area .box-title a{
+    /* color: #ffffff; */
+    color: var(--theme-color);
+    font-weight: 700;
+}
+.tour-area .woocommerce-review-link{
+    color: #ffffff;
+}
+.tour-box_price {
+    color: #ffffff; 
+}
+.tour-box_price span{
+    white-space: nowrap;
+    color: #ffffff;
+}
+.tour-box_price .calender i {
+    color: var(--theme-color);
+}
+.tour-box_price .currency {
+    color: #ffffff;
+    color: var(--theme-color);
+}
+.tour-box_price .PerPserson{
+font-size: 14px;
+}
+.tour_topbar .th-btn.style4 {
+    color: var(--white-color);
+    border: 1px solid var(--theme-color);
+}
+.tour_topbar .th-btn.style4 {
+    background-color: var(--theme-color);
+}
+.swiper-button-prev, .swiper-button-next{
+    background-color: #4f4f4f66;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translate(-20%,-50%);
+    position: absolute;
+    z-index: 2;
+}
+.swiper-button-prev::after, .swiper-button-next::after{
+    font-size: 16px;
+    color: #ffffff;
+} 
+.swiper-button-next{
+    right: 0%;
+}
+.swiper-button-prev{
+    left: 3%;
+}
+.swiper-button-next::after{
+    content: "›"; 
+}
+.swiper-button-prev::after{
+    content: "‹"; 
+} 

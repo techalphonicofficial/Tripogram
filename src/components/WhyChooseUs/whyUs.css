@@ -1,0 +1,102 @@
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.whyus-container .whyus-card{
+ background-position: left bottom;
+ background-size: cover;
+ background-repeat: no-repeat;
+ height: 400px;
+ /* Previous border kept for quick visual rollback: border: 1px solid #0598cc; */
+ border: 1px solid rgba(5, 152, 204, 0.28);
+ border-radius: 8px;
+ padding: 12px;
+ box-shadow: 0 16px 36px rgba(17, 61, 72, 0.12);
+ overflow: hidden;
+ transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+ position: relative;
+ isolation: isolate;
+}
+.whyus-container .whyus-card::after{
+ content: "";
+ position: absolute;
+ inset: 0;
+ background: linear-gradient(180deg, rgba(2, 10, 19, 0.08), rgba(2, 10, 19, 0.54));
+ z-index: -1;
+}
+.whyus-container .whyus-card:hover{
+ transform: translateY(-6px);
+ border-color: #0598cc;
+ box-shadow: 0 20px 44px rgba(5, 152, 204, 0.18);
+}
+.whyus-container .whyus-card-inner .whyus-card-title{
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+.whyus-container .whyus-card-inner .whyus-card-description{
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  font-size: 16px;
+  line-height: 1.65;
+}
+@media screen and (max-width:1300px) {
+  .whyus-container .whyus-card{
+    height: 400px;
+    }
+    .whyus-container .whyus-card-inner .whyus-card-title{
+      font-size: 24px;
+    }
+    .whyus-container .whyus-card-inner .whyus-card-description{
+      font-size: 15px;
+      
+    }
+}
+@media screen and (max-width:991px) {
+  .whyus-container .whyus-card{
+    height: 350px;
+    }
+    .whyus-container .whyus-card-inner .whyus-card-title{
+      font-size: 24px;
+    }
+    .whyus-container .whyus-card-inner .whyus-card-description{
+      font-size: 15px;
+      
+    }
+}
+@media screen and (max-width:576px) {
+  .whyus-container .whyus-card{
+    }
+    .whyus-container .whyus-card-inner .whyus-card-title{
+      font-size: 20px;
+    }
+    .whyus-container .whyus-card-inner .whyus-card-description{
+      font-size: 14px;
+      
+    }
+}
+
+.custom-hover-effect {
+  border-radius: 1rem;
+  /* Previous template gradient kept for rollback: background: linear-gradient(to right, #86efac, #3b82f6, #a78bfa); */
+  background: linear-gradient(to right, #0598cc, #ffb827, #0d3f52);
+  padding: 0.125rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  background-size: 200% 200%;
+  transition: box-shadow 0.3s ease, background-size 0.3s ease; 
+  &:hover {
+    background-size: 400% 400%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: backgroundAnimation 4s ease infinite; 
+  }
+}
