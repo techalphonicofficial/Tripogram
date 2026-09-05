@@ -1,4 +1,5 @@
 @use "sass:math";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
   --theme-color: #0598cc;
@@ -16,10 +17,10 @@
   --success-color: #0598cc;
   --error-color: #dc3545;
   --th-border-color: #e9edf5;
-  --title-font: var(--font-poppins), "Poppins", sans-serif;
-  --body-font: var(--font-poppins), "Poppins", sans-serif;
-  --style-font: var(--font-poppins), "Poppins", sans-serif;
-  --home-title-font: var(--font-poppins), "Poppins", sans-serif;
+  --title-font: Poppins, "Poppins Fallback";
+  --body-font: Poppins, "Poppins Fallback";
+  --style-font: Poppins, "Poppins Fallback";
+  --home-title-font: Poppins, "Poppins Fallback";
   --icon-font: "Font Awesome 6 Free";
   --main-container: 1320px;
   --container-gutters: 24px;
@@ -339,11 +340,11 @@ body {
 }
 
 body {
-  font-family: var(--body-font);
+  font-family: Poppins, "Poppins Fallback";
   font-size: 16px;
   font-weight: 400;
-  color: var(--body-color);
-  line-height: 26px;
+  color: rgb(53, 33, 31);
+  line-height: 24px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
