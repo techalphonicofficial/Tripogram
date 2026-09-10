@@ -32,7 +32,7 @@ export async function getPagewithSection(pageId, sectionKey = false) {
     return res.data;
 
   } catch (error) {
-    console.error("Error fetching page:", {
+    console.log("Error fetching page:", {
       pageId,
       sectionKey,
       message: error.message,
@@ -41,13 +41,7 @@ export async function getPagewithSection(pageId, sectionKey = false) {
       baseURL: api.defaults.baseURL,
     });
 
-    // Better error handling
-    if (error.response) {
-      throw new Error(error.response.data?.message || "API Error");
-    } else if (error.request) {
-      throw new Error("No response from server");
-    } else {
-      throw new Error("Request setup error");
-    }
+    // Better error handling - prevent Next.js from crashing by returning a fallback
+    return { section: [] };
   }
 }

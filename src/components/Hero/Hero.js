@@ -71,7 +71,7 @@ export default function Hero() {
   }
 
   return (
-    <div className="position-relative w-100 z-2 tripogram-hero" style={{ height: "90vh" }}>
+    <div className="position-relative w-100 tripogram-hero d-flex flex-column justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
       {/* Swiper */}
       <Swiper
         // modules={[Autoplay, EffectFade]}
@@ -83,7 +83,7 @@ export default function Hero() {
         //   swiperRef.current = swiper;   // ✅ works fine now
         // }}
         // slidesPerView={1}
-        className="h-100"
+        className="position-absolute top-0 start-0 w-100 h-100 z-0"
       >
         <SwiperSlide className="position-relative">
           <video
@@ -141,21 +141,23 @@ export default function Hero() {
       <div className="position-absolute top-0 start-0 w-100 h-100 tripogram-hero-overlay z-1"></div>
 
       {/* Hero Content */}
-      <div className=" main_ct_box  px-3">
+      <div className="main_ct_box px-3 position-relative z-2 w-100">
         <div className="main_ct_contentin">
           <p className="sub-title mb-3">{mainpage.section?.[0]?.data?.Text}</p>
-          <h1 className="sec-title display-4 fw-bold mb-3">
+          <h1 className="sec-title fw-bold mb-2">
             {mainpage.section?.[1]?.data?.Text}
           </h1>
 
-          {/* Typing Animation */}
-          <TypeAnimation
-            sequence={newArr}
-            wrapper="span"
-            speed={50}
-            className="fs-3 text-warning d-block mb-4"
-            repeat={Infinity}
-          />
+          {/* Typing Animation Wrapper */}
+          <div className="typing-text-wrapper mb-3 mt-2">
+            <TypeAnimation
+              sequence={newArr}
+              wrapper="span"
+              speed={50}
+              className="fs-4 text-warning d-block"
+              repeat={Infinity}
+            />
+          </div>
 
           {/* Search Bar */}
           <div className="position-relative w-100 mx-auto tripogram-hero-search">
@@ -172,21 +174,21 @@ export default function Hero() {
 
             {searchTerm && (
               <ul className="list-group position-absolute top-100 start-0 w-100 mt-1 shadow">
-                {results.map((item,index) => (
-                    <Link
-                      key={index}
-                      href={`/${item.slug}`}
-                      className="list-group-item list-group-item-action"
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
+                {results.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/${item.slug}`}
+                    className="list-group-item list-group-item-action"
+                  >
+                    {item.title}
+                  </Link>
+                ))}
               </ul>
             )}
           </div>
         </div>
         {/* Stats Row */}
-        <div className=" statsas container-fluid mt-5">
+        <div className="statsas container-fluid mt-4">
           <div className="row text-center justify-content-center ">
             {mainpage.section?.slice(3, 6).map((item, index) => (
               <div className=" adfsd col-md-4 col-4 mb-2" key={index}>

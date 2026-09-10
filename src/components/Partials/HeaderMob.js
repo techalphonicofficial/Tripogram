@@ -93,6 +93,11 @@ export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithco
               </Link>
             </li>
             <li>
+              <Link href="/careers" onClick={handleLinkClick}>
+                Careers
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" onClick={handleLinkClick}>
                 Contact Us
               </Link>

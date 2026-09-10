@@ -3,14 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import PopularCard from "./PopularCard";
 import { getPagewithSection } from "@/services/pageSection";
 import { getHomeDestination } from "@/services/destinationApi";
 
+const fallbackMainpage = {
+  section: [
+    { data: { Text: "Destination Lists" } },
+    { data: { Text: "Popular Destinations" } },
+  ],
+};
+
 export default function PopularDestination() {
-  const [mainpage, setMainpage] = useState(null);
+  const [mainpage, setMainpage] = useState(fallbackMainpage);
   const [homeDestination, setHomeDestination] = useState([]);
 
   useEffect(() => {
@@ -18,36 +23,36 @@ export default function PopularDestination() {
       getPagewithSection(1, "destination"),
       getHomeDestination(),
     ]).then(([pageResult, destinationResult]) => {
-      if (pageResult.status === "fulfilled") {
+      if (pageResult.status === "fulfilled" && pageResult.value?.section) {
         setMainpage(pageResult.value);
       } else {
-        console.error("Failed to fetch destination section:", pageResult.reason);
+        console.log("Failed to fetch destination section:", pageResult.reason);
       }
 
       if (destinationResult.status === "fulfilled" && Array.isArray(destinationResult.value)) {
         setHomeDestination(destinationResult.value);
-      } else if (destinationResult.status === "rejected") {
-        console.error("Failed to fetch destinations:", destinationResult.reason);
       }
     });
   }, []);
 
-  if (!mainpage || !homeDestination.length) return null;
+  if (!homeDestination || homeDestination.length === 0) return null;
+
+  const pageDataToDisplay = mainpage?.section?.[0]?.data?.Text ? mainpage : fallbackMainpage;
 
   return (
-    <div className="position-relative overflow-hidden pt-8 mt-60 mb-35">
+    <div className="position-relative overflow-hidden pt-8 mb-35">
       <div className="container">
-        <div className="title-area text-center">
-          <span className="sub-title">{mainpage.section?.[0]?.data?.Text}</span>
-          <h2 className="sec-title">{mainpage.section?.[1]?.data?.Text}</h2>
+        <div className="title-area text-center mb-4">
+          <span className="sub-title text-success fw-bold">{pageDataToDisplay.section?.[0]?.data?.Text || "Destination Lists"}</span>
+          <h2 className="sec-title fw-bold text-dark">{pageDataToDisplay.section?.[1]?.data?.Text || "Popular Destinations"}</h2>
         </div>
 
         <Swiper
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          loop={true}
-          autoplay={{ delay: 2500 }}
+          loop={homeDestination.length > 2}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
           speed={1000}
           slidesPerView={3}
           coverflowEffect={{
@@ -71,7 +76,7 @@ export default function PopularDestination() {
               <PopularCard
                 image={item.thumbnail}
                 title={item.name}
-                subtitle={item.active_packages_count}
+                subtitle={item.active_packages_count ?? 0}
                 slug={item.slug}
               />
             </SwiperSlide>
@@ -81,3 +86,6 @@ export default function PopularDestination() {
     </div>
   );
 }
+
+
+

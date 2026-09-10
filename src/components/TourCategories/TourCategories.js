@@ -21,28 +21,24 @@ export default function TourCategories() {
       getPagewithSection(1, "categories"),
       homeTrips(),
     ]).then(([pageResult, tripsResult]) => {
-      if (pageResult.status === "fulfilled") {
+      if (pageResult.status === "fulfilled" && pageResult.value?.section) {
         setMainpage(pageResult.value);
       } else {
-        console.error("Failed to fetch tour category content:", pageResult.reason);
+        console.log("Failed to fetch tour category content:", pageResult.reason);
       }
 
       if (tripsResult.status === "fulfilled" && Array.isArray(tripsResult.value)) {
         setTrips(tripsResult.value);
-      } else if (tripsResult.status === "rejected") {
-        console.error("Failed to fetch home trips:", tripsResult.reason);
       }
     });
   }, []);
 
-  if (!trips.length) {
-    return null;
-  }
+  if (!trips || trips.length === 0) return null;
 
   return (
     <section
-      className="category-area bg-top-center pt-8 pb-4"
-      style={{ backgroundImage: "url(/img/bg/about_bg_1.jpg)" }}
+      className="category-area pt-8 pb-4"
+      style={{ marginTop: 0 }}
     >
       <div className="container th-container">
         <div className="title-area text-center">
@@ -59,3 +55,5 @@ export default function TourCategories() {
     </section>
   );
 }
+
+

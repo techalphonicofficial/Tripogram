@@ -809,8 +809,8 @@ h6 {
     padding: 0 !important;
   }
 
-  .book_Amount > .title,
-  .book_Amount > .pricing_box {
+  .book_Amount>.title,
+  .book_Amount>.pricing_box {
     display: none !important;
   }
 
@@ -1027,7 +1027,7 @@ h6 {
     padding: 16px 18px !important;
   }
 
-  .trip-detail-booking-card > .d-flex:first-child {
+  .trip-detail-booking-card>.d-flex:first-child {
     margin-bottom: 0 !important;
   }
 
@@ -38088,15 +38088,15 @@ body {
   color: var(--tripogram-yellow);
 }
 
-.main-menu > ul > li > a,
-.main-menu > ul > li > span {
+.main-menu>ul>li>a,
+.main-menu>ul>li>span {
   color: var(--tripogram-ink);
   font-weight: 700;
   letter-spacing: 0;
 }
 
-.main-menu > ul > li > a:hover,
-.main-menu > ul > li > span:hover {
+.main-menu>ul>li>a:hover,
+.main-menu>ul>li>span:hover {
   color: var(--tripogram-primary);
 }
 
@@ -38168,7 +38168,7 @@ body {
   position: relative;
 }
 
-.statsas .adfsd > div {
+.statsas .adfsd>div {
   width: 88px;
   height: 88px;
   margin: 0 auto 10px;
@@ -38324,7 +38324,7 @@ input:focus {
 }
 
 .th-widget-contact .info-box_text .details {
-  margin-top: 6px; 
+  margin-top: 6px;
 }
 
 .th-widget-contact .info-box_text .icon {
@@ -38380,7 +38380,7 @@ input:focus {
     margin-top: 28px !important;
   }
 
-  .statsas .adfsd > div {
+  .statsas .adfsd>div {
     width: 54px;
     height: 54px;
   }
@@ -38411,6 +38411,7 @@ input:focus {
 }
 
 @media (max-width: 575px) {
+
   .space,
   .space-top {
     padding-top: 54px;

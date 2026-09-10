@@ -4,27 +4,50 @@ import { api } from "./config";
 export async function trendingPackage() {
   try {
     const res = await api.get("/packages/trending");
-    return res.data;
+    if (Array.isArray(res.data) && res.data.length > 0) {
+      return res.data;
+    }
+    const allRes = await api.get("/packages");
+    return Array.isArray(allRes.data) ? allRes.data : [];
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch trending packages:", error.response?.data?.message || error.message);
+    try {
+      const allRes = await api.get("/packages");
+      return Array.isArray(allRes.data) ? allRes.data : [];
+    } catch (e) {
+      return [];
+    }
   }
 }
 
 export async function allPackage(byCategory, page) {
   try {
-    const res = await api.get(`/packages?trip=${byCategory}&page=${page}&limit=12`);
-    // console.log("allPackage", byCategory);
-    return res.data;
+    let url = "/packages";
+    if (byCategory && byCategory !== "all") {
+      url = `/packages?trip=${byCategory}&page=${page}&limit=12`;
+    }
+    const res = await api.get(url);
+    const data = Array.isArray(res.data) ? res.data : (res.data?.data || []);
+    if (data.length > 0) {
+      return data;
+    }
+    const allRes = await api.get("/packages");
+    return Array.isArray(allRes.data) ? allRes.data : [];
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch all packages:", error.response?.data?.message || error.message);
+    try {
+      const allRes = await api.get("/packages");
+      return Array.isArray(allRes.data) ? allRes.data : [];
+    } catch (e) {
+      return [];
+    }
   }
 }
 
+
 export async function singlePackage(slug) {
-  
   try {
     const res = await api.get(`/packages/single/${slug}`);
-    // console.log("singlePackage", res.data);
     if (!res.data.hasOwnProperty("id")) {
       return notFound();
     }
@@ -33,20 +56,24 @@ export async function singlePackage(slug) {
     return notFound();
   }
 }
+
 export async function packageRedirection(slug) {
   try {
     const res = await api.get(`/redirection/${slug}`);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch redirection:", error.response?.data?.message || error.message);
+    return null;
   }
 }
+
 export async function costs_and_dates(slug) {
   try {
     const res = await api.get(`packages/${slug}/costs-and-dates`);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch costs and dates:", error.response?.data?.message || error.message);
+    return [];
   }
 }
 
@@ -55,14 +82,18 @@ export async function searchPackages(search) {
     const res = await api.get(`packages/search/${search}`);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch search packages:", error.response?.data?.message || error.message);
+    return [];
   }
 }
+
 export async function razorpay() {
   try {
     const res = await api.get(`razorpay`);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch razorpay config:", error.response?.data?.message || error.message);
+    return null;
   }
 }
+

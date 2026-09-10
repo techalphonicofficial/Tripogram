@@ -17,7 +17,7 @@ export default function AdvertisementSectionCard() {
 
   return (
     <section
-      className={`category-bit-area bg-top-center mb-5 pb-5 ${section?.data?.show_type ==="none" ? "d-none" : "" }`}
+      className={`category-bit-area bg-top-center mb-5 pb-5 ${section?.data?.show_type === "none" ? "d-none" : ""}`}
       style={{ marginTop: "24px", paddingTop: "24px" }}
     >
       <div className="container ">

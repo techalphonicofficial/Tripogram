@@ -148,6 +148,9 @@ export default function HeaderClient({
                       <li>
                         <Link href="/blog">Blogs</Link>
                       </li>
+                      <li>
+                        <Link href="/careers">Careers</Link>
+                      </li>
                     </ul>
                   </nav>
 

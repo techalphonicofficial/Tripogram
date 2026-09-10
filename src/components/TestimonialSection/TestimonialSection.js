@@ -46,10 +46,10 @@ export default function TestimonialSection() {
             modules={[Autoplay, Pagination]}
             loop={true}
             autoplay={{
-                delay: 2500,
-                pauseOnMouseEnter: true,
-                disableOnInteraction: true,
-              }}
+              delay: 2500,
+              pauseOnMouseEnter: true,
+              disableOnInteraction: true,
+            }}
             speed={1000}
             pagination={{ clickable: true, el: ".slider-pagination" }}
             spaceBetween={30}

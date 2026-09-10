@@ -2,11 +2,11 @@
 import Hero from "@/components/Hero/Hero";
 import TourCategories from "@/components/TourCategories/TourCategories";
 import PopularDestination from "@/components/PopularDestination/PopularDestination";
-import AboutSection from "@/components/AboutSection/AboutSection";
 import TestimonialSection from "@/components/TestimonialSection/TestimonialSection";
 import BlogSection from "@/components/BlogSection/BlogSection";
 import PopularTour from "@/components/PopularTour/PopularTour";
 import WhyUs from "@/components/WhyChooseUs/WhyUs";
+import PartnershipSection from "@/components/PartnershipSection/PartnershipSection";
 import AdvertisementSectionCard from "@/components/AdvertisementSection/AdvertisementSectionCard";
 import { getPagewithSection } from "@/services/pageSection";
 
@@ -79,10 +79,14 @@ export default async function Home() {
       <main className="home-page">
         <Hero />
         <AdvertisementSectionCard />
-        <TourCategories />
-        <PopularDestination />
-        <PopularTour />
-        <AboutSection />
+        <div className="bg-top-center mt-5 pt-5" style={{ backgroundImage: "url(/img/bg/about_bg_1.jpg)" }}>
+          <TourCategories />
+          <PopularDestination />
+        </div>
+        <div style={{ backgroundImage: "url(/img/bg/partnership-bg.png)", backgroundSize: "cover", backgroundPosition: "center bottom", backgroundRepeat: "no-repeat" }}>
+          <PopularTour />
+          <PartnershipSection />
+        </div>
         <TestimonialSection />
         <BlogSection />
         <WhyUs />

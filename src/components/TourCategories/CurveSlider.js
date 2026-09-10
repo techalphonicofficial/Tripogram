@@ -33,7 +33,7 @@ const CurveSlider = ({trips}) => {
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         slidesPerView={5}
-        loop={true}
+        loop={trips.length > 5}
         grabCursor={true}
         simulateTouch={true}
         draggable={true}

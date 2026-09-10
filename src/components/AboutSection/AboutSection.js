@@ -77,18 +77,18 @@ export default function AboutSection() {
             <div className="img-box1">
               <div className="img1 mb-3">
                 <Image src={
-                      getImageSrc(mainpage.section[0]?.data?.image, fallbackAboutImages[0])
-                    } alt="About" width={315} height={300} />
+                  getImageSrc(mainpage.section[0]?.data?.image, fallbackAboutImages[0])
+                } alt="About" width={315} height={300} />
               </div>
               <div className="img2 mb-3">
                 <Image src={
-                      getImageSrc(mainpage.section[1]?.data?.image, fallbackAboutImages[1])
-                    } alt="About" width={315} height={300} />
+                  getImageSrc(mainpage.section[1]?.data?.image, fallbackAboutImages[1])
+                } alt="About" width={315} height={300} />
               </div>
               <div className="img3 mb-3">
                 <Image src={
-                      getImageSrc(mainpage.section[2]?.data?.image, fallbackAboutImages[2])
-                    } alt="About" width={315} height={300} />
+                  getImageSrc(mainpage.section[2]?.data?.image, fallbackAboutImages[2])
+                } alt="About" width={315} height={300} />
               </div>
             </div>
           </div>
@@ -127,8 +127,8 @@ export default function AboutSection() {
 
               <div className="mt-35">
                 <Link href={getRelativeUrl(mainpage.section[8].data.button_link)} className="th-btn style3 th-icon">
-                    {mainpage.section[8].data.button_label}
-                  </Link>
+                  {mainpage.section[8].data.button_label}
+                </Link>
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function AboutSection() {
 
         <div
           className="shape-mockup about-shape movingX d-none d-xxl-block"
-           style={{ right: "-11%", bottom: "0%", position: "absolute" }}
+          style={{ right: "-11%", bottom: "0%", position: "absolute" }}
         >
           <Image src="/img/normal/about-slide-img.png" alt="shape" width={225} height={200} />
         </div>
@@ -173,12 +173,12 @@ export default function AboutSection() {
           className="shape-mockup about-rating d-none d-xxl-block"
           style={{ right: "-20%", bottom: "50%", position: "absolute" }}
         >
-          <FontAwesomeIcon icon={faStar} className="fs-6 d-block m-auto " style={{color:"#ffb827"}}/> <span>4.9k</span>
-        </div> 
+          <FontAwesomeIcon icon={faStar} className="fs-6 d-block m-auto " style={{ color: "#ffb827" }} /> <span>4.9k</span>
+        </div>
 
         <div
           className="shape-mockup about-emoji d-none d-xxl-block"
-         style={{ right: "5%", bottom: "25%", position: "absolute" }}
+          style={{ right: "5%", bottom: "25%", position: "absolute" }}
         >
           <Image src="/img/icon/emoji.png" alt="emoji" width={62} height={62} />
         </div>

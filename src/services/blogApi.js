@@ -1,7 +1,6 @@
 import { api } from "./config";
 import { notFound } from "next/navigation";
 
-// Get all blogs
 export async function getBlogs(page = 1, perPage = 10) {
   try {
     const res = await api.get("/blogs", {
@@ -9,7 +8,8 @@ export async function getBlogs(page = 1, perPage = 10) {
     });
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch blogs:", error.response?.data?.message || error.message);
+    return []; // Return empty array to prevent crash
   }
 }
 export async function getBlogsByTripDestination(text) {
@@ -17,7 +17,8 @@ export async function getBlogsByTripDestination(text) {
     const res = await api.get(`/blogs/search/${text}`);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch blogs");
+    console.log("Failed to fetch blogs by destination:", error.response?.data?.message || error.message);
+    return []; // Return empty array to prevent crash
   }
 }
 export async function getSingleBlog(slug) {
