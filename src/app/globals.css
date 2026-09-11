@@ -37757,13 +37757,12 @@ span.select2-selection.select2-selection--single:focus {
 
 /* Prevent content from hiding under header */
 body {
-  padding-top: 120px;
-  /* same as default header height */
+  padding-top: 85px; /* Adjusted to match the new compact header height */
 }
 
 @media (max-width: 991px) {
   body {
-    padding-top: 80px;
+    padding-top: 65px; /* Adjusted for mobile compact header */
   }
 
   select,

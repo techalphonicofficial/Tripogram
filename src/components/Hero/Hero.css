@@ -127,7 +127,7 @@
 }
 
 .tripogram-hero {
-  padding-top: 40px;
+  padding-top: 0;
   padding-bottom: 40px;
 }
 
@@ -158,10 +158,17 @@
 }
 
 .typing-text-wrapper {
-  height: 90px;
-  display: block;
+  /* FIXED height locks the container — prevents layout shift when typing text wraps */
+  height: 150px; /* Desktop: fits typing text without clipping */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   overflow: hidden;
+}
+
+.tripogram-hero-search {
+  margin-top: 24px;
 }
 
 .statsas h3 {
@@ -240,7 +247,7 @@
   .main_ct_box .sec-title {
     font-size: 32px;
   }
-  
+
   .statsas p {
     font-size: 16px;
     margin-bottom: 2px;
@@ -250,3 +257,332 @@
     font-size: 16px;
   }
 }
+
+/* Review Icons */
+.review-icon-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.review-icon-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+.main_ct_box .sub-title {
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 6px 20px;
+  display: inline-block;
+  margin-bottom: 24px !important;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.tripogram-hero {
+  min-height: 600px; /* Fixed value prevents layout jump when mobile keyboard opens */
+}
+
+@media (min-width: 992px) {
+  .tripogram-hero {
+    min-height: calc(100vh - 120px) !important;
+  }
+}
+
+.main_ct_box .sec-title {
+  font-size: 48px !important;
+}
+
+.hero-typing-text {
+  font-size: 15px !important;
+}
+
+@media (max-width: 768px) {
+  .hero-typing-text {
+    font-size: 18px !important;
+  }
+
+  .typing-text-wrapper {
+    height: auto; /* Let it grow naturally on mobile */
+    min-height: 60px;
+  }
+
+  .main_ct_box .sec-title {
+    font-size: 28px !important;
+  }
+
+  .main_ct_box {
+    margin-top: 0 !important;
+    padding-top: 80px !important; /* Fixed px instead of vh to prevent keyboard layout shift */
+  }
+
+  .tripogram-hero-search {
+    margin-top: 12px;
+  }
+
+  .statsas {
+    margin-top: 30px;
+    margin-bottom: 8px !important;
+  }
+}
+
+.review-icon-wrapper {
+  width: 55px !important;
+  height: 55px !important;
+}
+
+.review-icon-img {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.statsas h3 {
+  font-size: 20px !important;
+  margin-bottom: 2px !important;
+}
+
+.statsas p {
+  font-size: 13px !important;
+  font-weight: normal !important;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .statsas h3 {
+}
+
+.hero-search ul li:hover {
+  background: #f3f4f6;
+  /* gray-100 */
+}
+
+/* Stats Row */
+.hero-stats {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.hero-stats .stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  min-width: 160px;
+}
+
+/* Circle icons */
+.hero-stats .stat-box i {
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.hero-stats h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.hero-stats p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 992px) {
+  .main_ct_box .sec-title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main_ct_box .sec-title {
+    font-size: 32px;
+  }
+
+  .statsas p {
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  .statsas h3 {
+    font-size: 16px;
+  }
+}
+
+/* Review Icons */
+.review-icon-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.review-icon-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+.main_ct_box .sub-title {
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 6px 20px;
+  display: inline-block;
+  margin-bottom: 24px !important;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.tripogram-hero {
+  min-height: 600px; /* Fixed value prevents layout jump when mobile keyboard opens */
+}
+
+@media (min-width: 992px) {
+  .tripogram-hero {
+    min-height: calc(100vh - 120px) !important;
+  }
+}
+
+.main_ct_box .sec-title {
+  font-size: 48px !important;
+}
+
+.hero-typing-text {
+  font-size: 15px !important;
+}
+
+@media (max-width: 768px) {
+  .hero-typing-text {
+    font-size: 18px !important;
+  }
+
+  .typing-text-wrapper {
+    height: auto; /* Let it grow naturally on mobile */
+    min-height: 60px;
+  }
+
+  .main_ct_box .sec-title {
+    font-size: 28px !important;
+  }
+
+  .main_ct_box {
+    margin-top: 0 !important;
+    padding-top: 80px !important; /* Fixed px instead of vh to prevent keyboard layout shift */
+  }
+
+  .tripogram-hero-search {
+    margin-top: 12px;
+  }
+
+  .statsas {
+    margin-top: 30px;
+    margin-bottom: 8px !important;
+  }
+}
+
+.review-icon-wrapper {
+  width: 55px !important;
+  height: 55px !important;
+}
+
+.review-icon-img {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.statsas h3 {
+  font-size: 20px !important;
+  margin-bottom: 2px !important;
+}
+
+.statsas p {
+  font-size: 13px !important;
+  font-weight: normal !important;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .statsas h3 {
+    font-size: 24px !important;
+  }
+
+  .statsas p {
+    font-size: 14px !important;
+  }
+}
+.tripogram-hero { margin-top: 0; }

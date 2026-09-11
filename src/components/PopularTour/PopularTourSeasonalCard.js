@@ -19,7 +19,7 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
   const reviewsCount = data.reviews_count || "1.2K";
 
   return (
-    <div className={`seasonal-tour-card bg-white rounded-4 overflow-hidden position-relative d-flex flex-column shadow-sm ${isActive ? 'active-card' : 'inactive-card'}`}>
+    <div className={`seasonal-tour-card bg-white rounded-4 overflow-hidden position-relative d-flex flex-column ${isActive ? 'active-card' : 'inactive-card'}`}>
 
       {/* Top Image Section — FIXED height, no dynamic changes */}
       <div className="seasonal-card-img-wrapper position-relative" style={{ height: '250px' }}>
