@@ -25,11 +25,11 @@ export default function OpenPositions() {
         <div className="row">
           
           {/* Main Content - Jobs */}
-          <div className="col-lg-8 pe-lg-5">
+          <div className="col-lg-8 pe-lg-5 text-center text-lg-start">
             <span className="careers-eyebrow">Join Our Journey</span>
             <h2 className="sec-title mb-4">Open Positions</h2>
             
-            <div className="job-filters">
+            <div className="job-filters justify-content-center justify-content-lg-start">
               {DEPARTMENTS.map((dept) => (
                 <button 
                   key={dept} 

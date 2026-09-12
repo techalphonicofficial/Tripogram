@@ -385,6 +385,11 @@
   .stats-card {
     padding: 20px 16px;
   }
+
+  .stats-info h3 {
+    font-size: 24px;
+    white-space: nowrap;
+  }
   
   .job-meta {
     flex-direction: column;

@@ -105,8 +105,9 @@ export default function HeaderClient({
         <div className="sticky-wrapper">
           <div className="menu-area">
             <div className="container th-container">
-              <div className="row align-items-center justify-content-between">
-                <div className="col-auto">
+              <div className="row align-items-center position-relative">
+                {/* Logo - Left Aligned with custom margin on Desktop */}
+                <div className="col-auto logo-custom-margin">
                   <Link href="/">
                     {logo && (
                       <Image
@@ -121,9 +122,10 @@ export default function HeaderClient({
                   </Link>
                 </div>
 
-                <div className="col-auto ms-auto d-flex align-items-center">
-                  <nav className="main-menu d-none d-xl-block">
-                    <ul className="d-flex align-items-center">
+                {/* Absolute Centered Navigation for Desktop (Shifted slightly left per user request) */}
+                <div className="d-none d-xl-flex justify-content-center position-absolute" style={{ left: '48%', transform: 'translateX(-50%)', width: 'auto' }}>
+                  <nav className="main-menu">
+                    <ul className="grid-nav-list m-0 p-0">
                       {menuTrips.map((item, i) => (
                         <li key={i}>
                           <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
@@ -153,9 +155,12 @@ export default function HeaderClient({
                       </li>
                     </ul>
                   </nav>
+                </div>
 
+                {/* Mobile Menu Toggle - Right aligned */}
+                <div className="col-auto d-xl-none ms-auto">
                   <button
-                    className="th-menu-toggle d-xl-none"
+                    className="th-menu-toggle"
                     onClick={() => setMenuOpen(true)}
                     type="button"
                     aria-label="Open menu"

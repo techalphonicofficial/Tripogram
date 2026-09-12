@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,17 @@ import { companyInfo } from "@/constants/companyInfo";
 
 export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithcount }) {
   const [activeMenu, setActiveMenu] = useState(false);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [menuOpen]);
 
   // Toggle function
   const handleMenuClick = (e) => {

@@ -3645,8 +3645,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: none;
   font-size: 22px;
   position: absolute;
-  right: -16.5px;
-  top: 25px;
+  right: 15px;
+  top: 22px;
   padding: 0;
   line-height: 1;
   width: 33px;
@@ -4093,7 +4093,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .th-btn.style1:hover {
-  color: var(--title-color);
+  color: var(--theme-color) !important;
 }
 
 .th-btn.style1:hover.th-icon:after {
@@ -26475,10 +26475,15 @@ span.select2-selection.select2-selection--single:focus {
 @media (max-width: 767px) {
   .blog-card .blog-content {
     padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .blog-card .box-title {
     font-size: 24px;
+    text-align: center;
   }
 }
 
@@ -37757,12 +37762,14 @@ span.select2-selection.select2-selection--single:focus {
 
 /* Prevent content from hiding under header */
 body {
-  padding-top: 85px; /* Adjusted to match the new compact header height */
+  padding-top: 85px;
+  /* Adjusted to match the new compact header height */
 }
 
 @media (max-width: 991px) {
   body {
-    padding-top: 65px; /* Adjusted for mobile compact header */
+    padding-top: 65px;
+    /* Adjusted for mobile compact header */
   }
 
   select,
@@ -38437,5 +38444,98 @@ input:focus {
   .trip-card,
   .popular-tour-card {
     border-radius: 8px !important;
+  }
+}
+
+/* Grouped Navbar spacing override */
+.grid-nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px !important;
+}
+
+.grid-nav-list > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+}
+@media (min-width: 1200px) {
+  .logo-custom-margin {
+    margin-left: 100px !important;
+  }
+}
+
+/* Mobile Footer Alignment */
+@media (max-width: 767px) {
+  .footer-wrapper .footer-widget, 
+  .footer-wrapper .newsletter-area, 
+  .footer-wrapper .copyright-text {
+    text-align: center !important;
+  }
+  .footer-wrapper .footer-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-wrapper .th-social {
+    justify-content: center !important;
+  }
+  .footer-wrapper .about-logo {
+    display: flex;
+    justify-content: center;
+  }
+  .footer-wrapper .th-widget-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer-wrapper .th-widget-contact .info-box_text {
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 15px !important;
+    margin: 0 0 15px 0 !important;
+    width: 100%;
+    max-width: 300px;
+  }
+  .footer-wrapper .newsletter-top .row {
+    text-align: center;
+    justify-content: center;
+  }
+  .footer-wrapper .widget_nav_menu ul.menu li {
+    display: flex;
+    justify-content: center;
+  }
+  .footer-wrapper .th-widget-contact .info-box_text .icon {
+    margin: 0 0 10px 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .blog-box .blog-box_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .blog-box .blog-box_content .box-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .blog-single .blog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .blog-single .blog-meta {
+    justify-content: center;
   }
 }

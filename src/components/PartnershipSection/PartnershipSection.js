@@ -80,32 +80,48 @@ export default function PartnershipSection() {
           </motion.p>
         </div>
 
-        <div className="row g-4 justify-content-center">
-          {partners.map((partner, index) => (
-            <div className="col-xl-2 col-lg-3 col-md-4 col-6" key={partner.id}>
-              <motion.div 
-                variants={fadeUp}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="partner-card h-100"
-              >
-                <div className="partner-logo-box">
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name} 
-                    className="partner-logo" 
-                    onError={(e) => { e.target.src = '/img/brand/brand_1_1.svg'; }} 
-                  />
+        <div className="marquee-container">
+          <div className="marquee-track">
+            {/* First Set */}
+            {partners.map((partner, index) => (
+              <div className="marquee-item" key={`set1-${partner.id}`}>
+                <div className="partner-card h-100">
+                  <div className="partner-logo-box">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name} 
+                      className="partner-logo" 
+                      onError={(e) => { e.target.src = '/img/brand/brand_1_1.svg'; }} 
+                    />
+                  </div>
+                  <div className="partner-info">
+                    <h4 className="partner-name">{partner.name}</h4>
+                    <p className="partner-label">{partner.label}</p>
+                  </div>
                 </div>
-                <div className="partner-info">
-                  <h4 className="partner-name">{partner.name}</h4>
-                  <p className="partner-label">{partner.label}</p>
+              </div>
+            ))}
+            
+            {/* Second Set (Duplicate for seamless loop) */}
+            {partners.map((partner, index) => (
+              <div className="marquee-item" key={`set2-${partner.id}`}>
+                <div className="partner-card h-100">
+                  <div className="partner-logo-box">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name} 
+                      className="partner-logo" 
+                      onError={(e) => { e.target.src = '/img/brand/brand_1_1.svg'; }} 
+                    />
+                  </div>
+                  <div className="partner-info">
+                    <h4 className="partner-name">{partner.name}</h4>
+                    <p className="partner-label">{partner.label}</p>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

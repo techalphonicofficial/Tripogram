@@ -19,7 +19,7 @@ export default function CareersHero() {
         <div className="row align-items-center">
           
           {/* Left Column - Text */}
-          <div className="col-lg-6 careers-hero-content">
+          <div className="col-lg-6 careers-hero-content text-center text-lg-start">
             <span className="careers-eyebrow">Careers</span>
             <h1>
               New Places.<br />
@@ -37,7 +37,7 @@ export default function CareersHero() {
             </Link>
             
             {/* Small team members graphic similar to reference */}
-            <div className="mt-4 d-flex align-items-center gap-3">
+            <div className="mt-4 d-flex justify-content-center justify-content-lg-start align-items-center gap-3">
               <div className="d-flex" style={{ marginLeft: "10px" }}>
                 {/* These are just placeholder circles if no small avatars exist, 
                     using inline styles to mimic overlapping avatars */}
@@ -61,7 +61,7 @@ export default function CareersHero() {
               {/* Main Blob Image */}
               <div className="hero-img-main">
                 <Image 
-                  src="/img/trip/tour_1_1.jpg" // Fallback to existing tour image
+                  src="/img/tour/tour-1_1.jpg" // Fallback to existing tour image
                   alt="Team exploring" 
                   fill
                   style={{ objectFit: 'cover' }}
@@ -72,7 +72,7 @@ export default function CareersHero() {
               {/* Secondary Overlapping Image */}
               <div className="hero-img-secondary">
                 <Image 
-                  src="/img/trip/tour_1_3.jpg" // Fallback to existing tour image
+                  src="/img/tour/tour-1_3.jpg" // Fallback to existing tour image
                   alt="Van driving in mountains" 
                   fill
                   style={{ objectFit: 'cover' }}

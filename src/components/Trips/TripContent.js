@@ -27,7 +27,7 @@ export default function TripContent({ content }) {
       />
       <button
         onClick={() => setShowMore(!showMore)}
-        className="btn btn-primary px-4 py-2 shadow-sm"
+        className="btn btn-primary px-4 py-2 shadow-sm align-self-center align-self-md-start"
       >
         {showMore ? "Read Less" : "Read More"}
       </button>

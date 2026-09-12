@@ -8,18 +8,18 @@ export default function JobCard({ job, isExpanded, onToggle }) {
       
       {/* Header / Summary (Clickable to toggle) */}
       <div 
-        className="job-card-header d-flex align-items-center justify-content-between p-4" 
+        className="job-card-header d-flex flex-column flex-md-row align-items-center justify-content-between p-4 text-center text-md-start gap-3 gap-md-0" 
         onClick={onToggle}
         style={{ cursor: "pointer" }}
       >
         <div className="job-details">
           <h4 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "4px", color: "var(--title-color)" }}>{job.title}</h4>
-          <div className="job-meta d-flex gap-3 text-muted" style={{ fontSize: "13px" }}>
+          <div className="job-meta d-flex justify-content-center justify-content-md-start gap-3 text-muted" style={{ fontSize: "13px" }}>
             <span>{job.department} &bull; {job.type}</span>
           </div>
         </div>
 
-        <div className="job-actions d-flex align-items-center gap-4">
+        <div className="job-actions d-flex justify-content-center justify-content-md-end align-items-center gap-4 w-100" style={{ maxWidth: "fit-content" }}>
           {/* Badge */}
           <span className="badge" style={{ backgroundColor: "#ffea00", color: "#000", padding: "6px 12px", borderRadius: "20px", fontWeight: "600", fontSize: "12px" }}>
             We're Hiring
