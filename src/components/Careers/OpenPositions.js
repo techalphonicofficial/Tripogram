@@ -1,12 +1,7 @@
 "use client";
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { openPositions } from "@/data/careersData";
 import { getCareersJobs } from "@/services/careersApi";
-=======
-import React, { useState } from "react";
-import { openPositions } from "@/data/careersData";
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 import JobCard from "./JobCard";
 import PerksSidebar from "./PerksSidebar";
 import Link from "next/link";
@@ -16,7 +11,6 @@ const DEPARTMENTS = ["All", "Sales", "Operations", "Marketing", "HR", "Others"];
 export default function OpenPositions() {
   const [activeTab, setActiveTab] = useState("All");
   const [expandedJobId, setExpandedJobId] = useState(null);
-<<<<<<< HEAD
   const [jobs, setJobs] = useState(openPositions);
 
   useEffect(() => {
@@ -26,10 +20,6 @@ export default function OpenPositions() {
   }, []);
 
   const filteredJobs = jobs.filter((job) => {
-=======
-
-  const filteredJobs = openPositions.filter((job) => {
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     if (activeTab === "All") return true;
     if (activeTab === "Others") {
       return !["Sales", "Operations", "Marketing", "HR"].includes(job.department);

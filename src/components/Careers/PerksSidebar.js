@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,25 +15,13 @@ export default function PerksSidebar() {
     });
   }, []);
 
-=======
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { perksBenefits } from "@/data/careersData";
-import Link from "next/link";
-
-export default function PerksSidebar() {
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   return (
     <div className="perks-sidebar">
       <span className="perks-eyebrow">Good Things, Great People</span>
       <h3>Perks & Benefits</h3>
       
       <div className="perks-grid">
-<<<<<<< HEAD
         {benefits.map((perk) => (
-=======
-        {perksBenefits.map((perk) => (
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           <div className="perk-item" key={perk.id}>
             <div className="perk-icon">
               <FontAwesomeIcon icon={perk.icon} />
