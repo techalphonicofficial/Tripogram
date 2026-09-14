@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿"use client";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,10 +30,24 @@ export default function JobCard({ job, isExpanded, onToggle }) {
       {/* Header / Summary (Clickable to toggle) */}
       <div
         className="job-card-header d-flex flex-column flex-md-row align-items-center justify-content-between p-4 text-center text-md-start gap-3 gap-md-0"
+=======
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faClock, faUser, faPhone, faEnvelope, faLink, faComment, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
+export default function JobCard({ job, isExpanded, onToggle }) {
+  return (
+    <div className={`job-card-wrapper ${isExpanded ? 'expanded' : ''}`} style={{ marginBottom: "16px", background: "white", borderRadius: "16px", border: "1px solid #f0f0f0", transition: "all 0.3s ease", overflow: "hidden" }}>
+      
+      {/* Header / Summary (Clickable to toggle) */}
+      <div 
+        className="job-card-header d-flex flex-column flex-md-row align-items-center justify-content-between p-4 text-center text-md-start gap-3 gap-md-0" 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
         onClick={onToggle}
         style={{ cursor: "pointer" }}
       >
         <div className="job-details">
+<<<<<<< HEAD
           <h4 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "4px", color: "var(--title-color)" }}>
             {job.title}
           </h4>
@@ -40,13 +55,26 @@ export default function JobCard({ job, isExpanded, onToggle }) {
             <span>
               {job.department} &bull; {job.type}
             </span>
+=======
+          <h4 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "4px", color: "var(--title-color)" }}>{job.title}</h4>
+          <div className="job-meta d-flex justify-content-center justify-content-md-start gap-3 text-muted" style={{ fontSize: "13px" }}>
+            <span>{job.department} &bull; {job.type}</span>
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           </div>
         </div>
 
         <div className="job-actions d-flex justify-content-center justify-content-md-end align-items-center gap-4 w-100" style={{ maxWidth: "fit-content" }}>
+<<<<<<< HEAD
           <span className="badge" style={{ backgroundColor: "#ffea00", color: "#000", padding: "6px 12px", borderRadius: "20px", fontWeight: "600", fontSize: "12px" }}>
             We&apos;re Hiring
           </span>
+=======
+          {/* Badge */}
+          <span className="badge" style={{ backgroundColor: "#ffea00", color: "#000", padding: "6px 12px", borderRadius: "20px", fontWeight: "600", fontSize: "12px" }}>
+            We're Hiring
+          </span>
+          {/* Toggle Arrow */}
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           <FontAwesomeIcon icon={isExpanded ? faChevronUp : faChevronDown} className="text-muted" />
         </div>
       </div>
@@ -70,18 +98,88 @@ export default function JobCard({ job, isExpanded, onToggle }) {
 
               <h5 className="mb-3" style={{ fontSize: "16px", fontWeight: "600" }}>Job Description:</h5>
               <ul className="mb-4" style={{ paddingLeft: "20px", color: "var(--body-color)", fontSize: "14px", lineHeight: "1.8" }}>
+<<<<<<< HEAD
                 {job.description?.map((item, idx) => <li key={idx}>{item}</li>) || <li>Details not available.</li>}
+=======
+                {job.description?.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                )) || <li>Details not available.</li>}
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
               </ul>
 
               <h5 className="mb-3" style={{ fontSize: "16px", fontWeight: "600" }}>Desired Skills:</h5>
               <ul style={{ paddingLeft: "20px", color: "var(--body-color)", fontSize: "14px", lineHeight: "1.8" }}>
+<<<<<<< HEAD
                 {job.skills?.map((item, idx) => <li key={idx}>{item}</li>) || <li>Details not available.</li>}
+=======
+                {job.skills?.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                )) || <li>Details not available.</li>}
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
               </ul>
             </div>
 
             {/* Right Column: Application Form */}
             <div className="col-lg-6">
+<<<<<<< HEAD
               <ApplicationForm job={job} />
+=======
+              <div className="application-form p-4" style={{ background: "#f8f9fa", borderRadius: "16px", border: "1px solid #e9ecef" }}>
+                <h4 className="text-center mb-4" style={{ fontSize: "18px", fontWeight: "600" }}>Make your move, fill out your details now!</h4>
+                <form onSubmit={(e) => { e.preventDefault(); alert("Application submitted!"); }}>
+                  
+                  <div className="mb-3 position-relative form-group">
+                    <span className="position-absolute" style={{ left: "15px", top: "12px", color: "#adb5bd" }}>
+                      <FontAwesomeIcon icon={faUser} />
+                    </span>
+                    <input type="text" className="form-control" placeholder="Full Name*" required style={{ paddingLeft: "40px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }} />
+                  </div>
+
+                  <div className="mb-3 d-flex gap-2">
+                    <select className="form-select" style={{ width: "90px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }}>
+                      <option>+91 (IN)</option>
+                    </select>
+                    <div className="position-relative flex-grow-1 form-group">
+                      <span className="position-absolute" style={{ left: "15px", top: "12px", color: "#adb5bd" }}>
+                        <FontAwesomeIcon icon={faPhone} />
+                      </span>
+                      <input type="tel" className="form-control" placeholder="Mobile Number*" required style={{ paddingLeft: "40px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }} />
+                    </div>
+                  </div>
+
+                  <div className="mb-3 position-relative form-group">
+                    <span className="position-absolute" style={{ left: "15px", top: "12px", color: "#adb5bd" }}>
+                      <FontAwesomeIcon icon={faEnvelope} />
+                    </span>
+                    <input type="email" className="form-control" placeholder="Email Address*" required style={{ paddingLeft: "40px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }} />
+                  </div>
+
+                  <div className="mb-3 position-relative form-group">
+                    <span className="position-absolute" style={{ left: "15px", top: "12px", color: "#adb5bd" }}>
+                      <FontAwesomeIcon icon={faLink} />
+                    </span>
+                    <input type="url" className="form-control" placeholder="Enter Linkedin URL*" required style={{ paddingLeft: "40px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }} />
+                  </div>
+
+                  <div className="mb-3 position-relative form-group">
+                    <span className="position-absolute" style={{ left: "15px", top: "12px", color: "#adb5bd" }}>
+                      <FontAwesomeIcon icon={faComment} />
+                    </span>
+                    <textarea className="form-control" placeholder="Message" rows="3" style={{ paddingLeft: "40px", borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff" }}></textarea>
+                  </div>
+
+                  <div className="mb-4">
+                    <input type="file" className="form-control" style={{ borderRadius: "8px", border: "1px solid #dee2e6", backgroundColor: "#fff", padding: "8px 15px", fontSize: "14px" }} />
+                  </div>
+
+                  <div className="text-center">
+                    <button type="submit" className="th-btn" style={{ padding: "12px 30px", width: "100%", borderRadius: "30px", fontSize: "16px" }}>
+                      Apply Now
+                    </button>
+                  </div>
+                </form>
+              </div>
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
             </div>
           </div>
         </div>
@@ -89,6 +187,7 @@ export default function JobCard({ job, isExpanded, onToggle }) {
     </div>
   );
 }
+<<<<<<< HEAD
 
 function ApplicationForm({ job }) {
   const [form, setForm] = React.useState({
@@ -234,3 +333,5 @@ function ApplicationForm({ job }) {
     </div>
   );
 }
+=======
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31

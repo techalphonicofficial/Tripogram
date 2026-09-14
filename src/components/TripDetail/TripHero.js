@@ -7,7 +7,10 @@ import Image from "next/image";
 // import "./TripHero.css"; // custom styles
 
 export default function TripHero({ title, duration, starting_price, age_group, pickup, drop, banner }) {
+<<<<<<< HEAD
   const heroImage = banner || "/img/tour/tour-1_1.jpg";
+=======
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 
   return (
     <>
@@ -16,7 +19,11 @@ export default function TripHero({ title, duration, starting_price, age_group, p
         {/* Background Image */}
         <Image
           className="img-fluid w-100 trip-hero-img" width={1900} height={900}
+<<<<<<< HEAD
           src={heroImage}
+=======
+          src={banner}
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           alt={title}
         />
 

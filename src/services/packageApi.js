@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { api } from "./config";
 
+<<<<<<< HEAD
 export async function getMostPopularContent() {
   try {
     const res = await api.get("/packages/most-popular-content");
@@ -17,16 +18,29 @@ export async function trendingPackage(season) {
       ? `/packages/trending?season=${encodeURIComponent(season.toLowerCase())}`
       : "/packages/trending";
     const res = await api.get(url);
+=======
+export async function trendingPackage() {
+  try {
+    const res = await api.get("/packages/trending");
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     if (Array.isArray(res.data) && res.data.length > 0) {
       return res.data;
     }
     const allRes = await api.get("/packages");
+<<<<<<< HEAD
     return Array.isArray(allRes.data) ? allRes.data : (allRes.data?.data || []);
+=======
+    return Array.isArray(allRes.data) ? allRes.data : [];
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   } catch (error) {
     console.log("Failed to fetch trending packages:", error.response?.data?.message || error.message);
     try {
       const allRes = await api.get("/packages");
+<<<<<<< HEAD
       return Array.isArray(allRes.data) ? allRes.data : (allRes.data?.data || []);
+=======
+      return Array.isArray(allRes.data) ? allRes.data : [];
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     } catch (e) {
       return [];
     }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ================================
    Hero Section Styles
 ================================ */
@@ -383,6 +384,393 @@
   }
 
   .statsas h3 {
+=======
+/* ================================
+   Hero Section Styles
+================================ */
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Background Image/Video/Swiper */
+.hero-container video,
+.hero-container img,
+.hero-container .swiper-slide>div {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Dark overlay for readability */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* Content wrapper */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 15px;
+  color: #fff;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Top subtitle */
+.hero-content p {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* Main heading */
+.hero-content h1 {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 15px;
+}
+
+.hero-content .text-warning {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 35px;
+  color: #fbbf24;
+  /* Tailwind yellow-400 */
+}
+
+/* Search bar container */
+.hero-search {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Search input */
+.hero-search input {
+  width: 100%;
+  border-radius: 50px;
+  padding: 16px 140px 16px 28px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+}
+
+/* Search button */
+.hero-search button {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-size: 16px;
+  background: #0598cc;
+  /* primary color */
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.hero-search button:hover {
+  background: #0598cc;
+  /* primary color */
+}
+
+/* Dropdown results */
+.hero-search ul {
+  background: #fff;
+  color: #333;
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 6px 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+  text-align: left;
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+}
+
+.tripogram-hero {
+  padding-top: 0;
+  padding-bottom: 40px;
+}
+
+.main_ct_box {
+  width: 100%;
+  margin: auto;
+}
+
+.main_ct_contentin {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.main_ct_box .sub-title {
+  color: #fbbf24;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.main_ct_box .sec-title {
+  color: #ffffff;
+  font-size: 52px;
+  line-height: 1.2;
+}
+
+.typing-text-wrapper {
+  /* FIXED height locks the container — prevents layout shift when typing text wraps */
+  height: 150px; /* Desktop: fits typing text without clipping */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.tripogram-hero-search {
+  margin-top: 24px;
+}
+
+.statsas h3 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.statsas p {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.hero-search ul li {
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.hero-search ul li:hover {
+  background: #f3f4f6;
+  /* gray-100 */
+}
+
+/* Stats Row */
+.hero-stats {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.hero-stats .stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  min-width: 160px;
+}
+
+/* Circle icons */
+.hero-stats .stat-box i {
+  font-size: 28px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.hero-stats h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.hero-stats p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 992px) {
+  .main_ct_box .sec-title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main_ct_box .sec-title {
+    font-size: 32px;
+  }
+
+  .statsas p {
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  .statsas h3 {
+    font-size: 16px;
+  }
+}
+
+/* Review Icons */
+.review-icon-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.review-icon-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+.main_ct_box .sub-title {
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 6px 20px;
+  display: inline-block;
+  margin-bottom: 24px !important;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.tripogram-hero {
+  min-height: 600px; /* Fixed value prevents layout jump when mobile keyboard opens */
+}
+
+@media (min-width: 992px) {
+  .tripogram-hero {
+    min-height: calc(100vh - 120px) !important;
+  }
+}
+
+.main_ct_box .sec-title {
+  font-size: 48px !important;
+}
+
+.hero-typing-text {
+  font-size: 15px !important;
+}
+
+@media (max-width: 768px) {
+  .hero-typing-text {
+    font-size: 18px !important;
+  }
+
+  .typing-text-wrapper {
+    height: auto; /* Let it grow naturally on mobile */
+    min-height: 60px;
+  }
+
+  .main_ct_box .sec-title {
+    font-size: 28px !important;
+  }
+
+  .main_ct_box {
+    margin-top: 0 !important;
+    padding-top: 80px !important; /* Fixed px instead of vh to prevent keyboard layout shift */
+  }
+
+  .tripogram-hero-search {
+    margin-top: 12px;
+  }
+
+  .statsas {
+    margin-top: 30px;
+    margin-bottom: 8px !important;
+  }
+}
+
+.review-icon-wrapper {
+  width: 55px !important;
+  height: 55px !important;
+}
+
+.review-icon-img {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.statsas h3 {
+  font-size: 20px !important;
+  margin-bottom: 2px !important;
+}
+
+.statsas p {
+  font-size: 13px !important;
+  font-weight: normal !important;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .review-icon-wrapper {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .review-icon-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .statsas h3 {
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 }
 
 .hero-search ul li:hover {

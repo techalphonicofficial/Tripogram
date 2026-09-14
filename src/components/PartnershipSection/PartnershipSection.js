@@ -1,4 +1,5 @@
 "use client";
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import "./PartnershipSection.css";
@@ -50,41 +51,113 @@ export default function PartnershipSection() {
     fetchData();
   }, []);
 
+=======
+import React from "react";
+import { motion } from "framer-motion";
+import "./PartnershipSection.css";
+
+const partners = [
+  {
+    id: 1,
+    logo: "/img/brand/startup-india.svg",
+    name: "Startup India",
+    label: "DPIIT Recognized Startup",
+  },
+  {
+    id: 2,
+    logo: "/img/brand/msme.svg",
+    name: "MSME",
+    label: "Government Registration",
+  },
+  {
+    id: 3,
+    logo: "/img/brand/makemytrip.svg",
+    name: "MakeMyTrip",
+    label: "Preferred Travel Partner",
+  },
+  {
+    id: 4,
+    logo: "/img/brand/indigo.svg",
+    name: "IndiGo",
+    label: "Preferred Airline Partner",
+  },
+  {
+    id: 5,
+    logo: "/img/brand/gst.svg",
+    name: "Goods & Services Tax",
+    label: "GST Registered Company",
+  },
+  {
+    id: 6,
+    logo: "/img/brand/iato.svg",
+    name: "IATO",
+    label: "Indian Association of Tour Operators",
+  },
+];
+
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+export default function PartnershipSection() {
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   return (
     <section className="partnership-area position-relative overflow-hidden">
       <div className="container">
         <div className="title-area text-center">
+<<<<<<< HEAD
           <motion.span
+=======
+          <motion.span 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="sub-title style1 text-uppercase"
           >
+<<<<<<< HEAD
             {section.sub_title}
           </motion.span>
           <motion.h2
+=======
+            TRUSTED BY & RECOGNIZED BY
+          </motion.span>
+          <motion.h2 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="sec-title mb-3"
           >
+<<<<<<< HEAD
             {section.title}
           </motion.h2>
           <motion.p
+=======
+            Partnership & Recognition
+          </motion.h2>
+          <motion.p 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="sec-text"
           >
+<<<<<<< HEAD
             {section.description}
+=======
+            Proud to be associated with trusted travel, government and industry partners.
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           </motion.p>
         </div>
 
         <div className="marquee-container">
           <div className="marquee-track">
             {/* First Set */}
+<<<<<<< HEAD
             {partners.map((partner) => (
               <div className="marquee-item" key={`set1-${partner.id}`}>
                 <div className="partner-card h-100">
@@ -94,6 +167,17 @@ export default function PartnershipSection() {
                       alt={partner.name}
                       className="partner-logo"
                       onError={(e) => { e.target.src = "/img/brand/brand_1_1.svg"; }}
+=======
+            {partners.map((partner, index) => (
+              <div className="marquee-item" key={`set1-${partner.id}`}>
+                <div className="partner-card h-100">
+                  <div className="partner-logo-box">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name} 
+                      className="partner-logo" 
+                      onError={(e) => { e.target.src = '/img/brand/brand_1_1.svg'; }} 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
                     />
                   </div>
                   <div className="partner-info">
@@ -103,6 +187,7 @@ export default function PartnershipSection() {
                 </div>
               </div>
             ))}
+<<<<<<< HEAD
 
             {/* Second Set (Duplicate for seamless loop) */}
             {partners.map((partner) => (
@@ -114,6 +199,19 @@ export default function PartnershipSection() {
                       alt={partner.name}
                       className="partner-logo"
                       onError={(e) => { e.target.src = "/img/brand/brand_1_1.svg"; }}
+=======
+            
+            {/* Second Set (Duplicate for seamless loop) */}
+            {partners.map((partner, index) => (
+              <div className="marquee-item" key={`set2-${partner.id}`}>
+                <div className="partner-card h-100">
+                  <div className="partner-logo-box">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name} 
+                      className="partner-logo" 
+                      onError={(e) => { e.target.src = '/img/brand/brand_1_1.svg'; }} 
+>>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
                     />
                   </div>
                   <div className="partner-info">
