@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# 301 Redirection non-www to www
+RewriteCond %{HTTP_HOST} ^tripogram\.com$ [NC]
+RewriteRule ^(.*)$ https://www.tripogram.com/$1 [R=301,L,NE]
+
+# 301 Redirection for Old Enquiry page
+RewriteRule ^enquiry\.php$ /contact [R=301,L]
+
+# Proxy to Next.js
+RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]

@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build / release artifacts
+release.zip
+build.tar.gz
+release/
+
+# Logs
+*.log
+*.err.log
+
+# Local backups / temporary files
+.codex-backups/
+.next/
+out/

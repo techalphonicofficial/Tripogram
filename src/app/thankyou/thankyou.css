@@ -1,0 +1,54 @@
+.thankyou {
+  height: 300px;
+  padding: 180px 0 140px;
+  > div {
+    height: content;
+  }
+  .screen {
+    opacity: 0.25;
+    animation: slide 4s linear infinite;
+  }
+  .star {
+    animation: bounce 4s linear infinite;
+  }
+  .shaddow {
+    transform-origin: center center;
+    animation: bounceShaddow 4s linear infinite;
+  }
+}
+@keyframes slide {
+  from {
+    transform: translatex(-10%);
+  }
+  to {
+    transform: translatex(100%);
+  }
+}
+@keyframes bounce {
+  0%,
+  40%,
+  50%,
+  60%,
+  100% {
+    transform: translatey(0%);
+  }
+  45%,
+  55% {
+    transform: translatey(-10%);
+  }
+}
+@keyframes bounceShaddow {
+  0%,
+  40%,
+  50%,
+  60%,
+  100% {
+    opacity: 100%;
+    transform: scale(1, 1);
+  }
+  45%,
+  55% {
+    opacity: 30%;
+    transform: scale(0.8, 0.7) translatey(10%);
+  }
+}
