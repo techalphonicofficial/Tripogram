@@ -1347,10 +1347,7 @@ import {
   getBookingData as getStoredBookingData,
   setBookingData,
 } from "@/functions/bookingStorage";
-<<<<<<< HEAD
 import { decrypt } from "@/functions/crypt";
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 import RequestCallback from "../HelpingCompnents/RequestCallback";
 
 export default function Pricing({
@@ -1385,7 +1382,6 @@ export default function Pricing({
   });
 
   const getBookingData = () => {
-<<<<<<< HEAD
     const bookingData = getStoredBookingData(slug);
 
     if (typeof window === "undefined") return bookingData;
@@ -1399,9 +1395,6 @@ export default function Pricing({
     } catch {
       return bookingData;
     }
-=======
-    return getStoredBookingData(slug);
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   };
 
   const formatPackageName = (name) => {
@@ -1573,25 +1566,16 @@ export default function Pricing({
 
         setBookingData(slug, bookingPayloadBeforePayment);
 
-<<<<<<< HEAD
         const bookingStartDate = formatApiDate(
           freshBookingData.start_date || selectedDate?.start_date || selectedDate?.departure_date
         );
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
         const createBookingPayload = {
           full_name: freshBookingData.full_name || freshBookingData.ful_name || "",
           email: freshBookingData.email || "",
           phone: freshBookingData.phone || "",
-<<<<<<< HEAD
           start_date: bookingStartDate,
           end_date: formatApiDate(freshBookingData.end_date),
           package_id: freshBookingData.package_id || packageId,
-=======
-          start_date: formatApiDate(freshBookingData.start_date),
-          end_date: formatApiDate(freshBookingData.end_date),
-          package_id: freshBookingData.package_id,
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
           payment_type: paybleType,
           final_amount: Number(totals.grandTotal.toFixed(0)),
           active_cost: selectedCosts,
@@ -1600,7 +1584,6 @@ export default function Pricing({
           special_note: specialNote,
         };
 
-<<<<<<< HEAD
         const missingBookingFields = [
           ["full_name", createBookingPayload.full_name],
           ["email", createBookingPayload.email],
@@ -1618,8 +1601,6 @@ export default function Pricing({
           alert(`Please complete: ${missingBookingFields.join(", ")}`);
           return;
         }
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 
         // console.log("Create booking payload:", createBookingPayload);
 
@@ -1641,17 +1622,12 @@ export default function Pricing({
       } catch (error) {
         setIsLoading(false);
         if (error.response) {
-<<<<<<< HEAD
           const responseData = error.response.data || {};
           const fieldErrors = responseData.errors
             ? Object.values(responseData.errors).flat().join(" ")
             : "";
           console.error("Create booking server error:", responseData);
           alert(fieldErrors || responseData.message || "Booking could not be created.");
-=======
-          console.error("Create booking server error:", error.response.data);
-          alert(error.response.data.message || "Booking could not be created.");
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
         } else if (error.request) {
           console.error("No response from create booking API:", error.request);
           alert("No response from server, please try again.");
@@ -1671,7 +1647,6 @@ export default function Pricing({
   }, []);
 
   const openRazorpay = ({ createdBooking, amountToPay }) => {
-<<<<<<< HEAD
     if (!razorpay_key?.razorpay_key_id) {
       setIsLoading(false);
       alert("Payment gateway is not configured. Please try again later.");
@@ -1690,19 +1665,14 @@ export default function Pricing({
       return;
     }
 
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     const weblogo = document.querySelector(".header-top")?.dataset?.weblogo || '';
     const freshBookingData = getBookingData();
     const clearBookingDraft = () => {
       clearBookingData(slug);
     };
-<<<<<<< HEAD
     const razorpayOrderId = createdBooking?.order_id
       || createdBooking?.razorpay_order_id
       || createdBooking?.payment_order_id;
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 
     const options = {
       key: razorpay_key.razorpay_key_id,
@@ -1714,14 +1684,11 @@ export default function Pricing({
       currency: "INR",
       name: "Tripogram",
       image: weblogo,
-<<<<<<< HEAD
       ...(razorpayOrderId ? { order_id: razorpayOrderId } : {}),
       retry: {
         enabled: true,
         max_count: 3,
       },
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
       handler: async (response) => {
         let payload = {};
         let updatePaymentAttempted = false;
@@ -1776,15 +1743,7 @@ export default function Pricing({
       modal: {
         ondismiss: () => {
           // This function is called when the user closes the Razorpay modal
-<<<<<<< HEAD
           setIsLoading(false); // Remove loading state on cancel
-=======
-          // console.log("Payment modal closed by user");
-          setIsLoading(false); // Remove loading state on cancel
-
-          // Optional: Show a message to user
-          alert("Payment cancelled. You can try again when you're ready.");
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
         },
       },
       prefill: {
@@ -1801,7 +1760,6 @@ export default function Pricing({
 
     // Handle case where Razorpay fails to open
     rzp.on('payment.failed', function (response) {
-<<<<<<< HEAD
       const paymentError = response?.error || {};
       const isCancelled = Object.keys(paymentError).length === 0
         || paymentError.reason === "payment_cancelled"
@@ -1816,11 +1774,6 @@ export default function Pricing({
       alert(isCancelled
         ? "Payment was cancelled. You can try again."
         : `Payment failed: ${paymentError.description || 'Please try again'}`);
-=======
-      console.error('Payment failed:', response.error);
-      setIsLoading(false); // Remove loading state on payment failure
-      alert('Payment failed: ' + (response.error.description || 'Please try again'));
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     });
 
     rzp.open();

@@ -11,11 +11,7 @@ import "swiper/css/pagination";
 
 import PopularTourSeasonalCard from "./PopularTourSeasonalCard";
 import { getPagewithSection } from "@/services/pageSection";
-<<<<<<< HEAD
 import { getMostPopularContent, trendingPackage, allPackage } from "@/services/packageApi";
-=======
-import { trendingPackage, allPackage } from "@/services/packageApi";
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 import RequestCallback from "../HelpingCompnents/RequestCallback";
 import "./PopularTour.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,7 +40,6 @@ function getCurrentSeason() {
 
 
 function getPackageSeasons(pkg) {
-<<<<<<< HEAD
   const explicitSeasons = pkg.seasons || pkg.season;
   if (Array.isArray(explicitSeasons)) {
     return explicitSeasons.map((season) => String(season).toLowerCase());
@@ -55,15 +50,10 @@ function getPackageSeasons(pkg) {
 
   if (!Array.isArray(pkg.package_dates) || pkg.package_dates.length === 0) {
     return [];
-=======
-  if (!pkg.package_dates || !Array.isArray(pkg.package_dates) || pkg.package_dates.length === 0) {
-    return SEASONS.map(s => s.id);
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   }
 
   const packageSeasons = new Set();
   pkg.package_dates.forEach(d => {
-<<<<<<< HEAD
     const dateValue = d.start_date || d.departure_date;
     if (dateValue) {
       const month = new Date(dateValue).getMonth();
@@ -72,19 +62,6 @@ function getPackageSeasons(pkg) {
     }
   });
 
-=======
-    if (d.start_date) {
-      const month = new Date(d.start_date).getMonth();
-      const season = SEASONS.find(s => s.monthsArray.includes(month));
-      if (season) packageSeasons.add(season.id);
-    }
-  });
-
-  if (packageSeasons.size === 0) {
-    return SEASONS.map(s => s.id);
-  }
-
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   return Array.from(packageSeasons);
 }
 
@@ -92,11 +69,7 @@ export default function PopularTour() {
   const [mainpage, setMainpage] = useState(fallbackContent);
   const [trendingPkg, setTrendingPkg] = useState([]);
   const [open, setOpen] = useState(false);
-<<<<<<< HEAD
   const [activeSeason, setActiveSeason] = useState(getCurrentSeason);
-=======
-  const [activeSeason, setActiveSeason] = useState("Spring");
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   const [isLoading, setIsLoading] = useState(true);
   const [swiperInstance, setSwiperInstance] = useState(null);
   const sectionRef = useRef(null);
@@ -106,11 +79,8 @@ export default function PopularTour() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-<<<<<<< HEAD
         if (!swiperInstance.autoplay) return;
 
-=======
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
         if (entry.isIntersecting) {
           swiperInstance.autoplay.start();
         } else {
@@ -128,7 +98,6 @@ export default function PopularTour() {
   }, [swiperInstance]);
 
   useEffect(() => {
-<<<<<<< HEAD
     let cancelled = false;
     setIsLoading(true);
 
@@ -150,20 +119,6 @@ export default function PopularTour() {
         setMainpage(pageResult.value);
       } else {
         console.log("Failed to fetch popular tour content:", contentResult.reason || pageResult.reason);
-=======
-    setActiveSeason(getCurrentSeason());
-  }, []);
-
-  useEffect(() => {
-    Promise.allSettled([
-      getPagewithSection(1, "popular_tour"),
-      trendingPackage(),
-    ]).then(async ([pageResult, packageResult]) => {
-      if (pageResult.status === "fulfilled" && pageResult.value?.section) {
-        setMainpage(pageResult.value);
-      } else {
-        console.log("Failed to fetch popular tour content:", pageResult.reason);
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
       }
 
       let fetchedPackages = [];
@@ -182,7 +137,6 @@ export default function PopularTour() {
         }
       }
 
-<<<<<<< HEAD
       if (!cancelled) {
         setTrendingPkg(fetchedPackages);
         setIsLoading(false);
@@ -193,24 +147,12 @@ export default function PopularTour() {
       cancelled = true;
     };
   }, [activeSeason]);
-=======
-      setTrendingPkg(fetchedPackages);
-      setIsLoading(false);
-    });
-  }, []);
-
-
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
 
   // Filter packages based on the active season
   const filteredPackages = useMemo(() => {
     return trendingPkg.filter(pkg => {
       const seasons = getPackageSeasons(pkg);
-<<<<<<< HEAD
       return seasons.includes(activeSeason.toLowerCase());
-=======
-      return seasons.includes(activeSeason);
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
     });
   }, [trendingPkg, activeSeason]);
 
@@ -371,11 +313,7 @@ export default function PopularTour() {
                     <div className="d-flex align-items-center justify-content-between mt-1">
                       <div className="seasonal-swiper-pagination position-static w-auto"></div>
                       <div className="d-flex align-items-center gap-3">
-<<<<<<< HEAD
                         <Link href="/trips/upcoming-trips/all" className="fw-bold text-primary text-decoration-none border-bottom border-primary pb-1 view-all-link">
-=======
-                        <Link href="/packages" className="fw-bold text-primary text-decoration-none border-bottom border-primary pb-1 view-all-link">
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
                           View all tours <FontAwesomeIcon icon={faArrowRight} className="ms-1" />
                         </Link>
                         <div className="swiper-nav-buttons d-flex gap-2 ms-3">
@@ -399,11 +337,7 @@ export default function PopularTour() {
                     <p className="text-muted mb-4 mx-auto" style={{ maxWidth: '400px' }}>
                       We&apos;re currently preparing our {activeSeasonData?.name} season packages. Check back soon or explore our other available tours!
                     </p>
-<<<<<<< HEAD
                     <Link href="/trips/upcoming-trips/all" className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm">
-=======
-                    <Link href="/packages" className="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm">
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
                       Explore All Tours <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
                     </Link>
                   </div>

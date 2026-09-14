@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,32 +20,16 @@ export default function WhyJoinUs() {
     });
   }, []);
 
-=======
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { whyJoinUs } from "@/data/careersData";
-
-export default function WhyJoinUs() {
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
   return (
     <section className="why-join-section position-relative bg-light-blue" style={{ backgroundColor: "#f4f8fb" }}>
       <div className="container th-container">
         <div className="title-area text-center mb-5">
-<<<<<<< HEAD
           <span className="careers-eyebrow">{section?.small_label || "Why You'll Love It Here"}</span>
           <h2 className="sec-title">{section?.heading || "More Than a Workplace, It's a Community"}</h2>
         </div>
         
         <div className="row g-4 justify-content-center">
           {cards.map((feature) => (
-=======
-          <span className="careers-eyebrow">Why You'll Love It Here</span>
-          <h2 className="sec-title">More Than a Workplace, It's a <span className="text-theme">Community</span></h2>
-        </div>
-        
-        <div className="row g-4 justify-content-center">
-          {whyJoinUs.map((feature) => (
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
             <div className="col-12 col-md-6 col-lg-3" key={feature.id}>
               <div className="why-join-card">
                 <div className="why-icon-wrapper">

@@ -190,8 +190,4 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-50% - 8px)); }
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 294c810c152a6484dbf379600ab573546fe3fd31
