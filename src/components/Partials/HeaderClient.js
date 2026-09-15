@@ -128,24 +128,38 @@ export default function HeaderClient({
                     <ul className="grid-nav-list m-0 p-0">
                       {menuTrips.map((item, i) => (
                         <li key={i}>
-                          <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                          <Link href={`/trips/${item.slug}`} style={{ whiteSpace: 'nowrap' }}>{item.heading}</Link>
                         </li>
                       ))}
 
-                      <li>
-                        <Link href="/trips/upcoming-trips/all">Upcoming Trips</Link>
-                      </li>
-
-                      <li className="menu-item-has-children">
-                        <span>Domestic Trips</span>
-                        <ul className="sub-menu">
-                          {tripsWithcount.map((item) => (
-                            <li key={item.id}>
-                              <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                      {(() => {
+                        const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend trips from delhi"));
+                        const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend trips from delhi"));
+                        return (
+                          <>
+                            <li>
+                              <Link href="/trips/upcoming-trips/all" style={{ whiteSpace: 'nowrap' }}>Upcoming Trips</Link>
                             </li>
-                          ))}
-                        </ul>
-                      </li>
+
+                            <li className="menu-item-has-children">
+                              <span style={{ whiteSpace: 'nowrap' }}>Domestic Trips</span>
+                              <ul className="sub-menu">
+                                {domesticTripsFiltered.map((item) => (
+                                  <li key={item.id}>
+                                    <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+
+                            {weekendTripItem && (
+                              <li>
+                                <Link href={`/trips/${weekendTripItem.slug}`} style={{ whiteSpace: 'nowrap' }}>{weekendTripItem.heading}</Link>
+                              </li>
+                            )}
+                          </>
+                        );
+                      })()}
 
                       <li>
                         <Link href="/blog">Blogs</Link>
@@ -190,7 +204,7 @@ export default function HeaderClient({
         setMenuOpen={setMenuOpen}
       />
 
-      <Popup initialPopup={popup} />
+      {/* <Popup initialPopup={popup} /> Disabled in favor of LeadPopup */}
     </>
   );
 }

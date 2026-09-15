@@ -3,11 +3,25 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPiggyBank, faTags, faHourglassHalf, faSyncAlt, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faPiggyBank, faTags, faHourglassHalf, faSyncAlt, faChevronDown, faPlane } from "@fortawesome/free-solid-svg-icons";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import { getHomeDestination } from "@/services/destinationApi";
 import { trendingPackage } from "@/services/packageApi";
 import PopularTourSeasonalCard from "@/components/PopularTour/PopularTourSeasonalCard";
 import "./Offers.css";
+
+const fallbackDestImages = [
+  "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=400", // India/Taj Mahal style
+  "https://images.unsplash.com/photo-1516815231560-8f41ec531527?auto=format&fit=crop&q=80&w=400", // Beach/Maldives
+  "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400", // Mountains
+  "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=80&w=400", // Paris/City
+  "https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&q=80&w=400", // London/Urban
+  "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=400", // Desert/Camel
+  "https://images.unsplash.com/photo-1506461883276-594c8cb25bc3?auto=format&fit=crop&q=80&w=400", // Forest/Nature
+  "https://images.unsplash.com/photo-1496372412473-e8a48b5ceae4?auto=format&fit=crop&q=80&w=400", // Tropical/Bali
+];
 
 const faqData = [
   {
@@ -65,14 +79,32 @@ export default function OffersPage() {
     <main className="offers-page-wrapper">
       {/* 1. Hero Section */}
       <section className="offers-hero">
-        <div className="container">
-          <h1>Exclusive Travel Offers</h1>
-          <p>Grab the best deals, limited-time offers and special discounts on your dream destinations. Travel more, spend less!</p>
+        <div className="offers-hero-bg"></div>
+        <div className="container position-relative" style={{ zIndex: 2 }}>
+          <div className="row align-items-center">
+            <div className="col-lg-7">
+              <nav className="offers-breadcrumb">
+                <Link href="/" className="offers-bread-link">🏠 Home</Link>
+                <span className="offers-bread-sep">&gt;</span>
+                <span className="offers-bread-current">Offers & Sale</span>
+              </nav>
+              <h1 className="offers-hero-title">Exclusive Travel <span>Offers</span></h1>
+              <p className="offers-hero-desc">Grab the best deals, limited-time offers and special discounts on your dream destinations. Travel more, spend less!</p>
+            </div>
+            <div className="col-lg-5 d-none d-lg-flex justify-content-end position-relative">
+              <div className="offers-hero-tagline">
+                <span className="offers-tagline-line1">
+                  More Trips <FontAwesomeIcon icon={faPlane} className="offers-plane-icon" />
+                </span>
+                <span className="offers-tagline-line2">More Happiness</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* 2. Benefits Section */}
-      <section className="container mb-5">
+      <section className="container mb-5 mt-4 mt-lg-5">
         <div className="row g-4 justify-content-center">
           <div className="col-12 col-sm-6 col-md-3">
             <div className="benefit-card">
@@ -114,20 +146,36 @@ export default function OffersPage() {
         <section className="container mb-5 pb-4 border-bottom">
           <h2 className="offers-section-title">Popular Travel Spots</h2>
           <p className="offers-section-subtitle">Handpicked destinations for your next unforgettable journey.</p>
-          <div className="offer-destination-scroll">
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            spaceBetween={20}
+            slidesPerView={5}
+            breakpoints={{
+              0: { slidesPerView: 2, spaceBetween: 12 },
+              576: { slidesPerView: 3, spaceBetween: 16 },
+              768: { slidesPerView: 3, spaceBetween: 20 },
+              1024: { slidesPerView: 4, spaceBetween: 24 },
+              1400: { slidesPerView: 4, spaceBetween: 30 },
+            }}
+            className="offer-destination-swiper"
+          >
             {destinations.map((dest, i) => (
-              <Link href={`/destination/${dest.slug}`} className="offer-dest-card" key={i}>
-                <div className="offer-dest-img-wrap">
-                  <Image 
-                    src={dest.image_url || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&q=80"} 
-                    alt={dest.name || "Destination"} 
-                    width={150} height={150} 
-                  />
-                </div>
-                <span className="offer-dest-title">{dest.name}</span>
-              </Link>
+              <SwiperSlide key={i}>
+                <Link href={`/destination/${dest.slug}`} className="offer-dest-card">
+                  <div className="offer-dest-img-wrap">
+                    <Image 
+                      src={dest.image_url || dest.image || fallbackDestImages[i % fallbackDestImages.length]} 
+                      alt={dest.name || "Destination"} 
+                      width={180} height={180} 
+                    />
+                  </div>
+                  <span className="offer-dest-title">{dest.name}</span>
+                </Link>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </section>
       )}
 

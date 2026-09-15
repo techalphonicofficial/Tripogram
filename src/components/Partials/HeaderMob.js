@@ -75,28 +75,44 @@ export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithco
             </li>
 
             {/* Dropdown */}
-            <li
-              className={`menu-item-has-children th-item-has-children ${
-                activeMenu ? "th-active" : ""
-              }`}
-            >
-              <a onClick={handleMenuClick} style={{ cursor: "pointer" }}>
-                Domestic Trips
-                <span className="th-mean-expand"></span>
-              </a>
-              <ul
-                className="sub-menu th-submenu ms-3"
-                style={{ display: activeMenu ? "block" : "none" }}
-              >
-                {tripsWithcount.map((item) => (
-                  <li key={item.slug}>
-                    <Link href={`/trips/${item.slug}`} onClick={handleLinkClick}>
-                      {item.heading}
-                    </Link>
+            {(() => {
+              const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend trips from delhi"));
+              const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend trips from delhi"));
+              return (
+                <>
+                  <li
+                    className={`menu-item-has-children th-item-has-children ${
+                      activeMenu ? "th-active" : ""
+                    }`}
+                  >
+                    <a onClick={handleMenuClick} style={{ cursor: "pointer" }}>
+                      Domestic Trips
+                      <span className="th-mean-expand"></span>
+                    </a>
+                    <ul
+                      className="sub-menu th-submenu ms-3"
+                      style={{ display: activeMenu ? "block" : "none" }}
+                    >
+                      {domesticTripsFiltered.map((item) => (
+                        <li key={item.slug}>
+                          <Link href={`/trips/${item.slug}`} onClick={handleLinkClick}>
+                            {item.heading}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
-                ))}
-              </ul>
-            </li>
+                  
+                  {weekendTripItem && (
+                    <li>
+                      <Link href={`/trips/${weekendTripItem.slug}`} onClick={handleLinkClick}>
+                        {weekendTripItem.heading}
+                      </Link>
+                    </li>
+                  )}
+                </>
+              );
+            })()}
 
             <li>
               <Link href="/blog" onClick={handleLinkClick}>
