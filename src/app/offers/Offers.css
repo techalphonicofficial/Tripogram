@@ -1,0 +1,193 @@
+.offers-hero {
+  background: linear-gradient(135deg, rgba(5, 152, 204, 0.85), rgba(4, 125, 168, 0.8)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: white;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.offers-hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.offers-hero p {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.benefit-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.benefit-icon-wrap {
+  width: 60px;
+  height: 60px;
+  background: rgba(5, 152, 204, 0.1);
+  color: #0598cc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.benefit-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.offers-section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.offers-section-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+/* FAQ Custom Accordion */
+.offers-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.offers-faq-item {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.offers-faq-item:first-child {
+  border-top: 1px solid #e5e7eb;
+}
+
+.offers-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  transition: color 0.2s;
+}
+
+.offers-faq-question:hover {
+  color: #0598cc;
+}
+
+.offers-faq-question span {
+  flex: 1;
+}
+
+.offers-faq-arrow {
+  font-size: 14px;
+  color: #6b7280;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.offers-faq-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.offers-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.offers-faq-answer.expanded {
+  max-height: 500px;
+}
+
+.offers-faq-answer-inner {
+  padding: 0 8px 24px 8px;
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Rounded Destinations */
+.offer-destination-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 20px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.offer-destination-scroll::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+.offer-dest-card {
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.offer-dest-card:hover {
+  transform: translateY(-4px);
+}
+
+.offer-dest-img-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.offer-dest-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.offer-dest-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+}

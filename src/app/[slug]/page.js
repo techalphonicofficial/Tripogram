@@ -19,6 +19,7 @@ import RelatedYoutube from "@/components/TripDetail/RelatedYoutube";
 
 import TripHero from "@/components/TripDetail/TripHero";
 import TripInfo from "@/components/TripDetail/TripInfo";
+import HorizontalBookingBar from "@/components/TripDetail/HorizontalBookingBar";
 import { allPackage, packageRedirection, singlePackage, trendingPackage } from "@/services/packageApi";
 import { singleTrips } from "@/services/tripsApi";
 import { notFound } from "next/navigation";
@@ -155,7 +156,7 @@ export default async function Tripdetail({ params }) {
       />
       <div className="container th-container">
         <div className="row orderchage-formob">
-          <div className="col-xxl-8 col-lg-8 position-relative z-3">
+          <div className="col-xxl-12 col-lg-12 position-relative z-3">
             <TripInfo
               pickup={single_package.pickup}
               drop={single_package.drop}
@@ -163,6 +164,36 @@ export default async function Tripdetail({ params }) {
               trip={single_package.trips?.[0]?.heading || ''}
               completedata={single_package}
             />
+
+            <div className="mt-4">
+              <HorizontalBookingBar
+                id={single_package.id}
+                slug={single_package.slug}
+                starting_price={single_package.starting_price}
+                startingFrom={single_package?.starting_from}
+                activeCosts={single_package?.active_costs || []}
+                bookingAmont={single_package?.booking_amount}
+                showBookNoButton={single_package?.show_book_no_button}
+                bookingButton={
+                  single_package?.package_dates?.length > 0 &&
+                  single_package?.active_costs?.length > 0
+                }
+                package_dates={single_package.package_dates || []}
+                pickup={single_package.pickup}
+                drop={single_package.drop}
+              />
+              
+              {/* Moved DownloadPdf / Send Inquiry directly below HorizontalBookingBar */}
+              <div className="d-flex justify-content-end w-100 mt-2">
+                <div style={{ maxWidth: '400px', width: '100%' }}>
+                  <DownloadPdf
+                    id={single_package.id}
+                    itinerary_pdf={single_package.itinerary_pdf}
+                    completedata={single_package}
+                  />
+                </div>
+              </div>
+            </div>
 
             {/* <TripBanner /> */}
             <OverviewCont hasGallery={single_package.gallery?.length > 0} />
@@ -219,44 +250,7 @@ export default async function Tripdetail({ params }) {
             )}
 
           </div>
-          <div className="col-xxl-4 col-lg-4 mb-4">
-            <div
-              className="position-sticky"
-              style={{ top: "150px", zIndex: "1" }}
-            >
-              <BookNow
-                id={single_package.id}
-                slug={single_package.slug}
-                starting_price={single_package.starting_price}
-                startingFrom={single_package?.starting_from}
-                activeCosts={single_package?.active_costs || []}
-                showBtn={single_package.is_active}
-                bookingAmont={single_package?.booking_amount}
-                showBookNoButton={single_package?.show_book_no_button}
-                bookingButton={
-                  single_package?.package_dates?.length > 0 &&
-                    single_package?.active_costs?.length > 0
-                    ? true
-                    : false
-                }
-                completedata={single_package}
-              />
-              <DownloadPdf
-                id={single_package.id}
-                itinerary_pdf={single_package.itinerary_pdf}
-                completedata={single_package}
-              />
-              <Batches
-                package_dates={single_package.package_dates || []}
-                pickup={single_package.pickup}
-                drop={single_package.drop}
-              />
-              {/* <DownloadPdf
-                id={single_package.id}
-                itinerary_pdf={single_package.itinerary_pdf}
-              /> */}
-            </div>
-          </div>
+
         </div>
       </div>
 

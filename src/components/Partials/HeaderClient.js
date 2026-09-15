@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPhone, faTags } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import HeaderMob from "./HeaderMob";
 import Popup from "../HelpingCompnents/Popup";
@@ -152,6 +152,15 @@ export default function HeaderClient({
                       </li>
                       <li>
                         <Link href="/careers">Careers</Link>
+                      </li>
+                      <li>
+                        <Link href="/offers" className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-pill px-3 py-1 shadow-sm position-relative ms-2" style={{ fontSize: "14px", fontWeight: "600", transition: "all 0.3s ease", border: "1px solid rgba(255,255,255,0.2)" }}>
+                          <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "12px" }} />
+                          Offers
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style={{ fontSize: '9px', padding: '3px 6px' }}>
+                            NEW
+                          </span>
+                        </Link>
                       </li>
                     </ul>
                   </nav>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faTags } from "@fortawesome/free-solid-svg-icons";
 import { companyInfo } from "@/constants/companyInfo";
 
 export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithcount }) {
@@ -111,6 +111,12 @@ export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithco
             <li>
               <Link href="/contact" onClick={handleLinkClick}>
                 Contact Us
+              </Link>
+            </li>
+            <li className="mt-2">
+              <Link href="/offers" onClick={handleLinkClick} className="d-inline-flex align-items-center bg-primary text-white rounded-pill px-4 py-2 shadow-sm" style={{ fontWeight: "600", width: "fit-content" }}>
+                <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "14px" }} />
+                Offers <span className="badge bg-danger ms-2" style={{ fontSize: "10px" }}>NEW</span>
               </Link>
             </li>
           </ul>
