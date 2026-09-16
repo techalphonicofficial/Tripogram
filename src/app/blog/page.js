@@ -77,7 +77,7 @@ export default async function Blog() {
             <div className="col-xxl-12 col-lg-12">
               <div className="row">
                 {blogPosts.data.map((post) => (
-                  <div className="col-xxl-4 col-lg-4 col-md-6" key={post.id}>
+                  <div className="col-xxl-4 col-lg-4 col-md-6 mb-4 mb-md-5" key={post.id}>
                     <SingleBlog post={post} />
                   </div>
                 ))}
