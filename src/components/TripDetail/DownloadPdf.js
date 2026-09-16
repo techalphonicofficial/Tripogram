@@ -5,7 +5,7 @@ import RequestCallback from "../HelpingCompnents/RequestCallback";
 export default function DownloadPdf({ id, itinerary_pdf, completedata }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="min_box-detail Age_limit p-3 m-0">
+    <div className="min_box-detail Age_limit p-3 mt-0 mx-0 mb-4 mb-lg-0">
       <div className="d-flex align-items-center justify-content-center gap-3">
 
         {/* <a
