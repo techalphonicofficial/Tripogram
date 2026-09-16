@@ -133,8 +133,8 @@ export default function HeaderClient({
                       ))}
 
                       {(() => {
-                        const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend trips from delhi"));
-                        const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend trips from delhi"));
+                        const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend"));
+                        const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend"));
                         return (
                           <>
                             <li>

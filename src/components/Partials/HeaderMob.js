@@ -76,8 +76,8 @@ export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithco
 
             {/* Dropdown */}
             {(() => {
-              const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend trips from delhi"));
-              const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend trips from delhi"));
+              const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend"));
+              const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend"));
               return (
                 <>
                   <li
