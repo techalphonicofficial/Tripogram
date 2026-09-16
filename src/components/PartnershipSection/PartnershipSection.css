@@ -64,7 +64,7 @@
 }
 
 .partner-logo-box {
-  height: 70px;
+  height: 105px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,14 +79,14 @@
 }
 
 .partner-name {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   color: #0b1c39;
   margin-bottom: 8px;
 }
 
 .partner-label {
-  font-size: 12px;
+  font-size: 14px;
   color: #777;
   margin-bottom: 0;
   line-height: 1.4;
@@ -110,19 +110,23 @@
     padding-top: 60px;
     padding-bottom: 60px;
   }
+
   .partner-card {
     padding: 16px 10px;
   }
+
   .partner-logo-box {
-    height: 50px;
+    height: 75px;
     margin-bottom: 15px;
   }
+
   .partner-name {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 5px;
   }
+
   .partner-label {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
@@ -146,12 +150,12 @@
 
 .marquee-container::before {
   left: 0;
-  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .marquee-container::after {
   right: 0;
-  background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .marquee-track {
@@ -166,28 +170,41 @@
 }
 
 @keyframes scrollMarquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 12px)); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-50% - 12px));
+  }
 }
 
 .marquee-item {
-  width: 250px;
+  width: 375px;
   flex: 0 0 auto;
 }
 
 @media (max-width: 767px) {
   .marquee-item {
-    width: 200px;
+    width: 300px;
   }
+
   .marquee-container::before,
   .marquee-container::after {
     width: 50px;
   }
+
   .marquee-track {
     gap: 16px;
   }
+
   @keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 8px)); }
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(-50% - 8px));
+    }
   }
 }
