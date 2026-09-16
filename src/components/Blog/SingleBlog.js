@@ -29,7 +29,7 @@ export default function SingleBlog({ post }) {
           <Link href={`/blog/${post.slug}`}>{post.heading}</Link>
         </h2>
         <p className="blog-text flex-grow-1">{post.excerpt}</p>
-        <Link href={`/blog/${post.slug}`} className="th-btn style4 th-icon mt-auto align-self-start">
+        <Link href={`/blog/${post.slug}`} className="th-btn style4 th-icon mt-auto align-self-center align-self-md-start">
           Read More
         </Link>
       </div>

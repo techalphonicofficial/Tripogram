@@ -119,7 +119,7 @@ export default function BlogSection() {
                     </h3>
                     <Link
                       href={`blog/${blog.slug}`}
-                      className="th-btn style4 th-icon mt-auto align-self-start"
+                      className="th-btn style4 th-icon mt-auto align-self-center align-self-md-start"
                     >
                       Read More
                     </Link>
