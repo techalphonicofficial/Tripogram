@@ -96,7 +96,7 @@ export default function BlogSection() {
             className="th-slider has-shadow"
           >
             {blogPosts.map((blog) => (
-              <SwiperSlide key={blog.id}>
+              <SwiperSlide key={blog.id} style={{ height: "auto" }}>
                 <div className="blog-box th-ani h-100 d-flex flex-column">
                   <div className="blog-img global-img">
                     <Image

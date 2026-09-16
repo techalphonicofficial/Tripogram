@@ -37,7 +37,7 @@ export default function PerksSidebar() {
            <i className="fa-solid fa-mountain"></i>
         </div>
         
-        <Link href="mailto:hr@tripogram.com" className="th-btn w-100">
+        <Link href="#open-positions" className="th-btn w-100">
           Apply for this Role <i className="fa-solid fa-arrow-right ms-2"></i>
         </Link>
       </div>

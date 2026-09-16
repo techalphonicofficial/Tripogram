@@ -25,7 +25,7 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
       <div className="seasonal-card-img-wrapper position-relative" style={{ height: '250px' }}>
         <Link href={checkoutHref} className="d-block h-100 w-100">
           <Image
-            src={data.thumbnail || "/img/tour/1.jpg"}
+            src={data.thumbnail || "/img/tour/tour_1_1.jpg"}
             alt={data.title || "Tour Package"}
             width={400}
             height={300}
