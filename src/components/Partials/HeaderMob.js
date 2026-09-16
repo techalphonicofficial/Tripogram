@@ -131,24 +131,19 @@ export default function HeaderMob({
                 Careers
               </Link>
             </li>
-            {offersVisible !== false && (
-              <li>
-                <Link href="/offers" onClick={handleLinkClick}>
-                  {offersNavText || "Offers"} 🔥
-                </Link>
-              </li>
-            )}
             <li>
               <Link href="/contact" onClick={handleLinkClick}>
                 Contact Us
               </Link>
             </li>
-            <li className="mt-2">
-              <Link href="/offers" onClick={handleLinkClick} className="d-inline-flex align-items-center bg-primary text-white rounded-pill px-4 py-2 shadow-sm" style={{ fontWeight: "600", width: "fit-content" }}>
-                <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "14px" }} />
-                Offers <span className="badge bg-danger ms-2" style={{ fontSize: "10px" }}>NEW</span>
-              </Link>
-            </li>
+            {offersVisible !== false && (
+              <li className="mt-2">
+                <Link href="/offers" onClick={handleLinkClick} className="d-inline-flex align-items-center bg-primary text-white rounded-pill px-4 py-2 shadow-sm" style={{ fontWeight: "600", width: "fit-content" }}>
+                  <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "14px" }} />
+                  {offersNavText || "Offers"} <span className="badge bg-danger ms-2" style={{ fontSize: "10px" }}>NEW</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
