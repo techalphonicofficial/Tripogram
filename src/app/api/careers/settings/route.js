@@ -1,10 +1,8 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { EXTERNAL_BACKEND, API_KEY } from "@/app/api/backendConfig";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "https://dashboard.tripogram.com/api";
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "";
 
 const FALLBACK = {
   contact_email: "hr@tripogram.com",
@@ -20,7 +18,7 @@ const FALLBACK = {
 
 export async function GET() {
   try {
-    const res = await fetch(`${BACKEND_URL}/careers/settings`, {
+    const res = await fetch(`${EXTERNAL_BACKEND}/careers/settings`, {
       headers: { "Content-Type": "application/json", ...(API_KEY ? { "x-api-key": API_KEY } : {}) },
       cache: "no-store",
     });

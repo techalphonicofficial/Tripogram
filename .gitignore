@@ -9,7 +9,7 @@ release/
 # Logs
 *.log
 *.err.log
-
+*.env.local
 # Local backups / temporary files
 .codex-backups/
 .next/

@@ -1,10 +1,8 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { EXTERNAL_BACKEND, API_KEY } from "@/app/api/backendConfig";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "https://dashboard.tripogram.com/api";
-const API_KEY     = process.env.NEXT_PUBLIC_API_KEY  || "";
 
 const FALLBACK_SECTION = {
   sub_title:   "TRUSTED BY & RECOGNIZED BY",
@@ -24,7 +22,7 @@ const FALLBACK_PARTNERS = [
 // GET /api/partnerships — Section + sab partners
 export async function GET() {
   try {
-    const res = await fetch(`${BACKEND_URL}/partnerships`, {
+    const res = await fetch(`${EXTERNAL_BACKEND}/partnerships`, {
       headers: {
         "Content-Type": "application/json",
         ...(API_KEY ? { "x-api-key": API_KEY } : {}),

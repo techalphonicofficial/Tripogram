@@ -15,20 +15,21 @@ import { getPagewithSection } from "@/services/pageSection";
 // }
 
 
+import { cache } from "react";
+
 function isCurrentBrandSchema(schema) {
   return !/tripogram|tripogramclub/i.test(schema?.schema || "");
 }
 
-
-async function getHomeData() {
+const getHomeData = cache(async () => {
   try {
     const data = await getPagewithSection(1);
     return { data };
   } catch (err) {
-    console.error("Failed to fetch home page data:", err);
+    console.warn("Failed to fetch home page data:", err.message);
     return { data: null };
   }
-}
+});
 
 export async function generateMetadata() {
   const { data } = await getHomeData();

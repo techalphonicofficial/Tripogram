@@ -3,6 +3,7 @@ import CareersHero from "@/components/Careers/CareersHero";
 import CareerStats from "@/components/Careers/CareerStats";
 import WhyJoinUs from "@/components/Careers/WhyJoinUs";
 import OpenPositions from "@/components/Careers/OpenPositions";
+import CareerFaqs from "@/components/Careers/CareerFaqs";
 
 export const metadata = {
   title: "Careers at Tripogram | Explore Opportunities With Us",
@@ -25,6 +26,7 @@ export default function CareersPage() {
       <CareerStats />
       <WhyJoinUs />
       <OpenPositions />
+      <CareerFaqs />
     </main>
   );
 }

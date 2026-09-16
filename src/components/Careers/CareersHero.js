@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "./Careers.css";
 import { getCareersHero, getCareersHeroLabels } from "@/services/careersApi";
+import { formatImageUrl } from "@/utils/formatImage";
 
 const FALLBACK_HERO = {
   eyebrow: "Careers",
@@ -98,7 +99,7 @@ export default function CareersHero() {
                   labels.avatars.filter((avatar) => avatar?.image || avatar?.avatar || avatar?.url).slice(0, 4).map((avatar, i) => (
                     <img
                       key={i}
-                      src={avatar.image || avatar.avatar || avatar.url}
+                      src={formatImageUrl(avatar.image || avatar.avatar || avatar.url, "/img/team/team_1_1.jpg")}
                       alt={avatar.name || "Team member"}
                       style={{
                         width: "40px",
@@ -141,7 +142,7 @@ export default function CareersHero() {
 
               <div className="hero-img-main">
                 <Image
-                  src={hero.image_main || "/img/tour/tour-1_1.jpg"}
+                  src={formatImageUrl(hero.image_main, "/img/tour/tour-1_1.jpg")}
                   alt="Team exploring"
                   fill
                   style={{ objectFit: "cover" }}
@@ -151,7 +152,7 @@ export default function CareersHero() {
 
               <div className="hero-img-secondary">
                 <Image
-                  src={hero.image_secondary || "/img/tour/tour-1_3.jpg"}
+                  src={formatImageUrl(hero.image_secondary, "/img/tour/tour-1_3.jpg")}
                   alt="Van driving in mountains"
                   fill
                   style={{ objectFit: "cover" }}

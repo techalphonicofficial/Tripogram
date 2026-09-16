@@ -1,16 +1,15 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { careerStats, whyJoinUs, openPositions, perksBenefits } from "@/data/careersData";
+import { EXTERNAL_BACKEND, API_KEY } from "@/app/api/backendConfig";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "https://dashboard.tripogram.com/api";
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "";
-
 async function proxyGet(path) {
-  const res = await fetch(`${BACKEND_URL}${path}`, {
+  const res = await fetch(`${EXTERNAL_BACKEND}${path}`, {
     headers: { "Content-Type": "application/json", ...(API_KEY ? { "x-api-key": API_KEY } : {}) },
     cache: "no-store",
+    signal: AbortSignal.timeout(4000),
   });
   if (!res.ok) throw new Error(`Backend ${res.status}`);
   return res.json();

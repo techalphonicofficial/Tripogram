@@ -1,9 +1,16 @@
 import { api } from "./config";
 
 async function getCareersApi(path) {
-  const response = await fetch(`/api/careers${path}`, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Careers API ${response.status}`);
-  return response.json();
+  try {
+    const response = await fetch(`/api/careers${path}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (_) {
+    return null;
+  }
 }
 
 function unwrap(response) {
@@ -15,12 +22,12 @@ function normalizeHero(data) {
   return {
     ...data,
     eyebrow: data.eyebrow ?? data.label,
-    heading_line1: data.heading_line1 ?? data.heading_line_1,
-    heading_line2: data.heading_line2 ?? data.heading_line_2,
-    heading_line3: data.heading_line3 ?? data.heading_line_3,
+    heading_line1: data.heading_line1 ?? data.heading_line_1 ?? data.heading_1,
+    heading_line2: data.heading_line2 ?? data.heading_line_2 ?? data.heading_2,
+    heading_line3: data.heading_line3 ?? data.heading_line_3 ?? data.heading_3,
     cta_label: data.cta_label ?? data.button_text,
-    image_main: data.image_main ?? data.main_image,
-    image_secondary: data.image_secondary ?? data.secondary_image,
+    image_main: data.image_main ?? data.main_image ?? data.image ?? data.photo ?? data.bg_image,
+    image_secondary: data.image_secondary ?? data.secondary_image ?? data.sub_image,
   };
 }
 

@@ -6,7 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { companyInfo } from "@/constants/companyInfo";
 
-export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithcount }) {
+export default function HeaderMob({
+  mainpage,
+  menuOpen,
+  setMenuOpen,
+  tripsWithcount,
+  offersVisible = true,
+  offersNavText = "Offers",
+}) {
   const [activeMenu, setActiveMenu] = useState(false);
 
   useEffect(() => {
@@ -108,6 +115,13 @@ export default function HeaderMob({ mainpage, menuOpen, setMenuOpen, tripsWithco
                 Careers
               </Link>
             </li>
+            {offersVisible !== false && (
+              <li>
+                <Link href="/offers" onClick={handleLinkClick}>
+                  {offersNavText || "Offers"} 🔥
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/contact" onClick={handleLinkClick}>
                 Contact Us

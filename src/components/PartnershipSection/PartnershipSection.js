@@ -13,12 +13,12 @@ const FALLBACK_SECTION = {
 };
 
 const FALLBACK_PARTNERS = [
-  { id: 1, logo: "/img/brand/startup-india.svg", name: "Startup India", label: "DPIIT Recognized Startup" },
-  { id: 2, logo: "/img/brand/msme.svg", name: "MSME", label: "Government Registration" },
-  { id: 3, logo: "/img/brand/makemytrip.svg", name: "MakeMyTrip", label: "Preferred Travel Partner" },
-  { id: 4, logo: "/img/brand/indigo.svg", name: "IndiGo", label: "Preferred Airline Partner" },
-  { id: 5, logo: "/img/brand/gst.svg", name: "Goods & Services Tax", label: "GST Registered Company" },
-  { id: 6, logo: "/img/brand/iato.svg", name: "IATO", label: "Indian Association of Tour Operators" },
+  { id: 1, logo: "/img/brand/brand_1_1.svg", name: "Startup India", label: "DPIIT Recognized Startup" },
+  { id: 2, logo: "/img/brand/brand_1_2.svg", name: "MSME", label: "Government Registration" },
+  { id: 3, logo: "/img/brand/brand_1_3.svg", name: "MakeMyTrip", label: "Preferred Travel Partner" },
+  { id: 4, logo: "/img/brand/brand_1_4.svg", name: "IndiGo", label: "Preferred Airline Partner" },
+  { id: 5, logo: "/img/brand/brand_1_5.svg", name: "Goods & Services Tax", label: "GST Registered Company" },
+  { id: 6, logo: "/img/brand/brand_1_6.svg", name: "IATO", label: "Indian Association of Tour Operators" },
 ];
 
 export default function PartnershipSection() {

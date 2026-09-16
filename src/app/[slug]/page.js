@@ -152,6 +152,7 @@ export default async function Tripdetail({ params }) {
         pickup={single_package.pickup}
         drop={single_package.drop}
         banner={single_package?.banner}
+        thumbnail={single_package?.thumbnail}
       />
       <div className="container th-container">
         <div className="row orderchage-formob">

@@ -15,9 +15,16 @@ function unwrap(response) {
 }
 
 async function getPartnershipApi(path) {
-  const response = await fetch(`/api/partnerships${path}`, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Partnership API ${response.status}`);
-  return response.json();
+  try {
+    const response = await fetch(`/api/partnerships${path}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (_) {
+    return null;
+  }
 }
 
 function normalizePartner(partner) {

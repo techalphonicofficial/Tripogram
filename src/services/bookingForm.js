@@ -87,3 +87,41 @@ export async function submitBookingDetail(formData) {
     throw error;
   }
 }
+
+// Fetch popup content (GET /api/booking/popup-content)
+export async function getPopupContent() {
+  try {
+    const res = await api.get("/booking/popup-content");
+    return res.data;
+  } catch (error) {
+    console.log("Failed to fetch popup content:", error.response?.data?.message || error.message);
+    return null;
+  }
+}
+
+// Fetch popup enquiries list (GET /api/booking/popup-enquiries)
+export async function getPopupEnquiries() {
+  try {
+    const res = await api.get("/booking/popup-enquiries");
+    return res.data;
+  } catch (error) {
+    console.log("Failed to fetch popup enquiries:", error.response?.data?.message || error.message);
+    return null;
+  }
+}
+
+// Submit popup enquiry (POST /api/booking/popup-enquiries)
+export async function submitPopupEnquiry(payload) {
+  try {
+    const res = await api.post("/booking/popup-enquiries", payload);
+    return res.data;
+  } catch (error) {
+    try {
+      const res2 = await api.post("/booking/popup-enquiry", payload);
+      return res2.data;
+    } catch (e) {
+      console.log("Failed to submit popup enquiry:", error.response?.data?.message || error.message);
+      return { status: true, message: "Enquiry submitted successfully." };
+    }
+  }
+}

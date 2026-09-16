@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faRupeeSign, faUserClock } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
-// import "./TripHero.css"; // custom styles
+import { formatImageUrl } from "@/utils/formatImage";
 
-export default function TripHero({ title, duration, starting_price, age_group, pickup, drop, banner }) {
-  const heroImage = banner || "/img/tour/tour-1_1.jpg";
+export default function TripHero({ title, duration, starting_price, age_group, pickup, drop, banner, thumbnail }) {
+  const heroImage = formatImageUrl(banner || thumbnail, "/img/tour/tour-1_1.jpg");
 
   return (
     <>

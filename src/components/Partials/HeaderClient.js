@@ -11,6 +11,7 @@ import Popup from "../HelpingCompnents/Popup";
 import { companyInfo } from "@/constants/companyInfo";
 import { getPagewithSection } from "@/services/pageSection";
 import { tripsWithPackagecount } from "@/services/tripsApi";
+import { getOffersHero } from "@/services/offersApi";
 
 export default function HeaderClient({
   mainpage: initialMainpage = null,
@@ -20,6 +21,7 @@ export default function HeaderClient({
   const [mainpage, setMainpage] = useState(initialMainpage);
   const [tripsWithcount, setTripsWithcount] = useState(initialTripsWithcount);
   const [popup, setPopup] = useState(initialPopup);
+  const [offersHero, setOffersHero] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -30,7 +32,8 @@ export default function HeaderClient({
       getPagewithSection(6),
       tripsWithPackagecount(),
       getPagewithSection(6, "popup"),
-    ]).then(([mainResult, tripsResult, popupResult]) => {
+      getOffersHero(),
+    ]).then(([mainResult, tripsResult, popupResult, offersHeroResult]) => {
       if (!isMounted) return;
 
       if (mainResult.status === "fulfilled") {
@@ -43,6 +46,10 @@ export default function HeaderClient({
 
       if (popupResult.status === "fulfilled") {
         setPopup(popupResult.value);
+      }
+
+      if (offersHeroResult.status === "fulfilled" && offersHeroResult.value) {
+        setOffersHero(offersHeroResult.value);
       }
     });
 
@@ -153,6 +160,13 @@ export default function HeaderClient({
                       <li>
                         <Link href="/careers">Careers</Link>
                       </li>
+                      {offersHero?.website_visible !== false && offersHero?.is_visible !== false && (
+                        <li>
+                          <Link href="/offers">
+                            {offersHero?.navbar_text || "Offers"}
+                          </Link>
+                        </li>
+                      )}
                     </ul>
                   </nav>
                 </div>
@@ -179,6 +193,8 @@ export default function HeaderClient({
         tripsWithcount={tripsWithcount}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
+        offersVisible={offersHero?.website_visible !== false && offersHero?.is_visible !== false}
+        offersNavText={offersHero?.navbar_text || "Offers"}
       />
 
       <Popup initialPopup={popup} />
