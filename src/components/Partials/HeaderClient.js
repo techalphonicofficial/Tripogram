@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPhone, faTags } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import HeaderMob from "./HeaderMob";
 import Popup from "../HelpingCompnents/Popup";
@@ -135,24 +135,38 @@ export default function HeaderClient({
                     <ul className="grid-nav-list m-0 p-0">
                       {menuTrips.map((item, i) => (
                         <li key={i}>
-                          <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                          <Link href={`/trips/${item.slug}`} style={{ whiteSpace: 'nowrap' }}>{item.heading}</Link>
                         </li>
                       ))}
 
-                      <li>
-                        <Link href="/trips/upcoming-trips/all">Upcoming Trips</Link>
-                      </li>
-
-                      <li className="menu-item-has-children">
-                        <span>Domestic Trips</span>
-                        <ul className="sub-menu">
-                          {tripsWithcount.map((item) => (
-                            <li key={item.id}>
-                              <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                      {(() => {
+                        const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend"));
+                        const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend"));
+                        return (
+                          <>
+                            <li>
+                              <Link href="/trips/upcoming-trips/all" style={{ whiteSpace: 'nowrap' }}>Upcoming Trips</Link>
                             </li>
-                          ))}
-                        </ul>
-                      </li>
+
+                            <li className="menu-item-has-children">
+                              <span style={{ whiteSpace: 'nowrap' }}>Domestic Trips</span>
+                              <ul className="sub-menu">
+                                {domesticTripsFiltered.map((item) => (
+                                  <li key={item.id}>
+                                    <Link href={`/trips/${item.slug}`}>{item.heading}</Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+
+                            {weekendTripItem && (
+                              <li>
+                                <Link href={`/trips/${weekendTripItem.slug}`} style={{ whiteSpace: 'nowrap' }}>{weekendTripItem.heading}</Link>
+                              </li>
+                            )}
+                          </>
+                        );
+                      })()}
 
                       <li>
                         <Link href="/blog">Blogs</Link>
@@ -160,6 +174,7 @@ export default function HeaderClient({
                       <li>
                         <Link href="/careers">Careers</Link>
                       </li>
+<<<<<<< HEAD
                       {offersHero?.website_visible !== false && offersHero?.is_visible !== false && (
                         <li>
                           <Link href="/offers">
@@ -167,6 +182,17 @@ export default function HeaderClient({
                           </Link>
                         </li>
                       )}
+=======
+                      <li>
+                        <Link href="/offers" className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-pill px-3 py-1 shadow-sm position-relative ms-2" style={{ fontSize: "14px", fontWeight: "600", transition: "all 0.3s ease", border: "1px solid rgba(255,255,255,0.2)" }}>
+                          <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "12px" }} />
+                          Offers
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style={{ fontSize: '9px', padding: '3px 6px' }}>
+                            NEW
+                          </span>
+                        </Link>
+                      </li>
+>>>>>>> 23fc74fff222f566c3946969e96b1df9983f9680
                     </ul>
                   </nav>
                 </div>
@@ -197,7 +223,7 @@ export default function HeaderClient({
         offersNavText={offersHero?.navbar_text || "Offers"}
       />
 
-      <Popup initialPopup={popup} />
+      {/* <Popup initialPopup={popup} /> Disabled in favor of LeadPopup */}
     </>
   );
 }

@@ -97,7 +97,7 @@ export default function BlogSection() {
           >
             {blogPosts.map((blog) => (
               <SwiperSlide key={blog.id}>
-                <div className="blog-box th-ani">
+                <div className="blog-box th-ani h-100 d-flex flex-column">
                   <div className="blog-img global-img">
                     <Image
                       src={blog.image}
@@ -105,20 +105,21 @@ export default function BlogSection() {
                       width={500}
                       height={300}
                       className="w-100"
+                      style={{ height: "240px", objectFit: "cover" }}
                     />
                   </div>
-                  <div className="blog-box_content">
+                  <div className="blog-box_content d-flex flex-column flex-grow-1">
                     <div className="blog-meta">
                       <Link className="author" href="blog">
                         {blog.created_at}
                       </Link>
                     </div>
-                    <h3 className="box-title">
+                    <h3 className="box-title flex-grow-1">
                       <Link href={`blog/${blog.slug}`}>{blog.heading}</Link>
                     </h3>
                     <Link
                       href={`blog/${blog.slug}`}
-                      className="th-btn style4 th-icon"
+                      className="th-btn style4 th-icon mt-auto align-self-center align-self-md-start"
                     >
                       Read More
                     </Link>

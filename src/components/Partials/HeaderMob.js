@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faTags } from "@fortawesome/free-solid-svg-icons";
 import { companyInfo } from "@/constants/companyInfo";
 
 export default function HeaderMob({
@@ -82,28 +82,44 @@ export default function HeaderMob({
             </li>
 
             {/* Dropdown */}
-            <li
-              className={`menu-item-has-children th-item-has-children ${
-                activeMenu ? "th-active" : ""
-              }`}
-            >
-              <a onClick={handleMenuClick} style={{ cursor: "pointer" }}>
-                Domestic Trips
-                <span className="th-mean-expand"></span>
-              </a>
-              <ul
-                className="sub-menu th-submenu ms-3"
-                style={{ display: activeMenu ? "block" : "none" }}
-              >
-                {tripsWithcount.map((item) => (
-                  <li key={item.slug}>
-                    <Link href={`/trips/${item.slug}`} onClick={handleLinkClick}>
-                      {item.heading}
-                    </Link>
+            {(() => {
+              const weekendTripItem = tripsWithcount.find(item => item.heading.toLowerCase().includes("weekend"));
+              const domesticTripsFiltered = tripsWithcount.filter(item => !item.heading.toLowerCase().includes("weekend"));
+              return (
+                <>
+                  <li
+                    className={`menu-item-has-children th-item-has-children ${
+                      activeMenu ? "th-active" : ""
+                    }`}
+                  >
+                    <a onClick={handleMenuClick} style={{ cursor: "pointer" }}>
+                      Domestic Trips
+                      <span className="th-mean-expand"></span>
+                    </a>
+                    <ul
+                      className="sub-menu th-submenu ms-3"
+                      style={{ display: activeMenu ? "block" : "none" }}
+                    >
+                      {domesticTripsFiltered.map((item) => (
+                        <li key={item.slug}>
+                          <Link href={`/trips/${item.slug}`} onClick={handleLinkClick}>
+                            {item.heading}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
-                ))}
-              </ul>
-            </li>
+                  
+                  {weekendTripItem && (
+                    <li>
+                      <Link href={`/trips/${weekendTripItem.slug}`} onClick={handleLinkClick}>
+                        {weekendTripItem.heading}
+                      </Link>
+                    </li>
+                  )}
+                </>
+              );
+            })()}
 
             <li>
               <Link href="/blog" onClick={handleLinkClick}>
@@ -125,6 +141,12 @@ export default function HeaderMob({
             <li>
               <Link href="/contact" onClick={handleLinkClick}>
                 Contact Us
+              </Link>
+            </li>
+            <li className="mt-2">
+              <Link href="/offers" onClick={handleLinkClick} className="d-inline-flex align-items-center bg-primary text-white rounded-pill px-4 py-2 shadow-sm" style={{ fontWeight: "600", width: "fit-content" }}>
+                <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "14px" }} />
+                Offers <span className="badge bg-danger ms-2" style={{ fontSize: "10px" }}>NEW</span>
               </Link>
             </li>
           </ul>

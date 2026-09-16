@@ -11,6 +11,7 @@ config.autoAddCss = false;
 
 import Header from "@/components/Partials/Header";
 import Footer from "@/components/Partials/Footer";
+import LeadPopup from "@/components/HelpingCompnents/LeadPopup";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.tripogramclub.com";
 
@@ -106,6 +107,7 @@ export default async function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
+        <LeadPopup />
       </body>
     </html>
   );

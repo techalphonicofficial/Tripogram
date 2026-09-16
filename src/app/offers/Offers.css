@@ -1,0 +1,369 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+.offers-hero {
+  position: relative;
+  padding: 80px 0 70px;
+  color: white;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.offers-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(13, 31, 58, 0.9) 0%, rgba(13, 31, 58, 0.4) 50%, rgba(13, 31, 58, 0.1) 100%), url('https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* Breadcrumb */
+.offers-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.offers-bread-link {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.offers-bread-link:hover {
+  color: white;
+}
+
+.offers-bread-sep {
+  color: rgba(255,255,255,0.4);
+}
+
+.offers-bread-current {
+  color: rgba(255,255,255,0.9);
+}
+
+/* Hero Title */
+.offers-hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  line-height: 1.1;
+  color: white;
+}
+
+.offers-hero-title span {
+  color: white;
+}
+
+.offers-hero-desc {
+  font-size: 17px;
+  max-width: 520px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+/* Decorative Tagline */
+
+.offers-hero-tagline {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 42px;
+  color: white;
+  transform: rotate(-8deg);
+  position: relative;
+  right: 50px;
+  top: -20px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  line-height: 1;
+}
+
+.offers-tagline-line1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.offers-tagline-line2 {
+  padding-left: 20px;
+}
+
+.offers-plane-icon {
+  font-size: 24px;
+  color: #ffcc00; /* Yellow plane */
+  transform: rotate(15deg);
+}
+
+.offers-hero-tagline::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: -90px;
+  width: 90px;
+  height: 40px;
+  border-top: 2px dashed rgba(255, 255, 255, 0.6);
+  border-right: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 0 40px 0 0;
+  transform: rotate(20deg);
+}
+
+/* Responsive Hero */
+@media (max-width: 991px) {
+  .offers-hero {
+    padding: 60px 0 50px;
+    text-align: center;
+  }
+
+  .offers-hero-title {
+    font-size: 38px;
+  }
+
+  .offers-hero-desc {
+    margin: 0 auto;
+  }
+
+  .offers-breadcrumb {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .offers-hero {
+    padding: 50px 0 40px;
+  }
+
+  .offers-hero-title {
+    font-size: 30px;
+  }
+
+  .offers-hero-desc {
+    font-size: 15px;
+  }
+}
+
+.benefit-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  border: 1px solid #e8f4fd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0598cc, #06b6d4);
+  border-radius: 16px 16px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(5, 152, 204, 0.15);
+}
+
+.benefit-card:hover::before {
+  opacity: 1;
+}
+
+.benefit-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #e0f2fe, #cffafe);
+  color: #0598cc;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon-wrap {
+  transform: scale(1.1) rotate(-5deg);
+  background: linear-gradient(135deg, #0598cc, #06b6d4);
+  color: white;
+}
+
+.benefit-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.offers-section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.offers-section-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* FAQ Custom Accordion */
+.offers-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.offers-faq-item {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.offers-faq-item:first-child {
+  border-top: 1px solid #e5e7eb;
+}
+
+.offers-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  transition: color 0.2s;
+}
+
+.offers-faq-question:hover {
+  color: #0598cc;
+}
+
+.offers-faq-question span {
+  flex: 1;
+}
+
+.offers-faq-arrow {
+  font-size: 14px;
+  color: #6b7280;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.offers-faq-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.offers-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.offers-faq-answer.expanded {
+  max-height: 500px;
+}
+
+.offers-faq-answer-inner {
+  padding: 0 8px 24px 8px;
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Rounded Destinations */
+.offer-destination-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 20px;
+  scrollbar-width: none; /* Firefox */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.offer-destination-scroll::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+.offer-dest-card {
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.offer-dest-card:hover {
+  transform: translateY(-4px);
+}
+
+.offer-dest-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.offer-dest-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.offer-dest-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .offer-dest-img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 16px;
+    margin-bottom: 8px;
+  }
+
+  .offer-dest-card {
+    min-width: 0;
+  }
+
+  .offer-dest-title {
+    font-size: 13px;
+  }
+}
