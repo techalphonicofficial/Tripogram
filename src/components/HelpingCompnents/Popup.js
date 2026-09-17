@@ -47,7 +47,7 @@ function formatSlideImage(imagePath, fallback) {
     return trimmed;
   }
 
-  const mediaBase = process.env.NEXT_PUBLIC_MEDIA_PATH || "https://chocolate-salmon-819551.hostingersite.com/storage/";
+  const mediaBase = process.env.NEXT_PUBLIC_MEDIA_PATH || "https://admin.tripogramclub.com/storage/";
   const cleanPath = trimmed.startsWith("/") ? trimmed.slice(1) : trimmed;
 
   if (cleanPath.startsWith("storage/")) {
