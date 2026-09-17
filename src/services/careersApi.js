@@ -4,7 +4,7 @@ async function getCareersApi(path) {
   try {
     const response = await fetch(`/api/careers${path}`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(10000),
     });
     if (!response.ok) return null;
     return await response.json();
@@ -14,18 +14,21 @@ async function getCareersApi(path) {
 }
 
 function unwrap(response) {
-  return response?.data?.data ?? response?.data ?? null;
+  if (!response) return null;
+  if (response.data?.data) return response.data.data;
+  if (response.data !== undefined) return response.data;
+  return response;
 }
 
 function normalizeHero(data) {
   if (!data) return null;
   return {
     ...data,
-    eyebrow: data.eyebrow ?? data.label,
-    heading_line1: data.heading_line1 ?? data.heading_line_1 ?? data.heading_1,
-    heading_line2: data.heading_line2 ?? data.heading_line_2 ?? data.heading_2,
-    heading_line3: data.heading_line3 ?? data.heading_line_3 ?? data.heading_3,
-    cta_label: data.cta_label ?? data.button_text,
+    eyebrow: data.label || data.eyebrow,
+    heading_line1: data.heading_line_1 || data.heading_line1 || data.heading_1,
+    heading_line2: data.heading_line_2 || data.heading_line2 || data.heading_2,
+    heading_line3: data.heading_line_3 || data.heading_line3 || data.heading_3,
+    cta_label: data.button_text || data.cta_label,
     image_main: data.image_main ?? data.main_image ?? data.image ?? data.photo ?? data.bg_image,
     image_secondary: data.image_secondary ?? data.secondary_image ?? data.sub_image,
   };

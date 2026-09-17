@@ -39,7 +39,19 @@ export default function CareersHero() {
           getCareersHero(),
           getCareersHeroLabels(),
         ]);
-        if (heroData) setHero({ ...FALLBACK_HERO, ...heroData });
+        if (heroData) {
+          setHero({
+            ...FALLBACK_HERO,
+            ...heroData,
+            eyebrow: heroData.label || heroData.eyebrow || FALLBACK_HERO.eyebrow,
+            heading_line1: heroData.heading_line_1 || heroData.heading_line1 || FALLBACK_HERO.heading_line1,
+            heading_line2: heroData.heading_line_2 || heroData.heading_line2 || FALLBACK_HERO.heading_line2,
+            heading_line3: heroData.heading_line_3 || heroData.heading_line3 || FALLBACK_HERO.heading_line3,
+            cta_label: heroData.button_text || heroData.cta_label || FALLBACK_HERO.cta_label,
+            image_main: heroData.main_image || heroData.image_main || FALLBACK_HERO.image_main,
+            image_secondary: heroData.secondary_image || heroData.image_secondary || FALLBACK_HERO.image_secondary,
+          });
+        }
         if (labelsData) {
           setLabels({
             ...FALLBACK_LABELS,
@@ -62,10 +74,12 @@ export default function CareersHero() {
     }
   };
 
+  const bgImage = formatImageUrl(hero.background_image, "/img/bg/about_bg_1.jpg");
+
   return (
     <section
       className="careers-hero bg-top-center"
-      style={{ backgroundImage: "url(/img/bg/about_bg_1.jpg)", backgroundSize: "cover" }}
+      style={{ backgroundImage: `url(${bgImage})`, backgroundSize: "cover" }}
     >
       <div className="container th-container">
         <div className="row align-items-center">
@@ -76,7 +90,7 @@ export default function CareersHero() {
             <h1>
               {hero.heading_line1 && <>{hero.heading_line1}<br /></>}
               {hero.heading_line2 && <>{hero.heading_line2}<br /></>}
-              {hero.heading_line3 && <span>{hero.heading_line3}</span>}
+              {hero.heading_line3 && <span style={{ color: hero.heading_highlight_color || "#009ED1" }}>{hero.heading_line3}</span>}
             </h1>
             <p>
               {hero.description?.split("\n").map((line, i) => (
@@ -86,8 +100,13 @@ export default function CareersHero() {
                 </React.Fragment>
               ))}
             </p>
+            {hero.sub_text && <p className="text-muted small mt-2">{hero.sub_text}</p>}
 
-            <Link href="#open-positions" className="th-btn" onClick={scrollToPositions}>
+            <Link
+              href={hero.button_url || "#open-positions"}
+              className="th-btn"
+              onClick={hero.button_url && hero.button_url !== "#open-positions" ? undefined : scrollToPositions}
+            >
               {hero.cta_label || "Explore Open Positions"}{" "}
               <i className="fa-solid fa-arrow-right ms-2"></i>
             </Link>
@@ -129,7 +148,7 @@ export default function CareersHero() {
                 )}
               </div>
               <span style={{ fontSize: "13px", fontWeight: "600", color: "var(--body-color)" }}>
-                {labels.team_label}
+                {hero.team_text || labels.team_label}
               </span>
             </div>
           </div>
