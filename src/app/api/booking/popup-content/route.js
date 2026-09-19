@@ -29,8 +29,8 @@ const FALLBACK_POPUP_CONTENT = {
 // GET /api/booking/popup-content
 export async function GET() {
   const endpoints = [
-    `${EXTERNAL_BACKEND}/page/6/popup`,
     `${EXTERNAL_BACKEND}/booking/popup-content`,
+    `${EXTERNAL_BACKEND}/page/6/popup`,
   ];
 
   for (const url of endpoints) {
@@ -38,16 +38,38 @@ export async function GET() {
       const res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
           ...(API_KEY ? { "x-api-key": API_KEY } : {}),
         },
         cache: "no-store",
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(5000),
       });
 
       if (res.ok) {
-        const data = await res.json();
-        if (data && (data.slides || data.section || data.status)) {
-          return NextResponse.json(data);
+        const raw = await res.json();
+        const content = raw?.data || raw;
+        const slides = content?.slides || raw?.slides || [];
+        const setting = content?.setting || {};
+
+        if (Array.isArray(slides) && slides.length > 0) {
+          const formattedSlides = slides.map((s) => ({
+            id: s.id,
+            image: s.image || s.image_path || s.photo || "/img/hero/hero_1_1.jpg",
+            title: s.title || s.heading || "Your Next Adventure",
+            caption: s.description || s.subtext || s.caption || "",
+            subtext: s.description || s.subtext || s.caption || "",
+          }));
+
+          return NextResponse.json({
+            success: true,
+            status: "1",
+            title: setting.form_heading || content.title || "Plan your Next Trip",
+            slides: formattedSlides,
+            data: {
+              setting,
+              slides: formattedSlides,
+            },
+          });
         }
       }
     } catch (_) {}

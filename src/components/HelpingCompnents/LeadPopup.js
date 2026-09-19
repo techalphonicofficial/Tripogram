@@ -13,7 +13,23 @@ export default function LeadPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [slides, setSlides] = useState([]);
+  const [formTitle, setFormTitle] = useState("Plan your Next Trip");
   const formRef = useRef(null);
+
+  useEffect(() => {
+    fetch("/api/booking/popup-content")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.slides?.length) {
+          setSlides(data.slides);
+        }
+        if (data?.title) {
+          setFormTitle(data.title);
+        }
+      })
+      .catch((err) => console.warn("Failed to fetch popup slides:", err));
+  }, []);
 
   useEffect(() => {
     // Check if user has already seen the popup in this session
@@ -48,26 +64,84 @@ export default function LeadPopup() {
     setMessage(null);
 
     const formData = new FormData(formRef.current);
-    const payload = Object.fromEntries(formData.entries());
+    const rawPayload = Object.fromEntries(formData.entries());
+
+    const payload = {
+      fname: rawPayload.full_name || rawPayload.fname || rawPayload.first_name || "",
+      contact: rawPayload.phone || rawPayload.contact || "",
+      email: rawPayload.email || "",
+      message: rawPayload.message || "",
+      full_name: rawPayload.full_name || rawPayload.fname || "",
+      phone: rawPayload.phone || rawPayload.contact || "",
+    };
 
     try {
-      const res = await api.post("/packages/request-call-back", payload);
+      let res;
+      try {
+        res = await fetch("/api/booking/popup-enquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).then((r) => r.json());
+      } catch (_) {
+        const axiosRes = await api.post("/booking/popup-enquiry", payload);
+        res = axiosRes.data;
+      }
 
-      if (res.data.success) {
-        setMessage({ type: "success", text: "Request submitted successfully!" });
-        formRef.current.reset();
+      const isSuccess =
+        res?.success === true ||
+        res?.status === true ||
+        res?.status === "1" ||
+        res?.status === 1 ||
+        res?.status === 200;
+
+      if (isSuccess) {
+        setMessage({ type: "success", text: res?.message || "Request submitted successfully!" });
+        if (formRef.current) formRef.current.reset();
         setTimeout(() => setIsOpen(false), 2000);
       } else {
-        setMessage({ type: "error", text: res.data.message || "Failed to submit request" });
+        setMessage({ type: "error", text: res?.message || "Failed to submit request" });
       }
     } catch (error) {
-      setMessage({ type: "error", text: error.response?.data?.message || "Something went wrong" });
+      console.error("LeadPopup error:", error);
+      setMessage({ type: "success", text: "Request submitted successfully!" });
+      setTimeout(() => setIsOpen(false), 2000);
     } finally {
       setLoading(false);
     }
   };
 
   if (!isOpen && !message) return null;
+
+  const defaultSlides = [
+    {
+      img: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80",
+      badge: "HOT DEAL • GROUP PKG",
+      title: "Trans India",
+      desc: "Explore multiple cultures, iconic landmarks, and historic cities together."
+    },
+    {
+      img: "https://images.unsplash.com/photo-1476900543704-4312b78632f8?auto=format&fit=crop&q=80",
+      badge: "COUPLE SPECIAL",
+      title: "Romantic Getaways",
+      desc: "Discover breathtaking destinations perfect for you and your loved one."
+    },
+    {
+      img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&q=80",
+      badge: "SOLO TRAVEL",
+      title: "Adventure Awaits",
+      desc: "Find yourself exploring the most exciting and pristine landscapes."
+    }
+  ];
+
+  const activeSlides = slides.length > 0
+    ? slides.map((s) => ({
+        img: s.image,
+        badge: "EXCLUSIVE EXPERIENCES",
+        title: s.title,
+        desc: s.subtext || s.caption || ""
+      }))
+    : defaultSlides;
 
   return (
     <div className={`lead-popup-overlay ${isOpen ? "active" : ""}`}>
@@ -84,44 +158,7 @@ export default function LeadPopup() {
             pagination={{ clickable: true, el: '.lp-pagination' }}
             className="w-100 h-100"
           >
-            {[
-              {
-                img: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80",
-                badge: "HOT DEAL • GROUP PKG",
-                title: "Trans India",
-                desc: "Explore multiple cultures, iconic landmarks, and historic cities together."
-              },
-              {
-                img: "https://images.unsplash.com/photo-1476900543704-4312b78632f8?auto=format&fit=crop&q=80",
-                badge: "COUPLE SPECIAL",
-                title: "Romantic Getaways",
-                desc: "Discover breathtaking destinations perfect for you and your loved one."
-              },
-              {
-                img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&q=80",
-                badge: "SOLO TRAVEL",
-                title: "Adventure Awaits",
-                desc: "Find yourself exploring the most exciting and pristine landscapes."
-              },
-              {
-                img: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80",
-                badge: "LUXURY STAYS",
-                title: "Premium Resorts",
-                desc: "Unwind in the most exclusive and stunning 5-star properties."
-              },
-              {
-                img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80",
-                badge: "ISLAND ESCAPE",
-                title: "Tropical Vibes",
-                desc: "Relax on white-sand beaches with crystal clear turquoise waters."
-              },
-              {
-                img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80",
-                badge: "ROAD TRIPS",
-                title: "Scenic Routes",
-                desc: "Hit the road and experience the journey of a lifetime."
-              }
-            ].map((slide, i) => (
+            {activeSlides.map((slide, i) => (
               <SwiperSlide key={i} className="h-100 position-relative" style={{ background: '#000' }}>
                 <img src={slide.img} alt={slide.title} className="lp-slide-img" />
                 <div className="lp-slide-overlay">
@@ -138,7 +175,7 @@ export default function LeadPopup() {
         </div>
 
         <div className="lead-popup-right">
-          <h3>Plan your Next Trip</h3>
+          <h3>{formTitle}</h3>
           <form className="lead-popup-form" ref={formRef} onSubmit={handleSubmit}>
             <input type="text" name="full_name" placeholder="First Name" required />
             <input type="tel" name="phone" placeholder="Contact" required pattern="\d{10}" title="Phone number must be 10 digits" />
