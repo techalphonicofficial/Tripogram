@@ -327,7 +327,7 @@ export default function Footer() {
                           />
                         </div>
                         <div className="details">
-                          <p>
+                          <p className="text-nowrap" style={{ whiteSpace: "nowrap" }}>
                             <Link href={backendFooterContact.emailHref}>
                               {backendFooterContact.email}
                             </Link>

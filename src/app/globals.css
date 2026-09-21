@@ -38331,6 +38331,7 @@ input:focus {
 
 .th-widget-contact .info-box_text .details {
   margin-top: 6px;
+  font-size: 0.85em;
 }
 
 .th-widget-contact .info-box_text .icon {
@@ -38455,12 +38456,13 @@ input:focus {
   gap: 40px !important;
 }
 
-.grid-nav-list > li {
+.grid-nav-list>li {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 !important;
 }
+
 @media (min-width: 1200px) {
   .logo-custom-margin {
     margin-left: 100px !important;
@@ -38469,48 +38471,102 @@ input:focus {
 
 /* Mobile Footer Alignment */
 @media (max-width: 767px) {
-  .footer-wrapper .footer-widget, 
-  .footer-wrapper .newsletter-area, 
+
+  .footer-wrapper .footer-widget,
+  .footer-wrapper .newsletter-area,
   .footer-wrapper .copyright-text {
     text-align: center !important;
   }
+
   .footer-wrapper .footer-widget {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
   }
+
   .footer-wrapper .th-social {
     justify-content: center !important;
   }
+
   .footer-wrapper .about-logo {
     display: flex;
     justify-content: center;
   }
+
   .footer-wrapper .th-widget-contact {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
   }
+
   .footer-wrapper .th-widget-contact .info-box_text {
-    flex-direction: column;
+    flex-direction: row !important;
     align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding: 15px !important;
-    margin: 0 0 15px 0 !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: 0 !important;
+    margin: 0 0 40px 0 !important;
     width: 100%;
-    max-width: 300px;
+    max-width: 320px;
+    background: transparent !important;
+    border: none !important;
+    position: relative;
   }
+  
+  .footer-wrapper .th-widget-contact .info-box_text:last-child {
+    margin-bottom: 10px !important;
+  }
+
+  /* Vertical cyan line connecting icons */
+  .footer-wrapper .th-widget-contact .info-box_text:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 24px; /* Center of 50px icon */
+    width: 2px;
+    height: calc(100% + 40px - 50px); /* 40px is margin-bottom */
+    background-color: var(--theme-color, #00A6D6);
+    z-index: 1;
+  }
+
+  .footer-wrapper .th-widget-contact .info-box_text .icon {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    background-color: var(--theme-color, #00A6D6) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 20px 0 0 !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-wrapper .th-widget-contact .info-box_text .icon img {
+    filter: brightness(0) invert(1);
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .footer-wrapper .th-widget-contact .info-box_text .details {
+    margin-top: 0 !important;
+    position: relative;
+    padding-bottom: 0;
+  }
+
   .footer-wrapper .newsletter-top .row {
     text-align: center;
     justify-content: center;
   }
+
   .footer-wrapper .widget_nav_menu ul.menu li {
     display: flex;
     justify-content: center;
   }
+
   .footer-wrapper .th-widget-contact .info-box_text .icon {
     margin: 0 0 10px 0 !important;
   }
@@ -38523,6 +38579,7 @@ input:focus {
     align-items: center;
     text-align: center;
   }
+
   .blog-box .blog-box_content .box-title {
     text-align: center;
   }
@@ -38535,12 +38592,65 @@ input:focus {
     align-items: center;
     text-align: center;
   }
+
   .blog-single .blog-meta {
     justify-content: center;
   }
 }
- 
- 
-@media (max-width: 767px) { .mobile-btn-sm { padding: 8px 16px !important; font-size: 13px !important; } }
 
-@media (max-width: 767px) { .mobile-btn-sm { padding: 8px 16px !important; font-size: 13px !important; } }
+
+@media (max-width: 767px) {
+  .mobile-btn-sm {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  /* Make logo 20% smaller on mobile */
+  .logo-custom-margin img {
+    width: 108px !important;
+    height: 48px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-btn-sm {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .footer-wrapper .footer-widget.widget_nav_menu .widget_title {
+    text-align: center !important;
+  }
+
+  .footer-wrapper .footer-widget.widget_nav_menu .menu {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    margin: 0;
+    padding: 0 40px; /* Increased from 20px for more left margin */
+    gap: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .footer-wrapper .footer-widget.widget_nav_menu .menu li {
+    text-align: left !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 0;
+    width: 100%;
+    display: block; /* Ensure it behaves normally in grid */
+  }
+
+  .footer-wrapper .footer-widget.widget_nav_menu .menu a {
+    text-align: left !important;
+    display: flex;
+    align-items: flex-start; /* Keep icon at top when text wraps */
+    justify-content: flex-start;
+  }
+  
+  .footer-wrapper .footer-widget.widget_nav_menu .menu a svg {
+    flex-shrink: 0;
+    margin-right: 8px;
+    margin-top: 4px; /* Align slightly down with text baseline */
+    width: 10px !important;
+  }
+}
