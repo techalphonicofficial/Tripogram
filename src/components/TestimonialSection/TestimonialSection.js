@@ -49,7 +49,7 @@ export default function TestimonialSection() {
   if (!mainpage || !testimonialss.length) return null;
 
   return (
-    <section className="tripogram-modern-testimonials mb-60">
+    <section className="tripogram-modern-testimonials">
       <div className="container th-container">
         <div className="modern-testi-wrapper">
           <div className="row align-items-center">

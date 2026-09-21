@@ -2,9 +2,7 @@ import { getPagewithSection } from "@/services/pageSection";
 import Image from "next/image";
 import Link from "next/link";
 
-// function isCurrentBrandSchema(schema) {
-//   return !/enlive|enlivetrips/i.test(schema?.schema || "");
-// }
+
 
 function isCurrentBrandSchema(schema) {
   return !/tripogram|tripogramclub/i.test(schema?.schema || "");

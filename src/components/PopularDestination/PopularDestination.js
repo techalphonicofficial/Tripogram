@@ -40,7 +40,7 @@ export default function PopularDestination() {
   const pageDataToDisplay = mainpage?.section?.[0]?.data?.Text ? mainpage : fallbackMainpage;
 
   return (
-    <div className="position-relative overflow-hidden pt-8 mb-35">
+    <div className="position-relative overflow-hidden pt-8">
       <div className="container">
         <div className="title-area text-center mb-4">
           <span className="sub-title text-success fw-bold">{pageDataToDisplay.section?.[0]?.data?.Text || "Destination Lists"}</span>

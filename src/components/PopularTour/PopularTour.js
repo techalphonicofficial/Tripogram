@@ -162,7 +162,7 @@ export default function PopularTour() {
 
   return (
     <>
-      <section ref={sectionRef} className="seasonal-popular-tour py-50 overflow-hidden position-relative">
+      <section ref={sectionRef} className="seasonal-popular-tour py-3 py-lg-5 overflow-hidden position-relative">
 
         {/* Subtle Decorative Background Elements */}
         <div className="position-absolute top-0 end-0 opacity-10 pointer-events-none d-none d-lg-block" style={{ width: '600px', height: '600px', zIndex: 0 }}>
@@ -175,7 +175,7 @@ export default function PopularTour() {
             {/* LEFT SIDE: Intro & Season Selector */}
             <div className="col-lg-3 col-md-12 pe-lg-4 d-flex flex-column justify-content-center">
 
-              <div className="title-area mb-4 text-lg-start text-center">
+              <div className="title-area mb-3 mb-lg-4 text-lg-start text-center">
                 <h2 className="sec-title text-primary fw-bolder mb-3" style={{ fontSize: 'clamp(32px, 4vw, 42px)', lineHeight: '1.2' }}>
 
                   {(mainpage.section[1]?.data?.Text || "Most Popular\nTour").split('\n').map((line, i) => (
@@ -189,8 +189,19 @@ export default function PopularTour() {
               </div>
 
               {/* Season Selector */}
-              <div className="season-selector-wrapper bg-white p-3 rounded-4 shadow-sm mb-4 mx-auto mx-lg-0" style={{ maxWidth: '400px' }}>
-                <h6 className="text-dark fw-bold mb-3 fs-6 ps-2">Select Season</h6>
+              <div className="season-selector-wrapper bg-white p-2 p-lg-3 rounded-4 shadow-sm mb-3 mb-lg-4 mx-auto mx-lg-0">
+                <h6 className="text-dark fw-bold mb-3 fs-6 ps-lg-2 text-center text-lg-start">Select Season</h6>
+                
+                {/* Mobile-only badge */}
+                <div className="d-flex d-lg-none justify-content-center mb-3">
+                  <div className="season-info-badge bg-white px-3 py-2 rounded-3 shadow-sm w-100 d-inline-flex align-items-center gap-2 border" style={{ borderColor: '#e2e8f0' }}>
+                    <FontAwesomeIcon icon={activeSeasonData?.icon} style={{ color: activeSeasonData?.color }} />
+                    <div className="text-start">
+                      <span className="d-block text-muted" style={{ fontSize: '11px' }}>Showing top picks for</span>
+                      <span className="d-block fw-bold text-success" style={{ fontSize: '13px' }}>{activeSeasonData?.name} Season ({activeSeasonData?.months})</span>
+                    </div>
+                  </div>
+                </div>
                 <div className="d-flex justify-content-between gap-2">
                   {SEASONS.map((season) => {
                     const isActive = activeSeason === season.id;
@@ -198,7 +209,7 @@ export default function PopularTour() {
                       <button
                         key={season.id}
                         onClick={() => setActiveSeason(season.id)}
-                        className={`season-btn flex-fill d-flex flex-column align-items-center justify-content-center p-2 rounded-3 border transition-all ${isActive ? 'active shadow-sm' : 'bg-light border-light text-muted'}`}
+                        className={`season-btn flex-fill d-flex flex-column align-items-center justify-content-center p-1 p-lg-2 rounded-3 border transition-all ${isActive ? 'active shadow-sm' : 'bg-light border-light text-muted'}`}
                         style={{
                           borderColor: isActive ? season.color : 'transparent',
                           backgroundColor: isActive ? '#fff' : '',
@@ -217,7 +228,7 @@ export default function PopularTour() {
                 </div>
               </div>
 
-              <div className="d-flex justify-content-center mb-4">
+              <div className="d-none d-lg-flex justify-content-center mb-3 mb-lg-4">
                 <div className="season-info-badge bg-white px-3 py-2 rounded-3 shadow-sm d-inline-flex align-items-center gap-2 border" style={{ borderColor: '#e2e8f0' }}>
                   <FontAwesomeIcon icon={activeSeasonData?.icon} style={{ color: activeSeasonData?.color }} />
                   <div className="text-start">
@@ -298,10 +309,10 @@ export default function PopularTour() {
                         1400: { slidesPerView: 3.5 },
                         1600: { slidesPerView: 4 },
                       }}
-                      className="swiper seasonal-slider pb-5 px-2 pt-2"
+                      className="swiper seasonal-slider pb-3 pb-lg-5 px-2 pt-2"
                     >
                       {filteredPackages.map((tourpackage) => (
-                        <SwiperSlide key={tourpackage.id} className="swiper-slide h-100 py-4">
+                        <SwiperSlide key={tourpackage.id} className="swiper-slide h-100 py-2 py-lg-4">
                           {({ isActive }) => (
                             <PopularTourSeasonalCard data={tourpackage} isActive={isActive} onRequestCallback={() => setOpen(tourpackage)} />
                           )}
@@ -310,17 +321,17 @@ export default function PopularTour() {
                     </Swiper>
 
                     {/* Custom Swiper Controls */}
-                    <div className="d-flex align-items-center justify-content-between mt-1">
+                    <div className="d-flex flex-wrap align-items-center justify-content-between mt-2 gap-2">
                       <div className="seasonal-swiper-pagination position-static w-auto"></div>
-                      <div className="d-flex align-items-center gap-3">
-                        <Link href="/trips/upcoming-trips/all" className="fw-bold text-primary text-decoration-none border-bottom border-primary pb-1 view-all-link">
+                      <div className="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
+                        <Link href="/trips/upcoming-trips/all" className="fw-bold text-primary text-decoration-none border-bottom border-primary pb-1 view-all-link text-nowrap" style={{ fontSize: '14px' }}>
                           View all tours <FontAwesomeIcon icon={faArrowRight} className="ms-1" />
                         </Link>
-                        <div className="swiper-nav-buttons d-flex gap-2 ms-3">
-                          <button className="btn btn-light rounded-circle shadow-sm seasonal-swiper-prev d-flex align-items-center justify-content-center border" style={{ width: '40px', height: '40px' }}>
+                        <div className="swiper-nav-buttons d-flex gap-2">
+                          <button className="btn btn-light rounded-circle shadow-sm seasonal-swiper-prev d-flex align-items-center justify-content-center border" style={{ width: '36px', height: '36px' }}>
                             <i className="fas fa-arrow-left text-primary"></i>
                           </button>
-                          <button className="btn btn-primary rounded-circle shadow-sm seasonal-swiper-next d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+                          <button className="btn btn-primary rounded-circle shadow-sm seasonal-swiper-next d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px' }}>
                             <i className="fas fa-arrow-right text-white"></i>
                           </button>
                         </div>

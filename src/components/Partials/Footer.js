@@ -133,7 +133,7 @@ export default function Footer() {
   return (
     <>
       <footer className="footer-wrapper bg-title footer-layout2 ">
-        <div className="widget-area pb-0">
+        <div className="widget-area pt-5 pb-0">
           <div className="container">
             {/* Newsletter */}
             <div className="newsletter-area">

@@ -43,24 +43,24 @@ export default function TourCard({ data, onRequestCallback }) {
   const checkoutHref = `/booking/${data.slug}`;
 
   return (
-    <div className="tour-box th-ani gsap-cursor h-100 d-flex flex-column">
-      <div className="tour-box_img global-img" style={{ maxHeight: '345px', overflow: 'hidden' }}>
-        <Link href={`/${data.slug}`}>
-          <Image src={data.thumbnail} alt={data.title} width={300} height={150} />
+    <div className="tour-box th-ani gsap-cursor h-100 w-100 d-flex flex-column">
+      <div className="tour-box_img global-img" style={{ height: '240px', overflow: 'hidden' }}>
+        <Link href={`/${data.slug}`} style={{ display: 'block', height: '100%' }}>
+          <Image src={data.thumbnail} alt={data.title} width={400} height={240} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
         </Link>
       </div>
       <div className="tour-content position-absolute top-0 left-0 z-2 w-100 d-flex flex-column justify-content-between">
-        <div className="tour_topbar d-flex align-item-center justify-content-between">
-          <Link href={`/${data.slug}`} className="th-btn style4 rounded-1 px-2 py-1">
-            <i className="d-none d-sm-block ">
+        <div className="tour_topbar d-flex align-item-center justify-content-between p-2 gap-1">
+          <Link href={`/${data.slug}`} className="th-btn style4 rounded-1 text-truncate" style={{ fontSize: '12px', padding: '5px 10px', lineHeight: '1', whiteSpace: 'nowrap', maxWidth: '70%' }}>
+            <i className="d-none d-sm-inline me-1">
               <FontAwesomeIcon icon={faLocationDot} />
-            </i>{" "}
+            </i>
             {data.pickup} To {data.drop}
           </Link>
-          <Link href={`/${data.slug}`} className="th-btn style4 rounded-1 px-2 py-1">
-            <i className="d-none d-sm-block ">
+          <Link href={`/${data.slug}`} className="th-btn style4 rounded-1" style={{ fontSize: '12px', padding: '5px 10px', lineHeight: '1', whiteSpace: 'nowrap' }}>
+            <i className="d-none d-sm-inline me-1">
               <FontAwesomeIcon icon={faClock} />
-            </i>{" "}
+            </i>
             {data.duration}
           </Link>
         </div>
@@ -189,18 +189,19 @@ export default function TourCard({ data, onRequestCallback }) {
           </Link>
         </h4>
       </div>
-      <div className="tour-action px-3 gap-3  mb-2">
+      <div className="tour-action px-3 gap-3 mb-3">
         <Link
           href="tel:8287828267"
-          className="th-btn style4 w-auto px-xl-4 px-4 py-2"
+          className="th-btn style4 w-auto d-flex align-items-center justify-content-center"
+          style={{ padding: '6px 14px', fontSize: '13px' }}
         >
           <FontAwesomeIcon icon={faPhone} />
         </Link>
-        <Link href="#" onClick={(e) => { e.preventDefault(); onRequestCallback(); }} className="th-btn style4 th-icon w-100">
+        <Link href="#" onClick={(e) => { e.preventDefault(); onRequestCallback(); }} className="th-btn style4 th-icon w-100" style={{ padding: '6px 14px', fontSize: '13px' }}>
           Request CallBack
         </Link>
         {shouldShowBookNow && (
-          <Link href={checkoutHref} className="th-btn style4 th-icon w-100">
+          <Link href={checkoutHref} className="th-btn style4 th-icon w-100" style={{ padding: '6px 14px', fontSize: '13px' }}>
             Book Now
           </Link>
         )}

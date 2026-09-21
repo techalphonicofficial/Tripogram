@@ -1,5 +1,5 @@
 .partnership-area {
-  padding-top: 100px;
+  padding-top: 0px;
   padding-bottom: 100px;
   position: relative;
   z-index: 1;
@@ -32,7 +32,7 @@
 }
 
 .partnership-area .sec-title {
-  color: #0b1c39;
+  color: #1ea0ff;
   font-weight: 700;
 }
 
@@ -45,8 +45,8 @@
 
 .partner-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 24px 16px;
+  border-radius: 8px;
+  padding: 12px 8px;
   text-align: center;
   border: 1px solid rgba(30, 160, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
@@ -64,11 +64,11 @@
 }
 
 .partner-logo-box {
-  height: 105px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   width: 100%;
 }
 
@@ -79,14 +79,14 @@
 }
 
 .partner-name {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 700;
   color: #0b1c39;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .partner-label {
-  font-size: 14px;
+  font-size: 11px;
   color: #777;
   margin-bottom: 0;
   line-height: 1.4;
@@ -94,39 +94,39 @@
 
 @media (max-width: 1199px) {
   .partner-card {
-    padding: 20px 12px;
+    padding: 10px 6px;
   }
 }
 
 @media (max-width: 991px) {
   .partnership-area {
-    padding-top: 80px;
+    padding-top: 0px;
     padding-bottom: 80px;
   }
 }
 
 @media (max-width: 767px) {
   .partnership-area {
-    padding-top: 60px;
+    padding-top: 0px;
     padding-bottom: 60px;
   }
 
   .partner-card {
-    padding: 16px 10px;
+    padding: 8px 5px;
   }
 
   .partner-logo-box {
-    height: 75px;
-    margin-bottom: 15px;
+    height: 37px;
+    margin-bottom: 8px;
   }
 
   .partner-name {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 12px;
+    margin-bottom: 2px;
   }
 
   .partner-label {
-    font-size: 13px;
+    font-size: 10px;
   }
 }
 
@@ -159,10 +159,12 @@
 }
 
 .marquee-track {
-  display: flex;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column;
   width: max-content;
   animation: scrollMarquee 30s linear infinite;
-  gap: 24px;
+  gap: 40px 60px;
 }
 
 .marquee-track:hover {
@@ -180,13 +182,13 @@
 }
 
 .marquee-item {
-  width: 375px;
+  width: 187px;
   flex: 0 0 auto;
 }
 
 @media (max-width: 767px) {
   .marquee-item {
-    width: 300px;
+    width: 150px;
   }
 
   .marquee-container::before,

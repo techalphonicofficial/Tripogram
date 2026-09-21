@@ -86,8 +86,7 @@
 }
 
 .seasonal-popular-tour {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    /* Padding handled by responsive Bootstrap classes (py-3 py-lg-5) */
 }
 
 .season-btn {
@@ -116,7 +115,7 @@
 
 .inactive-card {
     opacity: 0.85;
-    transform: scale(0.96);
+    transform: scale(1);
 }
 
 .inactive-card .seasonal-card-rating-overlay {
@@ -136,7 +135,7 @@
 
 .inactive-card:hover {
     opacity: 1;
-    transform: scale(0.98);
+    transform: scale(1);
 }
 
 /* Rating overlay transition */
@@ -146,9 +145,9 @@
 
 /* Fixed-height swiper container to prevent section reflow */
 .seasonal-swiper-wrapper {
-    height: 620px;
-    overflow: hidden;
-    contain: layout paint;
+    min-height: 520px;
+    height: auto;
+    /* Removed overflow: hidden to prevent clipping of bottom controls on mobile */
 }
 
 .seasonal-swiper-wrapper .swiper {
@@ -231,5 +230,15 @@
     flex-direction: column;
     justify-content: flex-start;
     margin-top: 20%;
+  }
+}
+
+.season-selector-wrapper {
+  max-width: 400px;
+}
+
+@media (max-width: 991px) {
+  .season-selector-wrapper {
+    max-width: 300px; /* ~25% smaller than 400px */
   }
 }

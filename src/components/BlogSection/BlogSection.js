@@ -56,18 +56,18 @@ export default function BlogSection() {
   if (!mainpage || !blogPosts.length) return null;
 
   return (
-    <section className="bg-smoke overflow-hidden space !pb-20" id="blog-sec">
+    <section className="bg-smoke overflow-hidden py-3 py-lg-5" id="blog-sec">
       <div className="container">
-        <div className="mb-30 text-center text-md-start">
+        <div className="mb-0 mb-md-4 text-center text-md-start">
           <div className="row align-items-center justify-content-between">
             <div className="col-md-7">
-              <div className="title-area mb-md-0">
+              <div className="title-area mb-0">
                 <span className="sub-title">{mainpage.section?.[0]?.data?.Text}</span>
-                <h2 className="sec-title">{mainpage.section?.[1]?.data?.Text}</h2>
+                <h2 className="sec-title mb-0">{mainpage.section?.[1]?.data?.Text}</h2>
               </div>
             </div>
-            <div className="col-md-auto">
-              <Link href="blog" className="th-btn style4 th-icon">
+            <div className="col-md-auto my-3 my-md-0">
+              <Link href="blog" className="th-btn style4 th-icon mobile-btn-sm">
                 See More Articles
               </Link>
             </div>
@@ -119,7 +119,7 @@ export default function BlogSection() {
                     </h3>
                     <Link
                       href={`blog/${blog.slug}`}
-                      className="th-btn style4 th-icon mt-auto align-self-center align-self-md-start"
+                      className="th-btn style4 th-icon mt-1 mt-md-auto align-self-center align-self-md-start"
                     >
                       Read More
                     </Link>

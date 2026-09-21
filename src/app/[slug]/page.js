@@ -256,13 +256,13 @@ export default async function Tripdetail({ params }) {
       </div>
 
       {/* <MiddleContent /> */}
+      <Instavideo related_insta_video={single_package.related_insta_video} />
+
       {single_package?.related_youtube_video?.length > 0 && (
         <RelatedYoutube
           related_youtube_video={single_package.related_youtube_video}
         />
       )}
-
-      <Instavideo related_insta_video={single_package.related_insta_video} />
 
 
       <TestimonialPackageSection testimonials={single_package?.testimonials} />

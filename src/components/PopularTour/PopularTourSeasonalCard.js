@@ -22,13 +22,13 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
     <div className={`seasonal-tour-card bg-white rounded-4 overflow-hidden position-relative d-flex flex-column ${isActive ? 'active-card' : 'inactive-card'}`}>
 
       {/* Top Image Section — FIXED height, no dynamic changes */}
-      <div className="seasonal-card-img-wrapper position-relative" style={{ height: '250px' }}>
+      <div className="seasonal-card-img-wrapper position-relative" style={{ height: '200px' }}>
         <Link href={checkoutHref} className="d-block h-100 w-100">
           <Image
             src={data.thumbnail || "/img/tour/tour_1_1.jpg"}
             alt={data.title || "Tour Package"}
-            width={400}
-            height={300}
+            width={320}
+            height={240}
             className="seasonal-card-img w-100 h-100 object-fit-cover"
           />
         </Link>
@@ -61,10 +61,10 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
       </div>
 
       {/* Content Section — FIXED layout, no conditional margins or sizing */}
-      <div className="seasonal-card-content p-4 d-flex flex-column flex-grow-1 bg-white position-relative" style={{ zIndex: 2 }}>
+      <div className="seasonal-card-content p-3 d-flex flex-column flex-grow-1 bg-white position-relative" style={{ zIndex: 2 }}>
 
         {/* Title */}
-        <h3 className="seasonal-card-title fw-bold mb-3 text-truncate-2 h5 text-dark">
+        <h3 className="seasonal-card-title fw-bold mb-2 text-truncate-2 h6 text-dark">
           <Link href={checkoutHref} className="text-decoration-none" style={{ color: 'inherit' }}>
             {data.title}
           </Link>
@@ -86,7 +86,7 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
         </div>
 
         {/* Description — always rendered at fixed height, visibility controlled by CSS opacity */}
-        <p className="seasonal-card-desc text-muted text-truncate-2 mb-4" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+        <p className="seasonal-card-desc text-muted text-truncate-2 mb-3" style={{ fontSize: '13px', lineHeight: '1.5' }}>
           {data.excerpt || "Serene valleys, crystal lakes and snow-capped peaks await you."}
         </p>
 
@@ -102,7 +102,7 @@ export default function PopularTourSeasonalCard({ data, onRequestCallback, isAct
             </div>
           </div>
 
-          <Link href={checkoutHref} className={`btn rounded-circle d-flex align-items-center justify-content-center p-0 action-btn ${isActive ? 'active-btn' : 'inactive-btn'}`} style={{ width: '40px', height: '40px' }}>
+          <Link href={checkoutHref} className={`btn rounded-circle d-flex align-items-center justify-content-center p-0 action-btn ${isActive ? 'active-btn' : 'inactive-btn'}`} style={{ width: '32px', height: '32px' }}>
             <FontAwesomeIcon icon={faArrowRight} />
           </Link>
         </div>

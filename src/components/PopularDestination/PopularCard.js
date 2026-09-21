@@ -4,13 +4,14 @@ import React from "react";
 
 export default function PopularCard({ image, title, subtitle, slug }) {
   return (
-    <div className="destination-box gsap-cursor">
+    <div className="destination-box gsap-cursor" style={{ maxWidth: '80%', margin: '0 auto' }}>
       <div className="destination-img" >
         <Image
           src={image}
           alt={title}
           fill
-          className="object-fit-cover w-100 h-100 rounded"
+          style={{ objectFit: 'cover' }}
+          className="w-100 h-100 rounded"
         />
         <div className="destination-content">
           <div className="media-left">

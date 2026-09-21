@@ -43,6 +43,8 @@ export default function WhyUsClient({ data, mediaPath }) {
     return groupedArr;
   }, [data]);
 
+  if (!grouped || grouped.length === 0) return null;
+
   return (
     <div className="whyus-container space">
       <div className="container">

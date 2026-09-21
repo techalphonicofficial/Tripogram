@@ -15,40 +15,32 @@
  background-size: cover;
  background-repeat: no-repeat;
  height: 400px;
- /* Previous border kept for quick visual rollback: border: 1px solid #0598cc; */
- border: 1px solid rgba(5, 152, 204, 0.28);
- border-radius: 8px;
- padding: 12px;
- box-shadow: 0 16px 36px rgba(17, 61, 72, 0.12);
+ border: 1px solid #8cc63f; /* Using green to match the reference image */
+ border-radius: 12px;
+ padding: 24px;
+ box-shadow: none;
  overflow: hidden;
  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
  position: relative;
  isolation: isolate;
 }
-.whyus-container .whyus-card::after{
- content: "";
- position: absolute;
- inset: 0;
- background: linear-gradient(180deg, rgba(2, 10, 19, 0.08), rgba(2, 10, 19, 0.54));
- z-index: -1;
-}
+
 .whyus-container .whyus-card:hover{
  transform: translateY(-6px);
- border-color: #0598cc;
- box-shadow: 0 20px 44px rgba(5, 152, 204, 0.18);
+ border-color: #72a82f;
+ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 .whyus-container .whyus-card-inner .whyus-card-title{
-  color: #ffffff;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  color: #0b1f3b;
   font-size: clamp(22px, 2.2vw, 30px);
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: 0;
+  margin-bottom: 15px;
 }
 .whyus-container .whyus-card-inner .whyus-card-description{
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-  font-size: 16px;
-  line-height: 1.65;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
 }
 @media screen and (max-width:1300px) {
   .whyus-container .whyus-card{

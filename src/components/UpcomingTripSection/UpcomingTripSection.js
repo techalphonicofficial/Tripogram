@@ -258,7 +258,7 @@ export default function UpcomingTripSection({ byCategory, searchQuery = "" }) {
                 <div className="row g-4">
                   {/* Real cards */}
                   {filtered.map((tour) => (
-                    <div key={tour.id} className="col-xxl-4 col-lg-6">
+                    <div key={tour.id} className="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
                       <TourCard
                         data={tour}
                         onRequestCallback={() => setOpen(tour)}
@@ -268,8 +268,8 @@ export default function UpcomingTripSection({ byCategory, searchQuery = "" }) {
 
                   {/* Skeleton cards while loading more */}
                   {loadingMore &&
-                    Array.from({ length: 6 }).map((_, i) => (
-                      <div key={`sk-${i}`} className="col-xxl-4 col-lg-6">
+                    Array.from({ length: 8 }).map((_, i) => (
+                      <div key={`sk-${i}`} className="col-xl-3 col-lg-4 col-md-6 d-flex align-items-stretch">
                         <TourCardSkeleton />
                       </div>
                     ))}

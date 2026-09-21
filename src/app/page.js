@@ -80,7 +80,7 @@ export default async function Home() {
       <main className="home-page">
         <Hero />
         <AdvertisementSectionCard />
-        <div className="bg-top-center mt-5 pt-5" style={{ backgroundImage: "url(/img/bg/about_bg_1.jpg)" }}>
+        <div className="bg-top-center" style={{ backgroundImage: "url(/img/bg/about_bg_1.jpg)" }}>
           <TourCategories />
           <PopularDestination />
         </div>
