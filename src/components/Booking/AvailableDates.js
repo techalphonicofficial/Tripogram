@@ -93,11 +93,16 @@ export default function AvailableDates({ groupedDates, handleSetDates, slug }) {
               return (
                 <div key={index} className="col-md-6 px-2">
                   <label
-                    className={`d-flex justify-content-between align-items-center position-relative p-1 p-md-3 border rounded shadow-sm w-100 transition-all ${selectedBatch === batch.id ? "bg-light" : "bg-white"}`}
+                    className={`d-flex justify-content-between align-items-center position-relative p-1 p-md-3 border rounded shadow-sm w-100 transition-all ${selectedBatch === batch.id ? "bg-light" : "bg-white"} ${batch.status?.toLowerCase() === "close" || batch.status?.toLowerCase() === "closed" ? "opacity-75" : ""}`}
                     style={{
-                      cursor: "pointer",
+                      cursor: batch.status?.toLowerCase() === "close" || batch.status?.toLowerCase() === "closed" ? "not-allowed" : "pointer",
                       transition: "0.2s",
                       borderColor: selectedBatch === batch.id ? "#0598cc" : undefined,
+                    }}
+                    onClick={(e) => {
+                      if (batch.status?.toLowerCase() === "close" || batch.status?.toLowerCase() === "closed") {
+                        e.preventDefault();
+                      }
                     }}
                   >
                     <div className="d-flex align-items-center gap-3" >
@@ -106,12 +111,13 @@ export default function AvailableDates({ groupedDates, handleSetDates, slug }) {
                           type="radio"
                           name="batch"
                           checked={selectedBatch === batch.id}
+                          disabled={batch.status?.toLowerCase() === "close" || batch.status?.toLowerCase() === "closed"}
                           onChange={() => setSelectedBatch(batch.id)}
                           className="form-check-input mt-0"
                           style={{
                             width: "22px",
                             height: "22px",
-                            cursor: "pointer",
+                            cursor: batch.status?.toLowerCase() === "close" || batch.status?.toLowerCase() === "closed" ? "not-allowed" : "pointer",
                             borderColor: selectedBatch === batch.id ? "#0598cc" : "#dee2e6"
                           }}
                         />
