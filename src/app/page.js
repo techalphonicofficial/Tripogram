@@ -10,9 +10,7 @@ import PartnershipSection from "@/components/PartnershipSection/PartnershipSecti
 import AdvertisementSectionCard from "@/components/AdvertisementSection/AdvertisementSectionCard";
 import { getPagewithSection } from "@/services/pageSection";
 
-// function isCurrentBrandSchema(schema) {
-//   return !/enlive|enlivetrips/i.test(schema?.schema || "");
-// }
+
 
 
 import { cache } from "react";

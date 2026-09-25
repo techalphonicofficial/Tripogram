@@ -38654,3 +38654,88 @@ input:focus {
     width: 10px !important;
   }
 }
+/* Trip Hero Pills */
+.trip-hero-pill {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  padding: 5px 20px 5px 5px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  max-width: 100%;
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+.trip-hero-pill .icon-circle {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  margin: 0 !important;
+}
+
+.trip-hero-pill .icon-circle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.trip-hero-pill .pill-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  white-space: nowrap;
+  opacity: 1;
+  width: auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trip-hero-pill p {
+  line-height: 1.2;
+}
+
+/* Desktop Hover */
+@media (min-width: 768px) {
+  .trip-hero-pill:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Mobile: Collapse to icon, expand on hover/active */
+@media (max-width: 767px) {
+  .trip-hero-pill {
+    padding: 5px;
+    gap: 0;
+  }
+  
+  .trip-hero-pill .pill-content {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  
+  .trip-hero-pill:hover,
+  .trip-hero-pill:active,
+  .trip-hero-pill:focus {
+    gap: 10px;
+    padding-right: 15px;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .trip-hero-pill:hover .pill-content,
+  .trip-hero-pill:active .pill-content,
+  .trip-hero-pill:focus .pill-content {
+    max-width: 200px;
+    opacity: 1;
+  }
+}
