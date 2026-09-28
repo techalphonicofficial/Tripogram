@@ -140,6 +140,7 @@ function BookingFormContent() {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState([]);
   const [isEditingMode, setIsEditingMode] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const isValidUUID = (uuid) => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -527,6 +528,9 @@ function BookingFormContent() {
             triple: 0
           };
 
+          // Track generic (non-sharing-type) items separately
+          let genericMemberCount = 0;
+
           data.active_cost.forEach(item => {
             const activity = item.activity.toLowerCase();
             const quantity = item.quantity || 1;
@@ -537,14 +541,18 @@ function BookingFormContent() {
               allocation.double += quantity;
             } else if (activity.includes('triple')) {
               allocation.triple += quantity;
+            } else {
+              // Generic activity (e.g. tour package name) — add quantity as members
+              genericMemberCount += quantity;
             }
           });
 
           setActivityAllocation(allocation);
 
-          // Calculate total members from allocations
-          const totalMembers = Number(allocation.quad) + Number(allocation.double) + Number(allocation.triple);
-          setMemberCount(totalMembers || 1);
+          // Calculate total members from allocations + generic
+          const sharingTotal = Number(allocation.quad) + Number(allocation.double) + Number(allocation.triple);
+          const totalMembers = sharingTotal > 0 ? sharingTotal : (genericMemberCount || 1);
+          setMemberCount(totalMembers);
 
           // Create member array based on allocations - THIS IS THE BASE STRUCTURE
           const baseMembers = [];
@@ -571,6 +579,16 @@ function BookingFormContent() {
               ...emptyMember,
               allocatedActivity: 'Triple Sharing'
             });
+          }
+
+          // Add Generic members (if no quad/double/triple found)
+          if (sharingTotal === 0) {
+            for (let i = 0; i < totalMembers; i++) {
+              baseMembers.push({
+                ...emptyMember,
+                allocatedActivity: 'General'
+              });
+            }
           }
 
           // Check if we have saved local storage data
@@ -619,15 +637,15 @@ function BookingFormContent() {
               name: member.name || '',
               contact: member.contact || '',
               dob: member.dob || '',
-              idProofType: member.idProofType || '',
-              idProofNumber: member.idProofNumber || '',
+              idProofType: member.idProofType || member.id_proof_type || '',
+              idProofNumber: member.idProofNumber || member.id_proof_number || '',
               idProofFile: null,
               gender: member.gender || '',
               email: member.email || '',
-              emergencyName: member.emergencyName || '',
-              emergencyContact: member.emergencyContact || '',
-              emergencyRelation: member.emergencyRelation || '',
-              allocatedActivity: member.allocatedActivity || baseMembers[index]?.allocatedActivity || ''
+              emergencyName: member.emergencyName || member.emergency_name || '',
+              emergencyContact: member.emergencyContact || member.emergency_contact || '',
+              emergencyRelation: member.emergencyRelation || member.emergency_relation || '',
+              allocatedActivity: member.allocatedActivity || member.sharing_type || baseMembers[index]?.allocatedActivity || ''
             }));
 
             setMembers(apiMembers);
@@ -640,10 +658,16 @@ function BookingFormContent() {
               }
             });
             setCompletedSteps(completed);
+            if (data.members.length > 0) {
+              setIsSubmitted(true);
+            }
 
           } else {
             // No data anywhere, use empty base members
             setMembers(baseMembers);
+            if (data.data_get) {
+              setIsSubmitted(true);
+            }
           }
         }
 
@@ -849,6 +873,7 @@ function BookingFormContent() {
       const quadMembers = members.filter(m => m.allocatedActivity === 'Quad Sharing');
       const doubleMembers = members.filter(m => m.allocatedActivity === 'Double Sharing');
       const tripleMembers = members.filter(m => m.allocatedActivity === 'Triple Sharing');
+      const otherMembers = members.filter(m => !['Quad Sharing', 'Double Sharing', 'Triple Sharing'].includes(m.allocatedActivity));
 
       // Only add quad_sharing if count > 0
       if (quadMembers.length > 0) {
@@ -913,6 +938,27 @@ function BookingFormContent() {
         };
       }
 
+      // Add general_sharing for any generic or non-specified activity members
+      if (otherMembers.length > 0) {
+        sharingDetails.general_sharing = {
+          count: otherMembers.length,
+          members: otherMembers.map((member, index) => ({
+            member_number: index + 1,
+            name: member.name,
+            contact: member.contact,
+            dob: member.dob,
+            gender: member.gender,
+            email: member.email || '',
+            id_proof_type: member.idProofType,
+            id_proof_number: member.idProofNumber,
+            emergency_name: member.emergencyName,
+            emergency_contact: member.emergencyContact,
+            emergency_relation: member.emergencyRelation,
+            has_file: !!member.idProofFile
+          }))
+        };
+      }
+
       // Create the complete booking object
       const bookingData = {
         booking_info: {
@@ -948,17 +994,8 @@ function BookingFormContent() {
 
         // Clear local storage after successful submission
         clearAllStorage();
-
-        if (!id) {
-          setMembers([{ ...emptyMember }]);
-          setMemberCount(1);
-          setErrors({});
-          setTouched({});
-          setCurrentStep(0);
-          setCompletedSteps([]);
-        }
-        window.location.href = '/';
-
+        setIsSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         throw new Error(result.message || 'Submission failed');
       }
@@ -1062,17 +1099,10 @@ function BookingFormContent() {
     );
   }
 
-  // Show error state
-  if (error) {
+  // Show error state only if bookingDetail is missing
+  if (error && !bookingDetail) {
     return (
-      <div className="container py-5">
-        <div className="alert alert-danger" role="alert">
-          <h4 className="alert-heading">Your Traveller Details are already submitted.</h4>
-          {/* <p>{error}</p> */}
-          {/* <hr /> */}
-          {/* <p className="alert-heading">Information is already submitted.</p> */}
-        </div>
-      </div>
+      <BookingDetailErrorPage message={error || 'Failed to load booking details.'} />
     );
   }
 
@@ -1123,15 +1153,194 @@ function BookingFormContent() {
 
   return (
     <div className="container py-4">
-      <div className="card shadow-sm border-0">
-        <div className="card-header text-white py-3" style={{ backgroundColor: '#409d00' }}>
-          <h3 className="mb-0 fs-3 text-white">
-            Update Booking Member Details
-            {id && <span className="ms-2 badge bg-light rounded-1 text-primary">ID: {bookingDetail?.id}</span>}
-          </h3>
+      {/* Top Banner Header */}
+      <div className="card shadow-sm border-0 mb-4 overflow-hidden">
+        <div className="card-header text-white py-3 d-flex justify-content-between align-items-center flex-wrap" style={{ backgroundColor: '#409d00' }}>
+          <div>
+            <h3 className="mb-0 fs-3 text-white">
+              Tripogram Booking Details
+            </h3>
+            {bookingDetail?.booking_id && (
+              <span className="text-white-50 small">Booking ID: {bookingDetail.booking_id}</span>
+            )}
+          </div>
+          {bookingDetail?.status && (
+            <span className={`badge ${bookingDetail.status === 'confirmed' ? 'bg-success' : 'bg-warning text-dark'} fs-6 px-3 py-2 text-uppercase`}>
+              Status: {bookingDetail.status}
+            </span>
+          )}
         </div>
+      </div>
 
-        <div className="card-body p-4">
+      {/* Package & Trip Information Card */}
+      {bookingDetail && (
+        <div className="card shadow-sm border-0 mb-4">
+          <div className="card-header bg-primary text-white py-3">
+            <h5 className="mb-0 text-white">📍 Trip & Package Information</h5>
+          </div>
+          <div className="card-body p-4">
+            <div className="row g-3">
+              <div className="col-md-6 col-lg-4">
+                <div className="p-3 bg-light rounded h-100">
+                  <small className="text-muted d-block fw-bold text-uppercase">Package Name</small>
+                  <span className="fs-5 fw-bold text-dark">{bookingDetail.package_title}</span>
+                </div>
+              </div>
+
+              <div className="col-md-6 col-lg-4">
+                <div className="p-3 bg-light rounded h-100">
+                  <small className="text-muted d-block fw-bold text-uppercase">Duration</small>
+                  <span className="fs-5 fw-bold text-dark">{bookingDetail.duration || 'N/A'}</span>
+                </div>
+              </div>
+
+              <div className="col-md-6 col-lg-4">
+                <div className="p-3 bg-light rounded h-100">
+                  <small className="text-muted d-block fw-bold text-uppercase">Pickup & Drop</small>
+                  <span className="fs-6 fw-semibold text-dark">
+                    {bookingDetail.pickup || 'N/A'} <i className="bi bi-arrow-right"></i> {bookingDetail.drop || 'N/A'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-md-6 col-lg-6">
+                <div className="p-3 bg-light rounded h-100">
+                  <small className="text-muted d-block fw-bold text-uppercase">Travel Dates</small>
+                  <span className="fs-6 fw-semibold text-dark">
+                    {bookingDetail.start_date ? formatDateToDDMMYYYY(bookingDetail.start_date) : 'TBA'}
+                    {bookingDetail.end_date ? ` to ${formatDateToDDMMYYYY(bookingDetail.end_date)}` : ''}
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-md-12 col-lg-6">
+                <div className="p-3 bg-light rounded h-100">
+                  <small className="text-muted d-block fw-bold text-uppercase">Lead Guest Contact</small>
+                  <span className="fs-6 fw-semibold text-dark">
+                    {bookingDetail.full_name} ({bookingDetail.phone} | {bookingDetail.email})
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Payment & Cost Summary Card */}
+      {bookingDetail && (
+        <div className="card shadow-sm border-0 mb-4">
+          <div className="card-header bg-dark text-white py-3">
+            <h5 className="mb-0 text-white">💰 Cost & Payment Summary</h5>
+          </div>
+          <div className="card-body p-4">
+            {bookingDetail.active_cost && Array.isArray(bookingDetail.active_cost) && bookingDetail.active_cost.length > 0 && (
+              <div className="table-responsive mb-4">
+                <table className="table table-bordered align-middle">
+                  <thead className="table-light">
+                    <tr>
+                      <th>Activity / Package Option</th>
+                      <th className="text-center">Quantity / Persons</th>
+                      <th className="text-end">Total Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookingDetail.active_cost.map((cost, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          <strong>{cost.activity}</strong>
+                          {cost.gst_percent > 0 && <small className="text-muted d-block">(Includes {cost.gst_percent}% GST)</small>}
+                        </td>
+                        <td className="text-center">{cost.quantity || 1} Person(s)</td>
+                        <td className="text-end fw-semibold">₹{Number(cost.total_with_discount_and_gst || cost.cost || 0).toLocaleString('en-IN')}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="row g-3 text-center">
+              <div className="col-md-4">
+                <div className="p-3 bg-light border rounded">
+                  <small className="text-muted fw-bold d-block text-uppercase">Total Amount</small>
+                  <span className="fs-4 fw-bold text-primary">₹{Number(bookingDetail.final_amount || 0).toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="p-3 bg-light border rounded">
+                  <small className="text-muted fw-bold d-block text-uppercase">Paid Amount</small>
+                  <span className="fs-4 fw-bold text-success">₹{Number(bookingDetail.paid_amount || 0).toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="p-3 bg-light border rounded">
+                  <small className="text-muted fw-bold d-block text-uppercase">Due Amount</small>
+                  <span className={`fs-4 fw-bold ${Number(bookingDetail.due_amount || 0) > 0 ? 'text-danger' : 'text-success'}`}>
+                    ₹{Number(bookingDetail.due_amount || 0).toLocaleString('en-IN')}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Traveler Details Section */}
+      {isSubmitted ? (
+        <div className="card shadow-sm border-0 mb-4">
+          <div className="card-header bg-success text-white py-3 d-flex justify-content-between align-items-center flex-wrap">
+            <h5 className="mb-0 text-white">👥 Submitted Traveler Details ({members.length} Traveler(s))</h5>
+            <button
+              type="button"
+              className="btn btn-sm btn-light fw-bold"
+              onClick={() => setIsSubmitted(false)}
+            >
+              ✏️ Edit Traveler Details
+            </button>
+          </div>
+          <div className="card-body p-4">
+            <div className="alert alert-success d-flex align-items-center mb-4">
+              <i className="bi bi-check-circle-fill fs-4 me-3"></i>
+              <div>
+                <strong>Traveler Details Submitted!</strong>
+                <div className="small">All traveler details for this booking have been submitted. Click "Edit Traveler Details" above if you need to make changes.</div>
+              </div>
+            </div>
+
+            <div className="row g-3">
+              {members.map((member, idx) => (
+                <div className="col-md-6" key={idx}>
+                  <div className="card border h-100">
+                    <div className="card-header bg-light d-flex justify-content-between align-items-center">
+                      <h6 className="mb-0 fw-bold text-primary">
+                        Traveler {idx + 1}: {member.name || 'N/A'}
+                      </h6>
+                      {member.allocatedActivity && (
+                        <span className="badge bg-info">{member.allocatedActivity}</span>
+                      )}
+                    </div>
+                    <div className="card-body">
+                      <p className="mb-2"><strong>Mobile:</strong> {member.contact || 'N/A'}</p>
+                      <p className="mb-2"><strong>Gender:</strong> {member.gender || 'N/A'} | <strong>DOB:</strong> {member.dob || 'N/A'}</p>
+                      {member.email && <p className="mb-2"><strong>Email:</strong> {member.email}</p>}
+                      <p className="mb-2"><strong>ID Proof:</strong> {member.idProofType || 'N/A'} - {member.idProofNumber || 'N/A'}</p>
+                      <p className="mb-0"><strong>Emergency:</strong> {member.emergencyName || 'N/A'} ({member.emergencyRelation || 'N/A'}) - {member.emergencyContact || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="card shadow-sm border-0">
+          <div className="card-header text-white py-3" style={{ backgroundColor: '#409d00' }}>
+            <h3 className="mb-0 fs-3 text-white">
+              Fill / Update Traveler Details
+            </h3>
+          </div>
+
+          <div className="card-body p-4">
           {/* Package Summary */}
           {bookingDetail && (
             <div className="alert alert-info mb-4">
@@ -1564,6 +1773,7 @@ function BookingFormContent() {
           </form>
         </div>
       </div>
+      )}
 
       <style jsx>{`
         .step-indicator {
