@@ -4,7 +4,7 @@ import React, { Suspense, useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getBookingDetail, submitBookingDetail } from "@/services/bookingForm";
-import { API_URL, getApiHeaders } from "@/services/config";
+import { API_KEY, API_URL, getApiHeaders } from "@/services/config";
 
 // Empty member template
 const emptyMember = {
@@ -141,6 +141,7 @@ function BookingFormContent() {
   const [completedSteps, setCompletedSteps] = useState([]);
   const [isEditingMode, setIsEditingMode] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [viewMode, setViewMode] = useState('steps'); // 'steps' or 'all'
 
   const isValidUUID = (uuid) => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -157,7 +158,9 @@ function BookingFormContent() {
 
 
   function formatDateToDDMMYYYY(dateString) {
+    if (!dateString) return '';
     const date = new Date(dateString);
+    if (isNaN(date.getTime()) || date.getFullYear() <= 1970) return '';
 
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -631,7 +634,7 @@ function BookingFormContent() {
 
             setDataLoadedFromStorage(true);
 
-          } else if (data.members && Array.isArray(data.members)) {
+          } else if (data.members && Array.isArray(data.members) && data.members.length > 0) {
             // If no local storage but API has members, use API data
             const apiMembers = data.members.map((member, index) => ({
               name: member.name || '',
@@ -710,6 +713,16 @@ function BookingFormContent() {
       }
     });
     setErrors(newErrors);
+  };
+
+  const addMember = () => {
+    handleMemberChange(memberCount + 1);
+  };
+
+  const removeMember = () => {
+    if (memberCount > 1) {
+      handleMemberChange(memberCount - 1);
+    }
   };
 
   // Handle input change
@@ -978,12 +991,28 @@ function BookingFormContent() {
         },
         sharing_details: sharingDetails
       };
-      // console.log("Booking data", bookingData);
+      // Construct FormData to support file uploads
+      const formData = new FormData();
+      formData.append('booking_info', JSON.stringify(bookingData.booking_info));
+      formData.append('sharing_details', JSON.stringify(bookingData.sharing_details));
+      formData.append('booking_id', bookingDetail?.id || id);
+
+      // Append ID proof files
+      members.forEach((member, index) => {
+        if (member.idProofFile && member.idProofFile instanceof File) {
+          formData.append(`id_proof_file_${index}`, member.idProofFile);
+          const sharingKey = member.allocatedActivity ? member.allocatedActivity.toLowerCase().replace(/\s+/g, '_') : 'general';
+          formData.append(`file_${sharingKey}_${index + 1}`, member.idProofFile);
+        }
+      });
 
       const response = await fetch(`${API_URL}/booking/booking-information`, {
         method: "POST",
-        headers: getApiHeaders({ Accept: "application/json" }),
-        body: JSON.stringify(bookingData)
+        headers: {
+          ...(API_KEY ? { "x-api-key": API_KEY } : {}),
+          Accept: "application/json"
+        },
+        body: formData
       });
 
       const result = await response.json();
@@ -1109,44 +1138,90 @@ function BookingFormContent() {
   // Progress indicator for steps
   const renderStepIndicator = () => {
     return (
-      <div className="mb-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h5 className="mb-0">Member Progress</h5>
-          <span className="text-muted">
-            Step {currentStep + 1} of {members.length}
-          </span>
-        </div>
-        <div className="progress" style={{ height: '8px' }}>
-          <div
-            className="progress-bar"
-            role="progressbar"
-            style={{ width: `${((currentStep + 1) / members.length) * 100}%` }}
-            aria-valuenow={((currentStep + 1) / members.length) * 100}
-            aria-valuemin="0"
-            aria-valuemax="100"
-          ></div>
-        </div>
-        <div className="d-flex justify-content-between mt-2">
-          {members.map((_, index) => {
-            const status = getMemberStatus(index);
-            return (
+      <div className="mb-4 p-3 bg-light rounded border">
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <div>
+            <h5 className="mb-0 fw-bold d-inline me-2">Member Progress</h5>
+            <span className="badge bg-secondary">
+              {viewMode === 'steps' ? `Step ${currentStep + 1} of ${members.length}` : `All ${members.length} Members`}
+            </span>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 flex-wrap">
+            {/* View Mode Toggle */}
+            <div className="btn-group btn-group-sm me-2" role="group">
               <button
-                key={index}
                 type="button"
-                onClick={() => goToStep(index)}
-                className={`btn btn-sm rounded-circle step-indicator ${status === 'completed' ? 'btn-success' :
-                  status === 'current' ? 'btn-primary' :
-                    status === 'pending' ? 'btn-warning' :
-                      'btn-outline-secondary'
-                  }`}
-                style={{ width: '30px', height: '30px', padding: '0' }}
-                disabled={status === 'upcoming' && index > 0}
+                className={`btn ${viewMode === 'steps' ? 'btn-primary' : 'btn-outline-primary'}`}
+                onClick={() => setViewMode('steps')}
               >
-                {status === 'completed' ? '✓' : index + 1}
+                Step-by-Step
               </button>
-            );
-          })}
+              <button
+                type="button"
+                className={`btn ${viewMode === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
+                onClick={() => setViewMode('all')}
+              >
+                Show All Forms
+              </button>
+            </div>
+
+            {/* Quick Add / Remove Member Buttons */}
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-success fw-bold"
+              onClick={addMember}
+              title="Add another member"
+            >
+              + Add Member
+            </button>
+            {members.length > 1 && (
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger fw-bold"
+                onClick={removeMember}
+                title="Remove last member"
+              >
+                - Remove
+              </button>
+            )}
+          </div>
         </div>
+
+        {viewMode === 'steps' && (
+          <>
+            <div className="progress" style={{ height: '8px' }}>
+              <div
+                className="progress-bar bg-success"
+                role="progressbar"
+                style={{ width: `${((currentStep + 1) / members.length) * 100}%` }}
+                aria-valuenow={((currentStep + 1) / members.length) * 100}
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <div className="d-flex flex-wrap gap-2 mt-2">
+              {members.map((_, index) => {
+                const status = getMemberStatus(index);
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => goToStep(index)}
+                    className={`btn btn-sm rounded-circle step-indicator ${status === 'completed' ? 'btn-success' :
+                      status === 'current' ? 'btn-primary' :
+                        status === 'pending' ? 'btn-warning' :
+                          'btn-outline-secondary'
+                      }`}
+                    style={{ width: '32px', height: '32px', padding: '0', fontWeight: 'bold' }}
+                  >
+                    {status === 'completed' ? '✓' : index + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     );
   };
@@ -1334,10 +1409,23 @@ function BookingFormContent() {
         </div>
       ) : (
         <div className="card shadow-sm border-0">
-          <div className="card-header text-white py-3" style={{ backgroundColor: '#409d00' }}>
+          <div className="card-header text-white py-3 d-flex justify-content-between align-items-center flex-wrap" style={{ backgroundColor: '#409d00' }}>
             <h3 className="mb-0 fs-3 text-white">
               Fill / Update Traveler Details
             </h3>
+            <div className="d-flex align-items-center gap-2 mt-2 mt-sm-0">
+              <label className="text-white small fw-bold mb-0">Total Members:</label>
+              <select
+                className="form-select form-select-sm fw-bold border-0 shadow-sm"
+                style={{ width: 'auto', backgroundColor: '#ffffff', color: '#333', borderRadius: '6px' }}
+                value={memberCount}
+                onChange={(e) => handleMemberChange(e.target.value)}
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20].map(n => (
+                  <option key={n} value={n}>{n} Member{n > 1 ? 's' : ''}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="card-body p-4">
@@ -1349,7 +1437,7 @@ function BookingFormContent() {
                 <strong>Duration:</strong> {bookingDetail.duration} |
                 <strong> Pickup:</strong> {bookingDetail.pickup} |
                 <strong> Drop:</strong> {bookingDetail.drop} |
-                <strong> Dates:</strong> {formatDateToDDMMYYYY(bookingDetail.start_date)} to {formatDateToDDMMYYYY(bookingDetail.end_date)}
+                <strong> Dates:</strong> {formatDateToDDMMYYYY(bookingDetail.start_date)}{bookingDetail.end_date && formatDateToDDMMYYYY(bookingDetail.end_date) ? ` to ${formatDateToDDMMYYYY(bookingDetail.end_date)}` : ''}
               </p>
             </div>
           )}
@@ -1430,7 +1518,7 @@ function BookingFormContent() {
           <form onSubmit={handleSubmit} className='detail-booking_forma' encType="multipart/form-data">
             {/* Show only current member's form */}
             {members.map((member, index) => (
-              index === currentStep && (
+              (viewMode === 'all' || index === currentStep) && (
                 <div className="card mb-4 border" key={index}>
                   <div className="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
                     <h5 className="mb-0">
