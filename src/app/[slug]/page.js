@@ -16,6 +16,7 @@ import OverviewCont from "@/components/TripDetail/OverviewCont";
 import RelatedBlogs from "@/components/TripDetail/RelatedBlogs";
 import RelatedTrips from "@/components/TripDetail/RelatedTrips";
 import RelatedYoutube from "@/components/TripDetail/RelatedYoutube";
+import ThingsToPack from "@/components/TripDetail/ThingsToPack";
 
 import TripHero from "@/components/TripDetail/TripHero";
 import TripInfo from "@/components/TripDetail/TripInfo";
@@ -197,7 +198,13 @@ export default async function Tripdetail({ params }) {
             </div>
 
             {/* <TripBanner /> */}
-            <OverviewCont hasGallery={single_package.gallery?.length > 0} />
+            <OverviewCont
+              hasGallery={single_package.gallery?.length > 0}
+              hasThingsToPack={Boolean(
+                single_package.things_to_pack &&
+                  single_package.things_to_pack.replace(/<[^>]*>/g, "").trim() !== ""
+              )}
+            />
             <div id="Overview">
               <Overview
                 description={single_package.description}
@@ -219,6 +226,12 @@ export default async function Tripdetail({ params }) {
             <div id="Exclusions">
               <Exclusions exclusion={single_package.exclusion} />
             </div>
+            {single_package.things_to_pack &&
+              single_package.things_to_pack.replace(/<[^>]*>/g, "").trim() !== "" && (
+                <div id="ThingsToPack">
+                  <ThingsToPack things_to_pack={single_package.things_to_pack} />
+                </div>
+              )}
             {single_package.package_dates?.length > 0 && (
               <div id="Costing">
                 <Dates

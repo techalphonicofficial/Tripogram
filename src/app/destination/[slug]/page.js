@@ -100,8 +100,6 @@ export default async function Trips({ params }) {
 
       {trips.trip.content && <TripContent content={trips.trip.content} />}
 
-      {faqs.length > 0 && <Faq faqs={faqs} />}
-
       {/* Trips Section */}
       <section
         className="tour-area position-relative bg-top-center overflow-hidden"
@@ -114,6 +112,8 @@ export default async function Trips({ params }) {
           </div>
         </div>
       </section>
+
+      {faqs.length > 0 && <Faq faqs={faqs} />}
     </>
   );
 }

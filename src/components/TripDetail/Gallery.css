@@ -1,0 +1,28 @@
+.trip-gallery-main {
+  height: 250px;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.trip-gallery-thumb {
+  height: 140px;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .trip-gallery-main {
+    height: 100%;
+    min-height: 408px;
+  }
+
+  .trip-gallery-thumb {
+    height: 200px;
+  }
+
+  .trip-gallery-thumb-single-row {
+    height: 408px;
+  }
+}

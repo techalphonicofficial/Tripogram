@@ -10,12 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { formatImageUrl } from "@/utils/formatImage";
+import "./Gallery.css";
 
-export default function Gallery({ gallery, title }) {
+export default function Gallery({ gallery = [], title }) {
   const [showModal, setShowModal] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const image_base_url = process.env.NEXT_PUBLIC_MEDIA_PATH;
-  // console.log("gallery", image_base_url)
 
   useEffect(() => {
     setMounted(true);
@@ -45,26 +45,33 @@ export default function Gallery({ gallery, title }) {
     };
   }, [showModal]);
 
+  if (!Array.isArray(gallery) || gallery.length === 0) return null;
+
+  const modalGallery = gallery.slice().reverse();
+  const galleryWithModalIndex = gallery.map((img, i) => ({
+    ...img,
+    modalIndex: gallery.length - 1 - i,
+  }));
+  const mainImage = galleryWithModalIndex[0];
+  const rightImages = galleryWithModalIndex.slice(1, 5).reverse();
 
   return (
     <div className="min_box-detail Age_limit container my-4">
       <div className="title">
         <h6 className="text-center text-md-start fw-bold mb-4">Gallery</h6>
       </div>
-      <div className="container my-5">
+      <div className="container my-4">
         <div className="row g-2">
           {/* Large Left Image */}
-          <div className="col-md-6">
+          <div className={rightImages.length > 0 ? "col-md-6" : "col-12"}>
             <div
-              className="h-100 position-relative"
-              style={{ cursor: "pointer", borderRadius: "12px", overflow: "hidden" }}
-              onClick={() => openModal(0)}
+              className="trip-gallery-main position-relative"
+              onClick={() => openModal(mainImage.modalIndex)}
             >
               <Image
-                src={image_base_url + gallery[0]?.image}
-                className="w-100 h-100 img-fluid"
+                src={formatImageUrl(mainImage?.image, "/img/tour/tour-1_1.jpg")}
                 style={{ objectFit: "cover" }}
-                alt={title || "Gallery image"}
+                alt={mainImage?.alt_text || title || "Gallery image"}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 unoptimized
@@ -73,44 +80,38 @@ export default function Gallery({ gallery, title }) {
           </div>
 
           {/* Right Grid 2x2 */}
-          <div className="col-md-6 d-grid gap-2">
-            <div className="row g-2">
-              {gallery.slice(1, 5).reverse().map((img, index) => (
-                <div className="col-6" key={index + 1}>
-                  <div
-                    className="position-relative h-100"
-                    style={{
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                      cursor: "pointer",
-                    }}
-                    onClick={() =>
-                      index === 3
-                        ? openModal(0)
-                        : openModal(index + 1)
-                    }
-                  >
-                    <Image
-                      src={image_base_url + img?.image}
-                      className="w-100 h-100 img-fluid"
-                      style={{ objectFit: "cover" }}
-                      alt={img?.alt_text || "Gallery image"}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      unoptimized
-                    />
+          {rightImages.length > 0 && (
+            <div className="col-md-6">
+              <div className="row g-2">
+                {rightImages.map((img, index) => (
+                  <div className="col-6" key={index + 1}>
+                    <div
+                      className={`trip-gallery-thumb position-relative ${
+                        rightImages.length <= 2 ? "trip-gallery-thumb-single-row" : ""
+                      }`}
+                      onClick={() => openModal(img.modalIndex)}
+                    >
+                      <Image
+                        src={formatImageUrl(img?.image, "/img/tour/tour-1_1.jpg")}
+                        style={{ objectFit: "cover" }}
+                        alt={img?.alt_text || "Gallery image"}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        unoptimized
+                      />
 
-                    {/* Overlay for last image */}
-                    {index === 3 && (
-                      <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50">
-                        <span className="text-white fw-bold fs-5">+{gallery.length} Photos</span>
-                      </div>
-                    )}
+                      {/* Overlay for last image */}
+                      {index === 3 && gallery.length > 5 && (
+                        <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50">
+                          <span className="text-white fw-bold fs-5">+{gallery.length} Photos</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Modal with Gallery Slider */}
@@ -135,12 +136,12 @@ export default function Gallery({ gallery, title }) {
                 initialSlide={currentIndex}
                 className="h-100"
               >
-                {gallery.slice().reverse().map((img, index) => (
+                {modalGallery.map((img, index) => (
                   <SwiperSlide key={index}>
-                    <div className="d-flex align-items-center justify-content-center h-100">
+                    <div className="position-relative d-flex align-items-center justify-content-center w-100 h-100">
                       <Image
-                        src={image_base_url + img?.image}
-                        className="img-fluid rounded"
+                        src={formatImageUrl(img?.image, "/img/tour/tour-1_1.jpg")}
+                        className="rounded"
                         style={{
                           objectFit: "contain",
                         }}
@@ -168,11 +169,11 @@ export default function Gallery({ gallery, title }) {
                   992: { slidesPerView: 10 },
                 }}
               >
-                {gallery.slice().reverse().map((img, index) => (
+                {modalGallery.map((img, index) => (
                   <SwiperSlide key={index}>
                     <Image
-                      src={image_base_url + img?.image}
-                      className="img-fluid rounded"
+                      src={formatImageUrl(img?.image, "/img/tour/tour-1_1.jpg")}
+                      className="rounded"
                       style={{
                         objectFit: "cover",
                         cursor: "pointer",

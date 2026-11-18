@@ -1910,16 +1910,18 @@ ul.wp-block-latest-posts li {
     border: 1px solid #eee;
   }
 
-  /* List items (Inclusions/Exclusions) - Fixed Alignment & Icon Design */
+  /* List items (Inclusions/Exclusions/ThingsToPack) - Fixed Alignment & Icon Design */
   #InclusionsContent ul,
-  #ExclusionsContent ul {
+  #ExclusionsContent ul,
+  #things_to_packContent ul {
     padding-left: 0 !important;
     list-style: none !important;
   }
 
   .checklist li,
   #InclusionsContent li,
-  #ExclusionsContent li {
+  #ExclusionsContent li,
+  #things_to_packContent li {
     position: relative !important;
     padding-left: 36px !important;
     margin-bottom: 12px !important;
@@ -1929,7 +1931,8 @@ ul.wp-block-latest-posts li {
   }
 
   .checklist li::before,
-  #InclusionsContent li::before {
+  #InclusionsContent li::before,
+  #things_to_packContent li::before {
     content: "✓" !important;
     position: absolute !important;
     left: 0 !important;

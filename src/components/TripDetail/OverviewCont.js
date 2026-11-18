@@ -1,28 +1,32 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-export default function OverviewCont({ hasGallery = true }) {
+export default function OverviewCont({ hasGallery = true, hasThingsToPack = true }) {
   const [activeSection, setActiveSection] = useState("Overview");
   const isClickScrolling = useRef(false);
   const navRef = useRef(null);
 
-  const sections = [
-    { id: "Overview", label: "Overview" },
-    { id: "Itinerary", label: "Itinerary" },
-    ...(hasGallery ? [{ id: "Gallery", label: "Gallery" }] : []),
-    { id: "Inclusions", label: "Inclusions" },
-    { id: "Exclusions", label: "Exclusions" },
-    { id: "Costing", label: "Costing" },
-  ];
+  const sections = useMemo(
+    () => [
+      { id: "Overview", label: "Overview" },
+      { id: "Itinerary", label: "Itinerary" },
+      ...(hasGallery ? [{ id: "Gallery", label: "Gallery" }] : []),
+      { id: "Inclusions", label: "Inclusions" },
+      { id: "Exclusions", label: "Exclusions" },
+      ...(hasThingsToPack ? [{ id: "ThingsToPack", label: "Things To Pack" }] : []),
+      { id: "Costing", label: "Costing" },
+    ],
+    [hasGallery, hasThingsToPack]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       // Don't update active section while user clicked a tab (smooth scroll in progress)
       if (isClickScrolling.current) return;
 
-      let current = sections[0].id;
-      const scrollPosition = window.scrollY + 300;
+      let current = sections[0]?.id || "Overview";
+      const scrollPosition = window.scrollY + 400;
 
       sections.forEach((section) => {
         const element = document.getElementById(section.id);
@@ -39,9 +43,10 @@ export default function OverviewCont({ hasGallery = true }) {
       }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
 
   useEffect(() => {
     // Automatically scroll the tab bar horizontally to keep the active tab in view (useful for mobile)
