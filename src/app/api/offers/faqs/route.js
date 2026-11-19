@@ -64,7 +64,8 @@ export async function GET() {
           ...(API_KEY ? { "x-api-key": API_KEY } : {}),
         },
         cache: "no-store",
-        signal: AbortSignal.timeout(3500),
+        // [LOCAL DEV]: Increased timeout from 3500ms to 25000ms for single-threaded local PHP server
+        signal: AbortSignal.timeout(25000),
       });
 
       if (res.ok) {

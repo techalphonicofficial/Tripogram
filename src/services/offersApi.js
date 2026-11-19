@@ -2,7 +2,8 @@ async function getOffersApi(path) {
   try {
     const response = await fetch(`/api/offers${path}`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(8000),
+      // [LOCAL DEV]: Increased timeout from 8000ms to 30000ms for single-threaded local PHP server (restore 8000 for live if desired)
+      signal: AbortSignal.timeout(30000),
     });
     if (!response.ok) return null;
     return await response.json();

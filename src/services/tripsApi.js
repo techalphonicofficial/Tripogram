@@ -30,14 +30,38 @@ export async function singleTrips(slug) {
   }
 }
 
+let tripsWithCountInFlight = null;
+let tripsWithCountCache = null;
+
 export async function tripsWithPackagecount() {
-  try {
-    const res = await api.get(`/trips/trips-with-packagecount`);
-    return res.data;
-  } catch (error) {
-    console.log("Failed to fetch trips with package count:", error.response?.data?.message || error.message);
-    return [];
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    if (tripsWithCountCache && Date.now() - tripsWithCountCache.ts < 10000) {
+      return tripsWithCountCache.data;
+    }
+    if (tripsWithCountInFlight) {
+      return tripsWithCountInFlight;
+    }
   }
+
+  const req = api
+    .get(`/trips/trips-with-packagecount`)
+    .then((res) => {
+      if (isBrowser && Array.isArray(res.data)) {
+        tripsWithCountCache = { data: res.data, ts: Date.now() };
+      }
+      return res.data;
+    })
+    .catch((error) => {
+      console.log("Failed to fetch trips with package count:", error.response?.data?.message || error.message);
+      return [];
+    })
+    .finally(() => {
+      if (isBrowser) tripsWithCountInFlight = null;
+    });
+
+  if (isBrowser) tripsWithCountInFlight = req;
+  return req;
 }
 
 export async function tripsWithDestination() {

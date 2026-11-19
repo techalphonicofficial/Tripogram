@@ -28,7 +28,8 @@ export async function GET() {
         ...(API_KEY ? { "x-api-key": API_KEY } : {}),
       },
       cache: "no-store",
-      signal: AbortSignal.timeout(8000),
+      // [LOCAL DEV]: Increased timeout from 8000ms to 25000ms for single-threaded local PHP server
+      signal: AbortSignal.timeout(25000),
     });
     if (!res.ok) throw new Error(`Backend ${res.status}`);
     const data = await res.json();

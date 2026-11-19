@@ -4,7 +4,8 @@ async function getCareersApi(path) {
   try {
     const response = await fetch(`/api/careers${path}`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(10000),
+      // [LOCAL DEV]: Increased timeout from 10000ms to 30000ms for single-threaded local PHP server (restore 10000 for live if desired)
+      signal: AbortSignal.timeout(30000),
     });
     if (!response.ok) return null;
     return await response.json();

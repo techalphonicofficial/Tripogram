@@ -31,7 +31,8 @@ export async function GET() {
     const pkgRes = await fetch(`${EXTERNAL_BACKEND}/packages`, {
       headers,
       cache: "no-store",
-      signal: AbortSignal.timeout(3500),
+      // [LOCAL DEV]: Increased timeout from 3500ms to 25000ms for single-threaded local PHP server
+      signal: AbortSignal.timeout(25000),
     });
     if (pkgRes.ok) {
       const pkgRaw = await pkgRes.json();
@@ -50,7 +51,8 @@ export async function GET() {
       const res = await fetch(url, {
         headers,
         cache: "no-store",
-        signal: AbortSignal.timeout(3500),
+        // [LOCAL DEV]: Increased timeout from 3500ms to 25000ms for single-threaded local PHP server
+        signal: AbortSignal.timeout(25000),
       });
 
       if (res.ok) {
