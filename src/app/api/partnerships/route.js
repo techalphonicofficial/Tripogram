@@ -28,14 +28,15 @@ export async function GET() {
         ...(API_KEY ? { "x-api-key": API_KEY } : {}),
       },
       cache: "no-store",
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) throw new Error(`Backend ${res.status}`);
     const data = await res.json();
     return NextResponse.json(data);
   } catch (_) {
     return NextResponse.json({
-      section:  FALLBACK_SECTION,
-      partners: FALLBACK_PARTNERS,
+      section: null,
+      partners: [],
     });
   }
 }

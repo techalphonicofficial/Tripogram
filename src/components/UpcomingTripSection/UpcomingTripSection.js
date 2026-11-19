@@ -1,5 +1,6 @@
 "use client";
 import { allPackage } from "@/services/packageApi";
+import { filterUpcomingDates } from "@/functions/dateFunction";
 import TourCard from "../PopularTour/TourCard";
 import DateMonthSlider from "@/components/HelpingCompnents/DateMonthSlider";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -107,7 +108,11 @@ export default function UpcomingTripSection({ byCategory, searchQuery = "" }) {
         if (!isMounted) return;
 
         // console.log("fetched data for page", page, data);
-        const fetchedList = Array.isArray(data) ? data : (data?.data || []);
+        const rawList = Array.isArray(data) ? data : (data?.data || []);
+        const fetchedList = rawList.map((item) => ({
+          ...item,
+          package_dates: filterUpcomingDates(item?.package_dates || []),
+        }));
 
         // Determine if there is more data
         if (fetchedList.length === 0 || fetchedList.length < PAGE_SIZE) {

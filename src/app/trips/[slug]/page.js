@@ -73,7 +73,13 @@ export default async function Trips({ params }) {
   const { slug } = await params;
   const trips = await getTrips(slug);
   const fetchedPackages = await allPackage(slug, 1);
-  const packagesList = Array.isArray(fetchedPackages) ? fetchedPackages : (fetchedPackages?.data || []);
+  const packagesList = Array.isArray(fetchedPackages)
+    ? fetchedPackages
+    : Array.isArray(fetchedPackages?.data)
+    ? fetchedPackages.data
+    : Array.isArray(trips?.packages)
+    ? trips.packages
+    : [];
   const faqs = getPageFaqs("trip", slug, trips.trip.faq);
   const fallbackFaqSchema = getFaqSchema(faqs);
   const pageSchema = trips.trip.meta_schema || fallbackFaqSchema;
@@ -118,17 +124,19 @@ export default async function Trips({ params }) {
       <TripContent content={trips.trip.content} />
 
       {/* Trips Section */}
-      <section
-        className="tour-area position-relative bg-top-center overflow-hidden"
-        id="service-sec"
-      >
-        <div className="slider-area tour-slider">
-          <div className="container th-container my-5">
-            <h2 className="fw-bold mb-4 text-center">Available Trips</h2>
-            <AvailableTrips trips={packagesList} />
+      {packagesList.length > 0 && (
+        <section
+          className="tour-area position-relative bg-top-center overflow-hidden"
+          id="service-sec"
+        >
+          <div className="slider-area tour-slider">
+            <div className="container th-container my-5">
+              <h2 className="fw-bold mb-4 text-center">Available Trips</h2>
+              <AvailableTrips trips={packagesList} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {faqs.length > 0 && <Faq faqs={faqs} />}
     </>

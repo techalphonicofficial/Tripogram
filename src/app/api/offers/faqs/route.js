@@ -88,5 +88,5 @@ export async function GET() {
     } catch (_) {}
   }
 
-  return NextResponse.json(FALLBACK_FAQS);
+  return NextResponse.json([]);
 }

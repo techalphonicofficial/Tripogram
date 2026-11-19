@@ -40,20 +40,10 @@ export async function allPackage(byCategory, page) {
       url = `/packages?trip=${byCategory}&page=${page}&limit=12`;
     }
     const res = await api.get(url);
-    const data = Array.isArray(res.data) ? res.data : (res.data?.data || []);
-    if (data.length > 0) {
-      return data;
-    }
-    const allRes = await api.get("/packages");
-    return Array.isArray(allRes.data) ? allRes.data : [];
+    return Array.isArray(res.data) ? res.data : (res.data?.data || []);
   } catch (error) {
     console.log("Failed to fetch all packages:", error.response?.data?.message || error.message);
-    try {
-      const allRes = await api.get("/packages");
-      return Array.isArray(allRes.data) ? allRes.data : [];
-    } catch (e) {
-      return [];
-    }
+    return [];
   }
 }
 

@@ -51,5 +51,5 @@ export async function GET() {
     } catch (_) {}
   }
 
-  return NextResponse.json(FALLBACK_CARDS);
+  return NextResponse.json([]);
 }

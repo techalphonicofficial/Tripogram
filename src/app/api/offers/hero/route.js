@@ -61,9 +61,9 @@ export async function GET() {
             id: heroObj.id || 1,
             is_visible: isVisible,
             website_visible: isVisible,
-            navbar_text: heroObj.navbar_text || data?.navbar_text || "Offers",
-            title: heroObj.heading || heroObj.title || FALLBACK_HERO.title,
-            subtitle: heroObj.description || heroObj.subtitle || heroObj.sub_text || FALLBACK_HERO.subtitle,
+            navbar_text: heroObj.navbar_text || data?.navbar_text || "",
+            title: heroObj.heading || heroObj.title || "",
+            subtitle: heroObj.description || heroObj.subtitle || heroObj.sub_text || "",
             background_image: formattedBg,
           });
         }
@@ -71,5 +71,5 @@ export async function GET() {
     } catch (_) {}
   }
 
-  return NextResponse.json(FALLBACK_HERO);
+  return NextResponse.json(null);
 }

@@ -38,6 +38,6 @@ export async function GET() {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (_) {
-    return NextResponse.json(FALLBACK_FAQS);
+    return NextResponse.json([]);
   }
 }

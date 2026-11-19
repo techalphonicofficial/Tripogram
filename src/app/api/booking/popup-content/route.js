@@ -75,6 +75,5 @@ export async function GET() {
     } catch (_) {}
   }
 
-  // Fallback to local default popup content
-  return NextResponse.json(FALLBACK_POPUP_CONTENT);
+  return NextResponse.json({ status: "0", slides: [] });
 }

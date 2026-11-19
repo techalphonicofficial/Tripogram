@@ -2,7 +2,7 @@ async function getOffersApi(path) {
   try {
     const response = await fetch(`/api/offers${path}`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(3500),
+      signal: AbortSignal.timeout(8000),
     });
     if (!response.ok) return null;
     return await response.json();

@@ -11,12 +11,15 @@ const DEPARTMENTS = ["All", "Sales", "Operations", "Marketing", "HR", "Others"];
 export default function OpenPositions() {
   const [activeTab, setActiveTab] = useState("All");
   const [expandedJobId, setExpandedJobId] = useState(null);
-  const [jobs, setJobs] = useState(openPositions);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCareersJobs().then((data) => {
-      if (data?.length) setJobs(data);
-    });
+    getCareersJobs()
+      .then((data) => {
+        if (Array.isArray(data)) setJobs(data);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const filteredJobs = jobs.filter((job) => {
@@ -50,7 +53,7 @@ export default function OpenPositions() {
             </div>
             
             <div className="jobs-list">
-              {filteredJobs.length > 0 ? (
+              {loading ? null : filteredJobs.length > 0 ? (
                 filteredJobs.map((job) => (
                   <JobCard 
                     key={job.id} 

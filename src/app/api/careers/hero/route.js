@@ -36,17 +36,17 @@ export async function GET() {
       if (item && typeof item === "object" && !item.message) {
         return NextResponse.json({
           id: item.id || 1,
-          eyebrow: item.label || item.eyebrow || FALLBACK.eyebrow,
-          heading_line1: item.heading_1 || item.heading_line_1 || item.heading_line1 || item.heading1 || FALLBACK.heading_line1,
-          heading_line2: item.heading_2 || item.heading_line_2 || item.heading_line2 || item.heading2 || FALLBACK.heading_line2,
-          heading_line3: item.heading_3 || item.heading_line_3 || item.heading_line3 || item.heading3 || FALLBACK.heading_line3,
+          eyebrow: item.label || item.eyebrow || "",
+          heading_line1: item.heading_1 || item.heading_line_1 || item.heading_line1 || item.heading1 || "",
+          heading_line2: item.heading_2 || item.heading_line_2 || item.heading_line2 || item.heading2 || "",
+          heading_line3: item.heading_3 || item.heading_line_3 || item.heading_line3 || item.heading3 || "",
           heading_highlight_color: item.heading_highlight_color || "#009ED1",
-          description: item.description || FALLBACK.description,
+          description: item.description || "",
           sub_text: item.sub_text || "",
-          cta_label: item.cta_label || item.button_text || FALLBACK.cta_label,
+          cta_label: item.cta_label || item.button_text || "Explore Open Positions",
           button_url: item.button_url || "#open-positions",
-          image_main: item.main_image || item.image_main || item.image || item.photo || item.bg_image || FALLBACK.image_main,
-          image_secondary: item.secondary_image || item.image_secondary || item.sub_image || FALLBACK.image_secondary,
+          image_main: item.main_image || item.image_main || item.image || item.photo || item.bg_image || "",
+          image_secondary: item.secondary_image || item.image_secondary || item.sub_image || "",
           background_image: item.background_image || null,
           team_text: item.team_text || "",
         });
@@ -56,5 +56,5 @@ export async function GET() {
     console.warn("Careers hero route error:", err.message);
   }
 
-  return NextResponse.json(FALLBACK);
+  return NextResponse.json(null);
 }

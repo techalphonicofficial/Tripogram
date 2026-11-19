@@ -111,37 +111,14 @@ export default function LeadPopup() {
     }
   };
 
-  if (!isOpen && !message) return null;
+  if ((!isOpen && !message) || slides.length === 0) return null;
 
-  const defaultSlides = [
-    {
-      img: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80",
-      badge: "HOT DEAL • GROUP PKG",
-      title: "Trans India",
-      desc: "Explore multiple cultures, iconic landmarks, and historic cities together."
-    },
-    {
-      img: "https://images.unsplash.com/photo-1476900543704-4312b78632f8?auto=format&fit=crop&q=80",
-      badge: "COUPLE SPECIAL",
-      title: "Romantic Getaways",
-      desc: "Discover breathtaking destinations perfect for you and your loved one."
-    },
-    {
-      img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&q=80",
-      badge: "SOLO TRAVEL",
-      title: "Adventure Awaits",
-      desc: "Find yourself exploring the most exciting and pristine landscapes."
-    }
-  ];
-
-  const activeSlides = slides.length > 0
-    ? slides.map((s) => ({
-        img: s.image,
-        badge: "EXCLUSIVE EXPERIENCES",
-        title: s.title,
-        desc: s.subtext || s.caption || ""
-      }))
-    : defaultSlides;
+  const activeSlides = slides.map((s) => ({
+    img: s.image,
+    badge: "EXCLUSIVE EXPERIENCES",
+    title: s.title,
+    desc: s.subtext || s.caption || "",
+  }));
 
   return (
     <div className={`lead-popup-overlay ${isOpen ? "active" : ""}`}>

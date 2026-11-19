@@ -16,10 +16,6 @@ export async function GET() {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (_) {
-    const fallback = perksBenefits.map(({ icon, ...rest }) => ({
-      ...rest,
-      icon: icon?.iconName ?? "heart",
-    }));
-    return NextResponse.json(fallback);
+    return NextResponse.json([]);
   }
 }

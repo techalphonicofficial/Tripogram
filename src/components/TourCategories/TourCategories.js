@@ -5,15 +5,8 @@ import { getPagewithSection } from "@/services/pageSection";
 import CurveSlider from "./CurveSlider";
 import { homeTrips } from "@/services/tripsApi";
 
-const fallbackContent = {
-  section: [
-    { data: { Text: "Choose Your Experience" } },
-    { data: { Text: "Tour Categories" } },
-  ],
-};
-
 export default function TourCategories() {
-  const [mainpage, setMainpage] = useState(fallbackContent);
+  const [mainpage, setMainpage] = useState(null);
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
@@ -43,9 +36,9 @@ export default function TourCategories() {
       <div className="container th-container">
         <div className="title-area text-center">
           <span className="sub-title">
-            {mainpage?.section?.[0]?.data?.Text || "Choose Your Experience"}
+            {mainpage?.section?.[0]?.data?.Text}
           </span>
-          <h2 className="sec-title">{mainpage?.section?.[1]?.data?.Text || "Tour Categories"}</h2>
+          <h2 className="sec-title">{mainpage?.section?.[1]?.data?.Text}</h2>
         </div>
 
         <CurveSlider trips={trips} />

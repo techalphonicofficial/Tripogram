@@ -66,7 +66,7 @@ function getPackageSeasons(pkg) {
 }
 
 export default function PopularTour() {
-  const [mainpage, setMainpage] = useState(fallbackContent);
+  const [mainpage, setMainpage] = useState(null);
   const [trendingPkg, setTrendingPkg] = useState([]);
   const [open, setOpen] = useState(false);
   const [activeSeason, setActiveSeason] = useState(getCurrentSeason);
@@ -158,7 +158,7 @@ export default function PopularTour() {
 
   const activeSeasonData = SEASONS.find(s => s.id === activeSeason);
 
-  // Instead of returning null, we will let the empty state handle it.
+  if (!mainpage && isLoading) return null;
 
   return (
     <>
@@ -176,16 +176,19 @@ export default function PopularTour() {
             <div className="col-lg-3 col-md-12 pe-lg-4 d-flex flex-column justify-content-center">
 
               <div className="title-area mb-3 mb-lg-4 text-lg-start text-center">
-                <h2 className="sec-title text-primary fw-bolder mb-3" style={{ fontSize: 'clamp(32px, 4vw, 42px)', lineHeight: '1.2' }}>
+                {mainpage?.section?.[1]?.data?.Text && (
+                  <h2 className="sec-title text-primary fw-bolder mb-3" style={{ fontSize: 'clamp(32px, 4vw, 42px)', lineHeight: '1.2' }}>
+                    {mainpage.section[1].data.Text.split('\n').map((line, i) => (
+                      <React.Fragment key={i}>{line}<br /></React.Fragment>
+                    ))}
+                  </h2>
+                )}
 
-                  {(mainpage.section[1]?.data?.Text || "Most Popular\nTour").split('\n').map((line, i) => (
-                    <React.Fragment key={i}>{line}<br /></React.Fragment>
-                  ))}
-                </h2>
-
-                <p className="sec-text text-muted mb-0" style={{ fontSize: '15px' }}>
-                  {mainpage.section[2]?.data?.content || "Handpicked journeys loved by our travelers. These packages change every season, so you always get the best of every time."}
-                </p>
+                {mainpage?.section?.[2]?.data?.content && (
+                  <p className="sec-text text-muted mb-0" style={{ fontSize: '15px' }}>
+                    {mainpage.section[2].data.content}
+                  </p>
+                )}
               </div>
 
               {/* Season Selector */}

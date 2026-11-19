@@ -28,7 +28,7 @@ const FALLBACK_FAQS = [
 ];
 
 export default function CareerFaqs() {
-  const [faqs, setFaqs] = useState(FALLBACK_FAQS);
+  const [faqs, setFaqs] = useState([]);
   const [openFaq, setOpenFaq] = useState(1);
 
   useEffect(() => {
@@ -38,6 +38,8 @@ export default function CareerFaqs() {
       }
     });
   }, []);
+
+  if (!faqs || faqs.length === 0) return null;
 
   const toggleFaq = (id) => {
     setOpenFaq(openFaq === id ? null : id);

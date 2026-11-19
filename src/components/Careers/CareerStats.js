@@ -31,14 +31,13 @@ function formatStat(valueStr) {
 }
 
 export default function CareerStats() {
-  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [stats, setStats] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getCareersStatistics();
         if (data && data.length > 0) {
-          // Map icon string to actual icon if provided
           const mapped = data.map((stat) => ({
             ...stat,
             icon: ICON_MAP[stat.icon] || faUsers,
@@ -46,11 +45,13 @@ export default function CareerStats() {
           setStats(mapped);
         }
       } catch (err) {
-        console.log("CareerStats: Using fallback data", err);
+        console.log("CareerStats: Failed to fetch data", err);
       }
     }
     fetchData();
   }, []);
+
+  if (!stats || stats.length === 0) return null;
 
   return (
     <section className="career-stats-section bg-white position-relative z-index-1">

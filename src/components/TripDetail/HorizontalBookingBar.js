@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faArrowRight, faArrowDown, faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { formatDate } from "@/functions/dateFunction";
+import { filterUpcomingDates, formatDate } from "@/functions/dateFunction";
 import "./HorizontalBookingBar.css";
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -42,16 +42,18 @@ export default function HorizontalBookingBar({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const upcomingPackageDates = useMemo(() => filterUpcomingDates(package_dates), [package_dates]);
+
   const groupedDates = useMemo(() => {
-    const groups = package_dates.reduce((acc, item) => {
+    const groups = upcomingPackageDates.reduce((acc, item) => {
       const date = new Date(item.start_date);
       const month = monthNames[date.getMonth()];
       if (!acc[month]) acc[month] = { month, dates: [] };
       acc[month].dates.push(item);
       return acc;
     }, {});
-    return [{ month: "All", dates: package_dates }, ...Object.values(groups)];
-  }, [package_dates]);
+    return [{ month: "All", dates: upcomingPackageDates }, ...Object.values(groups)];
+  }, [upcomingPackageDates]);
 
   useEffect(() => {
     const selectedGroup = groupedDates.find((itm) => itm.month === selectedFilter);
@@ -61,11 +63,14 @@ export default function HorizontalBookingBar({
   }, [selectedFilter, groupedDates]);
 
   useEffect(() => {
-    if (package_dates && package_dates.length > 0) {
-      setSelectedBatchId(package_dates[0].id || 0);
-      setSelectedBatch(package_dates[0]);
+    if (upcomingPackageDates && upcomingPackageDates.length > 0) {
+      setSelectedBatchId(upcomingPackageDates[0].id || 0);
+      setSelectedBatch(upcomingPackageDates[0]);
+    } else {
+      setSelectedBatchId("");
+      setSelectedBatch(null);
     }
-  }, [package_dates]);
+  }, [upcomingPackageDates]);
 
   const handleBatchSelect = (batch, index) => {
     setSelectedBatchId(batch.id || index);

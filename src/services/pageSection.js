@@ -22,28 +22,16 @@ import { api } from "./config";
 // }
 
 
-const FALLBACK_PAGE_DATA = {
-  1: {
-    id: 1,
-    title: "Home",
-    meta_title: "Tripogram | Explore Opportunities & Travel Experiences",
-    meta_description: "Book your dream tours and travel experiences with Tripogram, your trusted travel partner.",
-    sections: [],
-    section: [],
-  },
-};
-
 export async function getPagewithSection(pageId, sectionKey = false) {
   try {
     const url = sectionKey
       ? `pages/${pageId}/${sectionKey}`
       : `pages/${pageId}`;
 
-    const res = await api.get(url, { timeout: 3500 });
+    const res = await api.get(url, { timeout: 8000 });
     return res.data;
 
   } catch (_) {
-    // Return structured fallback data to prevent page hangs/crashes when backend is slow
-    return FALLBACK_PAGE_DATA[pageId] || { section: [], sections: [] };
+    return null;
   }
 }

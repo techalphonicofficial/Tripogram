@@ -31,6 +31,7 @@ import {
 } from "@/services/offersApi";
 import { getHomeDestination } from "@/services/destinationApi";
 import { trendingPackage } from "@/services/packageApi";
+import AvailableTrips from "@/components/TripDetail/AvailableTrips";
 import PopularTourSeasonalCard from "@/components/PopularTour/PopularTourSeasonalCard";
 import "./Offers.css";
 
@@ -78,49 +79,45 @@ const FALLBACK_FAQS = [
 ];
 
 export default function OffersPage() {
-  const [hero, setHero] = useState(FALLBACK_HERO);
-  const [cards, setCards] = useState(FALLBACK_CARDS);
+  const [hero, setHero] = useState(null);
+  const [cards, setCards] = useState([]);
   const [spots, setSpots] = useState([]);
   const [packages, setPackages] = useState([]);
-  const [faqs, setFaqs] = useState(FALLBACK_FAQS);
+  const [faqs, setFaqs] = useState([]);
   const [openFaq, setOpenFaq] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadOffersData() {
-      // Load Offers specific content
-      const results = await Promise.allSettled([
-        getOffersHero(),
-        getOffersCards(),
-        getOffersTravelSpots(),
-        getOffersFaqs(),
-      ]);
+      try {
+        const results = await Promise.allSettled([
+          getOffersHero(),
+          getOffersCards(),
+          getOffersTravelSpots(),
+          getOffersFaqs(),
+        ]);
 
-      if (results[0].status === "fulfilled" && results[0].value) {
-        setHero((prev) => ({ ...prev, ...results[0].value }));
-      }
-      if (results[1].status === "fulfilled" && Array.isArray(results[1].value) && results[1].value.length > 0) {
-        setCards(results[1].value);
-      }
-      if (results[2].status === "fulfilled" && Array.isArray(results[2].value) && results[2].value.length > 0) {
-        setSpots(results[2].value);
-      }
-      if (results[3].status === "fulfilled" && Array.isArray(results[3].value) && results[3].value.length > 0) {
-        setFaqs(results[3].value);
-      }
-      
-      // If offers spots failed or empty, fallback to home destinations
-      if (results[2].status === "rejected" || !results[2].value || results[2].value.length === 0) {
-        getHomeDestination().then((res) => {
-          if (Array.isArray(res)) setSpots(res);
-        });
-      }
-
-      // Load Packages for the deals section
-      trendingPackage().then((res) => {
-        if (res && res.success && Array.isArray(res.data)) {
-          setPackages(res.data.slice(0, 4));
+        if (results[0].status === "fulfilled" && results[0].value) {
+          setHero(results[0].value);
         }
-      });
+        if (results[1].status === "fulfilled" && Array.isArray(results[1].value) && results[1].value.length > 0) {
+          setCards(results[1].value);
+        }
+        if (results[2].status === "fulfilled" && Array.isArray(results[2].value) && results[2].value.length > 0) {
+          setSpots(results[2].value);
+        }
+        if (results[3].status === "fulfilled" && Array.isArray(results[3].value) && results[3].value.length > 0) {
+          setFaqs(results[3].value);
+        }
+
+        trendingPackage().then((res) => {
+          if (res && res.success && Array.isArray(res.data)) {
+            setPackages(res.data.slice(0, 4));
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadOffersData();
@@ -129,6 +126,10 @@ export default function OffersPage() {
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index);
   };
+
+  if (loading && !hero) {
+    return <main className="offers-page-wrapper min-vh-100" />;
+  }
 
   // Check visibility logic from API
   if (hero && (hero.website_visible === false || hero.is_visible === false)) {
@@ -157,88 +158,65 @@ export default function OffersPage() {
   return (
     <main className="offers-page-wrapper">
       {/* 1. Hero Section (Premium Layout with Dynamic Data) */}
-      <section className="offers-hero" style={{ 
-        backgroundImage: `linear-gradient(rgba(11, 28, 57, 0.7), rgba(11, 28, 57, 0.9)), url('${hero.background_image || "/img/hero/hero_bg_1_1.jpg"}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-        <div className="container position-relative" style={{ zIndex: 2 }}>
-          <div className="row align-items-center">
-            <div className="col-lg-7">
-              <nav className="offers-breadcrumb">
-                <Link href="/" className="offers-bread-link">🏠 Home</Link>
-                <span className="offers-bread-sep">&gt;</span>
-                <span className="offers-bread-current">Offers & Sale</span>
-              </nav>
-              <h1 className="offers-hero-title" dangerouslySetInnerHTML={{ __html: hero.title || "Exclusive Travel <span>Offers</span>" }} />
-              <p className="offers-hero-desc">{hero.subtitle || FALLBACK_HERO.subtitle}</p>
-            </div>
-            <div className="col-lg-5 d-none d-lg-flex justify-content-end position-relative">
-              <div className="offers-hero-tagline">
-                <span className="offers-tagline-line1">
-                  More Trips <FontAwesomeIcon icon={faPlane} className="offers-plane-icon" />
-                </span>
-                <span className="offers-tagline-line2">More Happiness</span>
+      {hero && (
+        <section className="offers-hero" style={{ 
+          backgroundImage: `linear-gradient(rgba(11, 28, 57, 0.7), rgba(11, 28, 57, 0.9)), url('${hero.background_image || "/img/hero/hero_bg_1_1.jpg"}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}>
+          <div className="container position-relative" style={{ zIndex: 2 }}>
+            <div className="row align-items-center">
+              <div className="col-lg-7">
+                <nav className="offers-breadcrumb">
+                  <Link href="/" className="offers-bread-link">🏠 Home</Link>
+                  <span className="offers-bread-sep">&gt;</span>
+                  <span className="offers-bread-current">Offers & Sale</span>
+                </nav>
+                {hero.title && (
+                  <h1 className="offers-hero-title" dangerouslySetInnerHTML={{ __html: hero.title }} />
+                )}
+                {hero.subtitle && <p className="offers-hero-desc">{hero.subtitle}</p>}
+              </div>
+              <div className="col-lg-5 d-none d-lg-flex justify-content-end position-relative">
+                <div className="offers-hero-tagline">
+                  <span className="offers-tagline-line1">
+                    More Trips <FontAwesomeIcon icon={faPlane} className="offers-plane-icon" />
+                  </span>
+                  <span className="offers-tagline-line2">More Happiness</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. Benefits Section */}
-      <section className="container mb-5 mt-4 mt-lg-5">
-        <div className="row g-4 justify-content-center">
-          {cards.map((card, i) => {
-            const iconProp = ICON_MAP[card.icon] || faTags;
-            return (
-              <div className="col-12 col-sm-6 col-md-3" key={card.id || i}>
-                <div className="benefit-card">
-                  <div className="benefit-icon-wrap">
-                    <FontAwesomeIcon icon={iconProp} />
+      {cards.length > 0 && (
+        <section className="container mb-5 mt-4 mt-lg-5">
+          <div className="row g-4 justify-content-center">
+            {cards.map((card, i) => {
+              const iconProp = ICON_MAP[card.icon] || faTags;
+              return (
+                <div className="col-12 col-sm-6 col-md-3" key={card.id || i}>
+                  <div className="benefit-card">
+                    <div className="benefit-icon-wrap">
+                      <FontAwesomeIcon icon={iconProp} />
+                    </div>
+                    <h4>{card.title}</h4>
                   </div>
-                  <h4>{card.title}</h4>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
-      {/* 3. Popular Travel Spots (Swiper) */}
+      {/* 3. Popular Travel Spots (Available Trips Grid Style) */}
       {spots.length > 0 && (
-        <section className="container mb-5 pb-4 border-bottom">
+        <section className="container th-container mb-5 pb-4 border-bottom">
           <h2 className="offers-section-title">Popular Travel Spots</h2>
           <p className="offers-section-subtitle">Handpicked destinations for your next unforgettable journey.</p>
-          <Swiper
-            modules={[Autoplay]}
-            loop={true}
-            autoplay={{ delay: 2500, disableOnInteraction: false }}
-            spaceBetween={20}
-            slidesPerView={5}
-            breakpoints={{
-              0: { slidesPerView: 2, spaceBetween: 12 },
-              576: { slidesPerView: 3, spaceBetween: 16 },
-              768: { slidesPerView: 3, spaceBetween: 20 },
-              1024: { slidesPerView: 4, spaceBetween: 24 },
-              1400: { slidesPerView: 4, spaceBetween: 30 },
-            }}
-            className="offer-destination-swiper"
-          >
-            {spots.map((dest, i) => (
-              <SwiperSlide key={i}>
-                <Link href={dest.url || `/destination/${dest.slug}`} className="offer-dest-card">
-                  <div className="offer-dest-img-wrap">
-                    <Image 
-                      src={dest.image_url || dest.image || fallbackDestImages[i % fallbackDestImages.length]} 
-                      alt={dest.name || dest.heading || "Destination"} 
-                      width={180} height={180} 
-                    />
-                  </div>
-                  <span className="offer-dest-title">{dest.name || dest.heading}</span>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <AvailableTrips trips={spots} />
         </section>
       )}
 
@@ -262,37 +240,39 @@ export default function OffersPage() {
       )}
 
       {/* 5. FAQs */}
-      <section className="container mb-5">
-        <h2 className="offers-section-title text-center">Grand Travel Sale FAQs</h2>
-        <div className="offers-faq-list mt-5 mx-auto" style={{ maxWidth: '900px' }}>
-          {faqs.map((faq, index) => {
-            const faqId = faq.id || index;
-            return (
-              <div 
-                className={`offers-faq-item ${openFaq === faqId ? 'open' : ''}`} 
-                key={faqId}
-              >
-                <button 
-                  className="offers-faq-question" 
-                  onClick={() => toggleFaq(faqId)}
-                  aria-expanded={openFaq === faqId}
+      {faqs.length > 0 && (
+        <section className="container mb-5">
+          <h2 className="offers-section-title text-center">Grand Travel Sale FAQs</h2>
+          <div className="offers-faq-list mt-5 mx-auto" style={{ maxWidth: '900px' }}>
+            {faqs.map((faq, index) => {
+              const faqId = faq.id || index;
+              return (
+                <div 
+                  className={`offers-faq-item ${openFaq === faqId ? 'open' : ''}`} 
+                  key={faqId}
                 >
-                  <span>{faq.question}</span>
-                  <FontAwesomeIcon 
-                    icon={faChevronDown} 
-                    className={`offers-faq-arrow ${openFaq === faqId ? 'rotated' : ''}`} 
-                  />
-                </button>
-                <div className={`offers-faq-answer ${openFaq === faqId ? 'expanded' : ''}`}>
-                  <div className="offers-faq-answer-inner">
-                    {faq.answer}
+                  <button 
+                    className="offers-faq-question" 
+                    onClick={() => toggleFaq(faqId)}
+                    aria-expanded={openFaq === faqId}
+                  >
+                    <span>{faq.question}</span>
+                    <FontAwesomeIcon 
+                      icon={faChevronDown} 
+                      className={`offers-faq-arrow ${openFaq === faqId ? 'rotated' : ''}`} 
+                    />
+                  </button>
+                  <div className={`offers-faq-answer ${openFaq === faqId ? 'expanded' : ''}`}>
+                    <div className="offers-faq-answer-inner">
+                      {faq.answer}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
     </main>
   );

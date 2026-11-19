@@ -20,7 +20,9 @@ export default function Hero() {
   const [mainpage, setMainpage] = useState(null);
   const [results, setResults] = useState([]);
   const newArr = useMemo(() => {
-    const arr = mainpage?.section?.[2]?.data?.content?.split("|") || [];
+    const arr = (mainpage?.section?.[2]?.data?.content?.split("|") || [])
+      .map((item) => (typeof item === "string" ? item.trim() : ""))
+      .filter(Boolean);
     return arr.reduce((acc, item) => {
       acc.push(item);
       acc.push(1000);
@@ -67,7 +69,7 @@ export default function Hero() {
     setSearchTerm(value);
   };
 
-  if (!mainpage) {
+  if (!mainpage || !Array.isArray(mainpage.section) || mainpage.section.length === 0) {
     return <div className="position-relative w-100 z-2 tripogram-hero" style={{ height: "90vh" }} />;
   }
 
@@ -136,15 +138,18 @@ export default function Hero() {
             </h1>
 
             {/* Typing Animation Wrapper */}
-            <div className="typing-text-wrapper mb-3 mt-2">
-              <TypeAnimation
-                sequence={newArr}
-                wrapper="span"
-                speed={50}
-                className="hero-typing-text text-warning d-block"
-                repeat={Infinity}
-              />
-            </div>
+            {newArr.length > 0 && (
+              <div className="typing-text-wrapper mb-3 mt-2">
+                <TypeAnimation
+                  key={newArr.join("-")}
+                  sequence={newArr}
+                  wrapper="span"
+                  speed={50}
+                  className="hero-typing-text text-warning d-block"
+                  repeat={Infinity}
+                />
+              </div>
+            )}
 
             {/* Search Bar */}
             <div className="position-relative w-100 mx-auto tripogram-hero-search">

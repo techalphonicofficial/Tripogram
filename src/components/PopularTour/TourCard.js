@@ -15,10 +15,11 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
+import { filterUpcomingDates } from "@/functions/dateFunction";
 import "./PopularTour.css";
 
 export default function TourCard({ data, onRequestCallback }) {
-  const packageDates = Array.isArray(data.package_dates) ? data.package_dates : [];
+  const packageDates = filterUpcomingDates(Array.isArray(data.package_dates) ? data.package_dates : []);
   const dates =
     packageDates
       .slice(0, 3)

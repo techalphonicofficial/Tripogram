@@ -29,8 +29,8 @@ const FALLBACK_LABELS = {
 };
 
 export default function CareersHero() {
-  const [hero, setHero] = useState(FALLBACK_HERO);
-  const [labels, setLabels] = useState(FALLBACK_LABELS);
+  const [hero, setHero] = useState(null);
+  const [labels, setLabels] = useState({ team_label: "", avatars: [] });
 
   useEffect(() => {
     async function fetchData() {
@@ -41,30 +41,32 @@ export default function CareersHero() {
         ]);
         if (heroData) {
           setHero({
-            ...FALLBACK_HERO,
             ...heroData,
-            eyebrow: heroData.label || heroData.eyebrow || FALLBACK_HERO.eyebrow,
-            heading_line1: heroData.heading_line_1 || heroData.heading_line1 || FALLBACK_HERO.heading_line1,
-            heading_line2: heroData.heading_line_2 || heroData.heading_line2 || FALLBACK_HERO.heading_line2,
-            heading_line3: heroData.heading_line_3 || heroData.heading_line3 || FALLBACK_HERO.heading_line3,
-            cta_label: heroData.button_text || heroData.cta_label || FALLBACK_HERO.cta_label,
-            image_main: heroData.main_image || heroData.image_main || FALLBACK_HERO.image_main,
-            image_secondary: heroData.secondary_image || heroData.image_secondary || FALLBACK_HERO.image_secondary,
+            eyebrow: heroData.label || heroData.eyebrow || "",
+            heading_line1: heroData.heading_line_1 || heroData.heading_line1 || "",
+            heading_line2: heroData.heading_line_2 || heroData.heading_line2 || "",
+            heading_line3: heroData.heading_line_3 || heroData.heading_line3 || "",
+            cta_label: heroData.button_text || heroData.cta_label || "Explore Open Positions",
+            image_main: heroData.main_image || heroData.image_main || "",
+            image_secondary: heroData.secondary_image || heroData.image_secondary || "",
           });
         }
         if (labelsData) {
           setLabels({
-            ...FALLBACK_LABELS,
             ...labelsData,
-            avatars: labelsData.avatars?.length ? labelsData.avatars : FALLBACK_LABELS.avatars,
+            avatars: Array.isArray(labelsData.avatars) ? labelsData.avatars : [],
           });
         }
       } catch (err) {
-        console.log("CareersHero: Using fallback data", err);
+        console.log("CareersHero: Failed to fetch data", err);
       }
     }
     fetchData();
   }, []);
+
+  if (!hero) {
+    return <section className="careers-hero bg-top-center" style={{ minHeight: "480px" }} />;
+  }
 
   const scrollToPositions = (e) => {
     e.preventDefault();

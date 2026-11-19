@@ -1,5 +1,6 @@
 "use client";
 import { api } from "@/services/config"; // <- axios instance
+import { filterUpcomingDates } from "@/functions/dateFunction";
 import { useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -12,7 +13,7 @@ export default function RequestCallback({ heading = "Request Callback", open, se
   const pkg = typeof open === 'object' ? open : packageData;
   const packageId = pkg?.id || open;
   const packageTitle = pkg?.title || pkg?.heading || "Trip";
-  const packageDates = pkg?.package_dates || [];
+  const packageDates = filterUpcomingDates(pkg?.package_dates || []);
   const banner = pkg?.banner || pkg?.featured_image || null;
   const price = pkg?.starting_price || pkg?.booking_amount || "";
 

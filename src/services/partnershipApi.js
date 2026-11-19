@@ -18,7 +18,7 @@ async function getPartnershipApi(path) {
   try {
     const response = await fetch(`/api/partnerships${path}`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(8000),
     });
     if (!response.ok) return null;
     return await response.json();

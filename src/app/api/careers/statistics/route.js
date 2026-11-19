@@ -16,11 +16,6 @@ export async function GET() {
     const data = await res.json();
     return NextResponse.json(data);
   } catch (_) {
-    // Fallback: strip FontAwesome icon objects, send icon name string
-    const fallback = careerStats.map(({ icon, ...rest }) => ({
-      ...rest,
-      icon: icon?.iconName ?? "users",
-    }));
-    return NextResponse.json(fallback);
+    return NextResponse.json([]);
   }
 }

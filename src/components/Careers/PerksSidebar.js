@@ -7,13 +7,15 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 export default function PerksSidebar() {
-  const [benefits, setBenefits] = useState(perksBenefits);
+  const [benefits, setBenefits] = useState([]);
 
   useEffect(() => {
     getCareersBenefits().then((data) => {
       if (data?.length) setBenefits(data.map((benefit) => ({ ...benefit, icon: faHeart })));
     });
   }, []);
+
+  if (!benefits || benefits.length === 0) return null;
 
   return (
     <div className="perks-sidebar">

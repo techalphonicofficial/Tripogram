@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faRupeeSign } from "@fortawesome/free-solid-svg-icons";
-import { formatDate } from "@/functions/dateFunction";
+import { filterUpcomingDates, formatDate } from "@/functions/dateFunction";
 
 // Dummy JSON data (replace with API response if needed)
 const jsonData = {
@@ -88,8 +88,10 @@ export default function Batches({ package_dates, drop, pickup }) {
     setActiveIndex(index !== activeIndex ? index : null);
   };
 
+  const upcomingPackageDates = useMemo(() => filterUpcomingDates(package_dates), [package_dates]);
+
   const groupedDates = useMemo(() => {
-    const groups = package_dates.reduce((acc, item) => {
+    const groups = upcomingPackageDates.reduce((acc, item) => {
       const date = new Date(item.start_date);
       const month = monthNames[date.getMonth()];
 
@@ -102,18 +104,18 @@ export default function Batches({ package_dates, drop, pickup }) {
 
     const monthGroups = Object.values(groups);
 
-    return [{ month: "All", dates: package_dates }, ...monthGroups];
-  }, [package_dates]);
+    return [{ month: "All", dates: upcomingPackageDates }, ...monthGroups];
+  }, [upcomingPackageDates]);
 
   useEffect(() => {
     const selectedGroup = groupedDates.find(
       (itm) => itm.month === selectedFilter
     );
-    setData(selectedGroup.dates);
+    setData(selectedGroup ? selectedGroup.dates : []);
     if (isMobile) setVisibleCount(4); // Reset on mobile filter changes
   }, [selectedFilter, groupedDates, isMobile]);
 
-  if (package_dates.length == 0) {
+  if (upcomingPackageDates.length == 0) {
     return;
   }
 

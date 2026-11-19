@@ -124,14 +124,14 @@
 import React, { useState, useEffect } from "react";
 import { faIndianRupee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { convertMyDate } from "@/functions/dateFunction";
+import { convertMyDate, filterUpcomingDates } from "@/functions/dateFunction";
 
 function Dates({ active_costs = [], package_dates = [] }) {
   const [specialDates, setSpecialDates] = useState([]);
 
   useEffect(() => {
     setSpecialDates(
-      package_dates.filter((item) => Number(item.special) === 1)
+      filterUpcomingDates(package_dates).filter((item) => Number(item.special) === 1)
     );
   }, [package_dates]);
 

@@ -7,15 +7,8 @@ import PopularCard from "./PopularCard";
 import { getPagewithSection } from "@/services/pageSection";
 import { getHomeDestination } from "@/services/destinationApi";
 
-const fallbackMainpage = {
-  section: [
-    { data: { Text: "Destination Lists" } },
-    { data: { Text: "Popular Destinations" } },
-  ],
-};
-
 export default function PopularDestination() {
-  const [mainpage, setMainpage] = useState(fallbackMainpage);
+  const [mainpage, setMainpage] = useState(null);
   const [homeDestination, setHomeDestination] = useState([]);
 
   useEffect(() => {
@@ -37,14 +30,12 @@ export default function PopularDestination() {
 
   if (!homeDestination || homeDestination.length === 0) return null;
 
-  const pageDataToDisplay = mainpage?.section?.[0]?.data?.Text ? mainpage : fallbackMainpage;
-
   return (
     <div className="position-relative overflow-hidden pt-8">
       <div className="container">
         <div className="title-area text-center mb-4">
-          <span className="sub-title text-success fw-bold">{pageDataToDisplay.section?.[0]?.data?.Text || "Destination Lists"}</span>
-          <h2 className="sec-title fw-bold text-dark">{pageDataToDisplay.section?.[1]?.data?.Text || "Popular Destinations"}</h2>
+          <span className="sub-title text-success fw-bold">{mainpage?.section?.[0]?.data?.Text}</span>
+          <h2 className="sec-title fw-bold text-dark">{mainpage?.section?.[1]?.data?.Text}</h2>
         </div>
 
         <Swiper

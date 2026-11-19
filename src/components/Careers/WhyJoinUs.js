@@ -9,7 +9,7 @@ const ICON_MAP = { users: faUsers, chart: faChartLine, trophy: faTrophy, globe: 
 
 export default function WhyJoinUs() {
   const [section, setSection] = useState(null);
-  const [cards, setCards] = useState(whyJoinUs);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     Promise.all([getCareersWhyJoinUs(), getCareersWhyJoinUsCards()]).then(([sectionData, cardsData]) => {
@@ -19,6 +19,8 @@ export default function WhyJoinUs() {
       }
     });
   }, []);
+
+  if (!section && cards.length === 0) return null;
 
   return (
     <section className="why-join-section position-relative bg-light-blue" style={{ backgroundColor: "#f4f8fb" }}>

@@ -8,6 +8,7 @@ import Pricing from "@/components/Booking/Pricing";
 import TravellerDetail from "@/components/Booking/TravellerDetail";
 import TripSummary from "@/components/Booking/TripSummary";
 import { getBookingData } from "@/functions/bookingStorage";
+import { filterUpcomingDates } from "@/functions/dateFunction";
 import { costs_and_dates, singlePackage } from "@/services/packageApi";
 import { useParams } from "next/navigation";
 // import { useParams, useSearchParams } from "next/navigation";
@@ -51,7 +52,8 @@ export default function BookingPageClient({ razorpay_key }) {
           costs_and_dates(slug),
           singlePackage(slug)
         ]);
-        setData({ ...costRes, package: packageRes });
+        const upcomingPackageDates = filterUpcomingDates(costRes?.packageDates || []);
+        setData({ ...costRes, packageDates: upcomingPackageDates, package: packageRes });
 
         // Restore state from localStorage after data is fetched
         try {
@@ -64,8 +66,8 @@ export default function BookingPageClient({ razorpay_key }) {
             if (freshData.payable_type) {
               setPaybleType(freshData.payable_type);
             }
-            if (freshData.selectedBatch && costRes.packageDates) {
-              const selected = costRes.packageDates.find(itm => itm.id == freshData.selectedBatch);
+            if (freshData.selectedBatch && upcomingPackageDates.length > 0) {
+              const selected = upcomingPackageDates.find(itm => itm.id == freshData.selectedBatch);
               if (selected) setSelectedDate(selected);
             }
             if (freshData.applied_coupons && freshData.applied_coupons.length > 0) {
@@ -84,7 +86,8 @@ export default function BookingPageClient({ razorpay_key }) {
 
   const groupedDates = useMemo(() => {
     if (!data.packageDates) return [];
-    const groups = data.packageDates.reduce((acc, item) => {
+    const upcomingDates = filterUpcomingDates(data.packageDates);
+    const groups = upcomingDates.reduce((acc, item) => {
       const date = new Date(item.start_date);
       const month = monthNames[date.getMonth()];
       if (!acc[month]) acc[month] = { month, dates: [] };
@@ -92,7 +95,7 @@ export default function BookingPageClient({ razorpay_key }) {
       return acc;
     }, {});
     const monthGroups = Object.values(groups);
-    return [{ month: "All", dates: data.packageDates }, ...monthGroups];
+    return [{ month: "All", dates: upcomingDates }, ...monthGroups];
   }, [data]);
 
   const handleSetDates = (id) => {

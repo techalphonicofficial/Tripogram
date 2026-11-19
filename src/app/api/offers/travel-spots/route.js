@@ -18,16 +18,37 @@ export async function GET() {
   const endpoints = [
     `${EXTERNAL_BACKEND}/offer-travel-spots`,
     `${EXTERNAL_BACKEND}/offers/travel-spots`,
-    `${EXTERNAL_BACKEND}/destinations/home`,
   ];
+
+  const headers = {
+    "Content-Type": "application/json",
+    ...(API_KEY ? { "x-api-key": API_KEY } : {}),
+  };
+
+  let packagesBySlug = new Map();
+  let packagesById = new Map();
+  try {
+    const pkgRes = await fetch(`${EXTERNAL_BACKEND}/packages`, {
+      headers,
+      cache: "no-store",
+      signal: AbortSignal.timeout(3500),
+    });
+    if (pkgRes.ok) {
+      const pkgRaw = await pkgRes.json();
+      const pkgList = Array.isArray(pkgRaw) ? pkgRaw : pkgRaw?.data || [];
+      if (Array.isArray(pkgList)) {
+        pkgList.forEach((p) => {
+          if (p?.slug) packagesBySlug.set(p.slug, p);
+          if (p?.id) packagesById.set(Number(p.id), p);
+        });
+      }
+    }
+  } catch (_) {}
 
   for (const url of endpoints) {
     try {
       const res = await fetch(url, {
-        headers: {
-          "Content-Type": "application/json",
-          ...(API_KEY ? { "x-api-key": API_KEY } : {}),
-        },
+        headers,
         cache: "no-store",
         signal: AbortSignal.timeout(3500),
       });
@@ -56,6 +77,11 @@ export async function GET() {
               extractedSlug = parts[parts.length - 1] || extractedSlug;
             }
 
+            const fullPkg =
+              packagesBySlug.get(extractedSlug) ||
+              (item.package?.id ? packagesById.get(Number(item.package.id)) : null) ||
+              null;
+
             let targetUrl = `/${extractedSlug}`;
             if (item.url) {
               if (item.url.startsWith("http://") || item.url.startsWith("https://")) {
@@ -74,7 +100,9 @@ export async function GET() {
             let imgSource =
               item.image ||
               item.package?.thumbnail ||
+              fullPkg?.thumbnail ||
               item.package?.banner ||
+              fullPkg?.banner ||
               item.destination?.image ||
               item.thumbnail;
 
@@ -85,12 +113,32 @@ export async function GET() {
                 : `${mediaBase.replace(/\/+$/, "")}/${imgSource.replace(/^\//, "")}`;
             }
 
+            const title =
+              item.title ||
+              item.package?.title ||
+              fullPkg?.title ||
+              item.heading ||
+              item.name ||
+              FALLBACK_SPOTS[index % 6].heading;
+
             return {
-              id: item.id || index + 1,
-              heading: item.title || item.heading || item.name || FALLBACK_SPOTS[index % 6].heading,
+              id: fullPkg?.id || item.package?.id || item.id || index + 1,
+              title,
+              heading: title,
               slug: extractedSlug,
               url: targetUrl,
               image: imgUrl,
+              thumbnail: imgUrl,
+              banner: item.package?.banner || fullPkg?.banner || imgUrl,
+              pickup: fullPkg?.pickup || item.package?.pickup || item.pickup || "Delhi",
+              drop: fullPkg?.drop || item.package?.drop || item.drop || "Delhi",
+              duration: item.package?.duration || fullPkg?.duration || item.duration || "",
+              starting_price:
+                item.package?.starting_price || fullPkg?.starting_price || item.starting_price || 0,
+              package_dates:
+                fullPkg?.package_dates || item.package?.package_dates || item.package_dates || [],
+              show_book_no_button:
+                fullPkg?.show_book_no_button ?? item.package?.show_book_no_button ?? null,
             };
           });
           return NextResponse.json(formatted);
@@ -99,5 +147,5 @@ export async function GET() {
     } catch (_) {}
   }
 
-  return NextResponse.json(FALLBACK_SPOTS);
+  return NextResponse.json([]);
 }

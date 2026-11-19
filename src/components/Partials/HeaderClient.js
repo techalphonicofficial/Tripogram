@@ -31,21 +31,16 @@ export default function HeaderClient({
     Promise.allSettled([
       getPagewithSection(6),
       tripsWithPackagecount(),
-      getPagewithSection(6, "popup"),
       getOffersHero(),
-    ]).then(([mainResult, tripsResult, popupResult, offersHeroResult]) => {
+    ]).then(([mainResult, tripsResult, offersHeroResult]) => {
       if (!isMounted) return;
 
-      if (mainResult.status === "fulfilled") {
+      if (mainResult.status === "fulfilled" && mainResult.value) {
         setMainpage(mainResult.value);
       }
 
-      if (tripsResult.status === "fulfilled") {
-        setTripsWithcount(tripsResult.value || []);
-      }
-
-      if (popupResult.status === "fulfilled") {
-        setPopup(popupResult.value);
+      if (tripsResult.status === "fulfilled" && Array.isArray(tripsResult.value)) {
+        setTripsWithcount(tripsResult.value);
       }
 
       if (offersHeroResult.status === "fulfilled" && offersHeroResult.value) {
@@ -174,11 +169,11 @@ export default function HeaderClient({
                       <li>
                         <Link href="/careers">Careers</Link>
                       </li>
-                      {offersHero?.website_visible !== false && offersHero?.is_visible !== false && (
+                      {Boolean(offersHero && offersHero.website_visible !== false && offersHero.is_visible !== false && offersHero.navbar_text) && (
                         <li>
                           <Link href="/offers" className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-pill px-3 py-1 shadow-sm position-relative ms-2" style={{ fontSize: "14px", fontWeight: "600", transition: "all 0.3s ease", border: "1px solid rgba(255,255,255,0.2)", whiteSpace: 'nowrap' }}>
                             <FontAwesomeIcon icon={faTags} className="me-2" style={{ fontSize: "12px" }} />
-                            {offersHero?.navbar_text || "Offers"}
+                            {offersHero.navbar_text}
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style={{ fontSize: '9px', padding: '3px 6px' }}>
                               NEW
                             </span>
@@ -211,8 +206,8 @@ export default function HeaderClient({
         tripsWithcount={tripsWithcount}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
-        offersVisible={offersHero?.website_visible !== false && offersHero?.is_visible !== false}
-        offersNavText={offersHero?.navbar_text || "Offers"}
+        offersVisible={Boolean(offersHero && offersHero.website_visible !== false && offersHero.is_visible !== false && offersHero.navbar_text)}
+        offersNavText={offersHero?.navbar_text || ""}
       />
 
       {/* <Popup initialPopup={popup} /> Disabled in favor of LeadPopup */}

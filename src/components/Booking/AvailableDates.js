@@ -1,5 +1,5 @@
 import { getBookingData, setBookingData } from "@/functions/bookingStorage";
-import { formatDate } from "@/functions/dateFunction";
+import { formatDate, isUpcomingBatch } from "@/functions/dateFunction";
 import React, { useEffect, useState } from "react";
 
 export default function AvailableDates({ groupedDates, handleSetDates, slug }) {
@@ -87,7 +87,11 @@ export default function AvailableDates({ groupedDates, handleSetDates, slug }) {
       >
         <div className="row gy-3 mx-0 py-2">
           {dates
-            .filter((batch) => !["full", "no seat", "closed"].includes(batch?.status?.toLowerCase()))
+            .filter(
+              (batch) =>
+                isUpcomingBatch(batch) &&
+                !["full", "no seat", "closed"].includes(batch?.status?.toLowerCase())
+            )
             .slice(0, visibleCount)
             .map((batch, index) => {
               return (
@@ -189,7 +193,11 @@ export default function AvailableDates({ groupedDates, handleSetDates, slug }) {
         </div>
 
         {/* Show More Button */}
-        {dates.filter((batch) => !["full", "no seat", "closed"].includes(batch?.status?.toLowerCase())).length > visibleCount && (
+        {dates.filter(
+          (batch) =>
+            isUpcomingBatch(batch) &&
+            !["full", "no seat", "closed"].includes(batch?.status?.toLowerCase())
+        ).length > visibleCount && (
           <div className="text-center mt-2 mt-md-4 ">
             <button
               onClick={() => setVisibleCount((prev) => prev + 4)}

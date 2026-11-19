@@ -101,17 +101,19 @@ export default async function Trips({ params }) {
       {trips.trip.content && <TripContent content={trips.trip.content} />}
 
       {/* Trips Section */}
-      <section
-        className="tour-area position-relative bg-top-center overflow-hidden"
-        id="service-sec"
-      >
-        <div className="slider-area tour-slider">
-          <div className="container th-container my-5">
-            <h2 className="fw-bold mb-4 text-center">Available Trips</h2>
-            <AvailableTrips trips={trips.packages} />
+      {Array.isArray(trips.packages) && trips.packages.length > 0 && (
+        <section
+          className="tour-area position-relative bg-top-center overflow-hidden"
+          id="service-sec"
+        >
+          <div className="slider-area tour-slider">
+            <div className="container th-container my-5">
+              <h2 className="fw-bold mb-4 text-center">Available Trips</h2>
+              <AvailableTrips trips={trips.packages} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {faqs.length > 0 && <Faq faqs={faqs} />}
     </>
