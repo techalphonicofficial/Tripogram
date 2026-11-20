@@ -25,10 +25,11 @@
  isolation: isolate;
 }
 
-.whyus-container .whyus-card:hover{
+.whyus-container .whyus-card:hover,
+.whyus-container .whyus-card:active {
  transform: translateY(-6px);
  border-color: #72a82f;
- box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+ box-shadow: 0 12px 24px rgba(114, 168, 47, 0.16);
 }
 .whyus-container .whyus-card-inner .whyus-card-title{
   color: #0b1f3b;
@@ -68,14 +69,99 @@
 }
 @media screen and (max-width:576px) {
   .whyus-container .whyus-card{
-    }
-    .whyus-container .whyus-card-inner .whyus-card-title{
-      font-size: 20px;
-    }
-    .whyus-container .whyus-card-inner .whyus-card-description{
-      font-size: 14px;
-      
-    }
+    height: 350px;
+  }
+  .whyus-container .whyus-card-inner .whyus-card-title{
+    font-size: 20px;
+  }
+  .whyus-container .whyus-card-inner .whyus-card-description{
+    font-size: 14px;
+  }
+}
+
+/* Mobile / Tablet Single-Card Slider & Arrow Navigation */
+.whyus-mobile-slider {
+  position: relative;
+  width: 82%;
+  max-width: 310px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.whyus-swiper-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.whyus-swiper {
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 14px;
+  border-radius: 12px;
+}
+
+.whyus-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #0598cc;
+  background: #ffffff;
+  color: #0598cc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(5, 152, 204, 0.2);
+  transition: all 0.25s ease;
+}
+
+.whyus-arrow-btn:hover,
+.whyus-arrow-btn:active {
+  background: #0598cc;
+  color: #ffffff;
+}
+
+.whyus-arrow-prev {
+  left: -20px;
+}
+
+.whyus-arrow-next {
+  right: -20px;
+}
+
+.whyus-mobile-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.whyus-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.whyus-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.whyus-dot.active {
+  width: 24px;
+  border-radius: 999px;
+  background: #0598cc;
 }
 
 .custom-hover-effect {

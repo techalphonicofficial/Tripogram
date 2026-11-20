@@ -585,6 +585,29 @@ const ratingSections = [
     { key: "itinerary", label: "Itinerary", icon: faClipboardList },
 ];
 
+const formatDateToDDMMYYYY = (value) => {
+    if (!value) return "";
+    const trimmed = String(value).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+        const [y, m, d] = trimmed.split("-");
+        return `${d}-${m}-${y}`;
+    }
+    return trimmed;
+};
+
+const formatDateToISO = (value) => {
+    if (!value) return "";
+    const trimmed = String(value).trim();
+    if (/^\d{2}-\d{2}-\d{4}$/.test(trimmed)) {
+        const [d, m, y] = trimmed.split("-");
+        return `${y}-${m}-${d}`;
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+        return trimmed;
+    }
+    return "";
+};
+
 function FeedbackContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -595,7 +618,9 @@ function FeedbackContent() {
         name: searchParams.get("name") || "",
         contact: searchParams.get("contact") || "",
         destination: searchParams.get("destination") || searchParams.get("package_name") || "",
-        departureDate: searchParams.get("departure_date") || searchParams.get("start_date") || "",
+        departureDate: formatDateToDDMMYYYY(
+            searchParams.get("departure_date") || searchParams.get("start_date") || ""
+        ),
     }), [searchParams]);
 
     const [tripDetails, setTripDetails] = useState(initialTripDetails);
@@ -791,12 +816,17 @@ function FeedbackContent() {
                                         onChange={handleTripDetailChange}
                                         error={errors.destination}
                                     />
-                                    <InputField
+                                    <DateField
                                         icon={faCalendarAlt}
                                         label="Departure Date"
                                         name="departureDate"
                                         value={tripDetails.departureDate}
-                                        onChange={handleTripDetailChange}
+                                        onChange={(formattedDate) => {
+                                            setTripDetails((prev) => ({ ...prev, departureDate: formattedDate }));
+                                            if (errors.departureDate) {
+                                                setErrors((prev) => ({ ...prev, departureDate: "" }));
+                                            }
+                                        }}
                                         error={errors.departureDate}
                                     />
                                 </div>
@@ -1182,6 +1212,109 @@ export default function Feedback() {
         <Suspense fallback={null}>
             <FeedbackContent />
         </Suspense>
+    );
+}
+
+function DateField({ icon, label, name, value, onChange, error }) {
+    const [focused, setFocused] = useState(false);
+    const isoValue = formatDateToISO(value);
+
+    return (
+        <div className="feedback-input-wrap">
+            <label htmlFor={name}>{label}</label>
+            <div className={`feedback-date-box ${focused ? "is-focused" : ""} ${error ? "has-error" : ""}`}>
+                <FontAwesomeIcon icon={icon} />
+                <span className={`feedback-date-display ${value ? "has-value" : ""}`}>
+                    {value || "dd-mm-yyyy"}
+                </span>
+                <input
+                    id={name}
+                    type="date"
+                    name={name}
+                    value={isoValue}
+                    onChange={(e) => onChange(formatDateToDDMMYYYY(e.target.value))}
+                    onClick={(e) => {
+                        try {
+                            e.currentTarget.showPicker?.();
+                        } catch (_) {}
+                    }}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    className="feedback-date-native"
+                />
+            </div>
+            {error && <p><FontAwesomeIcon icon={faExclamationCircle} /> {error}</p>}
+
+            <style jsx>{`
+                .feedback-input-wrap label {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #374151;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-bottom: 8px;
+                }
+
+                .feedback-date-box {
+                    position: relative;
+                    width: 100%;
+                    height: 50px;
+                    border: 1.5px solid ${error ? "#ef4444" : focused ? "#52a112" : "#e5e7eb"};
+                    border-radius: 12px;
+                    background: ${focused ? "#ffffff" : "#f9fafb"};
+                    display: flex;
+                    align-items: center;
+                    padding-left: 44px;
+                    padding-right: 16px;
+                    cursor: pointer;
+                    transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+                    box-shadow: ${focused ? "0 0 0 3px rgba(82, 161, 18, 0.12)" : "none"};
+                }
+
+                .feedback-date-box :global(svg) {
+                    position: absolute;
+                    top: 50%;
+                    left: 16px;
+                    transform: translateY(-50%);
+                    color: ${error ? "#ef4444" : focused ? "#52a112" : "#9ca3af"};
+                    font-size: 14px;
+                    pointer-events: none;
+                    transition: color 0.2s;
+                    z-index: 1;
+                }
+
+                .feedback-date-display {
+                    font-size: 14px;
+                    color: #9ca3af;
+                    pointer-events: none;
+                }
+
+                .feedback-date-display.has-value {
+                    color: #1f2937;
+                    font-weight: 500;
+                }
+
+                .feedback-date-native {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+                    cursor: pointer;
+                    z-index: 2;
+                }
+
+                .feedback-input-wrap p {
+                    color: #ef4444;
+                    font-size: 12px;
+                    margin: 6px 0 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                }
+            `}</style>
+        </div>
     );
 }
 
